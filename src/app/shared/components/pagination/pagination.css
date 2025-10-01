@@ -1,0 +1,9 @@
+.custom-pagination z-pagination-button[zactive='true'] {
+  background-color: #3b82f6; /* blue-500 */
+  color: white;
+  border-color: #3b82f6;
+}
+
+.custom-pagination z-pagination-button[zactive='true']:hover {
+  background-color: #2563eb; /* blue-600 */
+}
