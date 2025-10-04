@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { Navbar } from '@shared/components/navbar/navbar';
 
@@ -10,7 +10,7 @@ import { Navbar } from '@shared/components/navbar/navbar';
   standalone: true,
   templateUrl: './login.html',
   styleUrls: ['./login.css'],
-  imports: [CommonModule, FormsModule,Navbar]
+  imports: [CommonModule, FormsModule,Navbar,RouterLink]
 })
 export class Login implements OnInit {
   email = '';

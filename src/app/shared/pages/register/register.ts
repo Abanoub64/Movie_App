@@ -2,14 +2,15 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, updateProfile } from '@angular/fire/auth';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Navbar } from '@shared/components/navbar/navbar';
 
 @Component({
   selector: 'app-register',
+  standalone:true,
   templateUrl: './register.html',
   styleUrls: ['./register.css'],
-  imports: [FormsModule,CommonModule,Navbar]
+  imports: [FormsModule,CommonModule,Navbar,RouterLink]
 })
 export class Register {
   name = '';
