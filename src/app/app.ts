@@ -8,10 +8,11 @@ import { Navbar } from '@shared/components/navbar/navbar';
 import { ZardDemoPaginationComponent } from '@shared/components/pagination/pagination';
 import { ZardPaginationComponent } from '@shared/components/pagination/pagination.component';
 import { Home } from '@shared/pages/home/home';
+import { Register } from '@shared/pages/register/register';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Navbar, HeroSection, Footer, ZardPaginationComponent, Home],
+  imports: [RouterOutlet, Navbar, HeroSection, Footer, ZardPaginationComponent, Home,Register],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
