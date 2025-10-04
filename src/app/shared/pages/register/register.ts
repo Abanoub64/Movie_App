@@ -3,12 +3,13 @@ import { Component } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, updateProfile } from '@angular/fire/auth';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Navbar } from '@shared/components/navbar/navbar';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.html',
   styleUrls: ['./register.css'],
-  imports: [FormsModule,CommonModule]
+  imports: [FormsModule,CommonModule,Navbar]
 })
 export class Register {
   name = '';
