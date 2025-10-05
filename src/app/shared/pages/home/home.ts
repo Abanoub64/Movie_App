@@ -1,56 +1,40 @@
-import { Component, signal } from '@angular/core';
-import { MediaCardComponent } from '@shared/components/media-card/media-card';
+import { Component, OnInit } from '@angular/core';
+import { MovieCard } from '@shared/components/movie-card/movie-card';
+import { IMovie, IMoviesResponse } from '@shared/interface/interfaces';
+import { MoviesService } from '@shared/services/movies-service';
+import { FormsModule } from '@angular/forms';
+import { ZardPaginationComponent } from '@shared/components/pagination/pagination.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MediaCardComponent],
+  imports: [MovieCard, ZardPaginationComponent, FormsModule],
   templateUrl: './home.html',
-  styleUrl: './home.css',
+  styleUrls: ['./home.css'],
 })
-export class Home {
-  readonly mediaItems = signal([
-    {
-      id: 1,
-      title: 'The Good Doctor',
-      date: 'Sep 25, 2017',
-      rating: 85,
-      image: 'medical-drama-poster.png',
-    },
-    {
-      id: 2,
-      title: 'Rick and Morty',
-      date: 'Dec 02, 2013',
-      rating: 87,
-      image: 'animated-sci-fi-show-poster.jpg',
-    },
-    {
-      id: 3,
-      title: 'My Fault',
-      date: 'Jun 08, 2023',
-      rating: 81,
-      image: 'romantic-drama-movie-poster.jpg',
-    },
-    {
-      id: 4,
-      title: 'The Little Mermaid',
-      date: 'Aug 25, 2023',
-      rating: 66,
-      image: 'mermaid-underwater-fantasy-poster.jpg',
-    },
-    {
-      id: 5,
-      title: 'John Wick: Chapter 4',
-      date: 'Mar 24, 2023',
-      rating: 78,
-      image: 'action-movie-poster.png',
-    },
-    {
-      id: 6,
-      title: 'Family Guy',
-      date: 'Jan 31, 1999',
-      rating: 73,
-      image: '/public/animated-comedy-show-poster.jpg',
-    },
-  ]);
+export class Home implements OnInit {
+  mediaItems: IMovie[] = [];
+  pageNumber = 1;
+  totalPages = 1;
+
+  constructor(private moviesService: MoviesService) {}
+
+  ngOnInit(): void {
+    this.loadMovies(this.pageNumber);
+  }
+
+  loadMovies(page: number) {
+    this.moviesService.getpopular(page).subscribe({
+      next: (res: IMoviesResponse) => {
+        this.mediaItems = res.results;
+        this.totalPages = res.total_pages;
+        this.pageNumber = page;
+      },
+      error: (err) => console.error('Error loading movies', err),
+    });
+  }
+
+  onPageChange(newPage: number) {
+    this.loadMovies(newPage);
+  }
 }

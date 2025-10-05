@@ -1,17 +1,42 @@
-<div class="card bg-base-100 w-96 shadow-sm">
-  <figure>
-    <img
-      src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-      alt="Shoes"
-    />
-  </figure>
-  <div class="card-body">
-    <h2 class="card-title">Card Title</h2>
-    <p>
-      A card component has a figure, a body part, and inside body there are title and actions parts
-    </p>
-    <div class="card-actions justify-end">
-      <button class="btn btn-primary">Buy Now</button>
+<div class="card style_1">
+  <div class="image">
+    <div class="wrapper glyphicons_v2 picture grey no_image_holder">
+      <a class="image" [href]="movieUrl" [title]="movie.title">
+        <img
+          loading="lazy"
+          class="poster w-full"
+          [src]="posterUrl"
+          [srcset]="posterUrl + ' 1x, ' + posterUrl2x + ' 2x'"
+          [alt]="movie.title"
+        />
+      </a>
+    </div>
+    <div class="options" [attr.data-id]="movie.id" data-media-type="movie" data-role="tooltip">
+      <a class="no_click" href="#" aria-label="View Item Options" (click)="onOptionsClick($event)">
+      </a>
     </div>
   </div>
+
+  <div class="content flex flex-col items-start gap-2">
+    <div
+      class="radial-progress relative flex items-center justify-center"
+      [style.--value]="userScorePercent"
+      [attr.aria-valuenow]="userScorePercent"
+      role="progressbar"
+      [style.background]="trackColor"
+      [style.color]="scoreColor"
+      style="--size: 40px; --thickness: 3px"
+    >
+      <div class="percent text-white text-sm absolute flex items-center justify-center">
+        <span class="icon" [attr.data-percent]="userScorePercent"></span>
+      </div>
+    </div>
+
+    <h2>
+      <a [href]="movieUrl" [title]="movie.title">{{ movie.title }}</a>
+    </h2>
+    <p>{{ movie.release_date }}</p>
+  </div>
+
+  <div class="hover" [attr.data-id]="movie.id"></div>
 </div>
