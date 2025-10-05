@@ -1,19 +1,18 @@
-<app-navbar></app-navbar>
 <div class="register-container container">
   <h2>Login</h2>
 
   <!-- ✅ رسالة نجاح -->
   @if (successMessage) {
-    <div class="alert alert-success text-center" role="alert">
-      {{ successMessage }}
-    </div>
+  <div class="alert alert-success text-center" role="alert">
+    {{ successMessage }}
+  </div>
   }
 
   <!-- ❌ رسالة خطأ -->
   @if (errorMessage) {
-    <div class="alert alert-danger text-center" role="alert">
-      {{ errorMessage }}
-    </div>
+  <div class="alert alert-danger text-center" role="alert">
+    {{ errorMessage }}
+  </div>
   }
 
   <form (ngSubmit)="onLogin()" #loginForm="ngForm">
@@ -27,9 +26,10 @@
         [(ngModel)]="email"
         required
         #emailCtrl="ngModel"
-        class="form-control">
+        class="form-control"
+      />
       @if (emailCtrl.invalid && emailCtrl.touched) {
-        <div class="text-danger">Enter Your Email</div>
+      <div class="text-danger">Enter Your Email</div>
       }
     </div>
 
@@ -44,12 +44,13 @@
         required
         minlength="6"
         #passCtrl="ngModel"
-        class="form-control">
+        class="form-control"
+      />
       @if (passCtrl.invalid && passCtrl.touched) {
-        <div class="text-danger">Password must be at least 6 characters</div>
+      <div class="text-danger">Password must be at least 6 characters</div>
       }
-      <small style="display:block; margin-top:.25rem;">
-        <input type="checkbox" [(ngModel)]="showPass" name="showPass"> Show password
+      <small style="display: block; margin-top: 0.25rem">
+        <input type="checkbox" [(ngModel)]="showPass" name="showPass" /> Show password
       </small>
     </div>
 

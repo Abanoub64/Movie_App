@@ -3,14 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
-import { Navbar } from '@shared/components/navbar/navbar';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   templateUrl: './login.html',
   styleUrls: ['./login.css'],
-  imports: [CommonModule, FormsModule,Navbar,RouterLink]
+  imports: [CommonModule, FormsModule, RouterLink],
 })
 export class Login implements OnInit {
   email = '';
@@ -33,13 +32,20 @@ export class Login implements OnInit {
 
   private mapFirebaseError(code: string): string {
     switch (code) {
-      case 'auth/invalid-email': return 'Invalid email address';
-      case 'auth/missing-password': return 'Please enter your password';
-      case 'auth/weak-password': return 'Password must be at least 6 characters';
-      case 'auth/user-not-found': return 'No user found for this email';
-      case 'auth/wrong-password': return 'Incorrect password';
-      case 'auth/too-many-requests': return 'Too many attempts. Try again later';
-      default: return 'Login failed, please try again';
+      case 'auth/invalid-email':
+        return 'Invalid email address';
+      case 'auth/missing-password':
+        return 'Please enter your password';
+      case 'auth/weak-password':
+        return 'Password must be at least 6 characters';
+      case 'auth/user-not-found':
+        return 'No user found for this email';
+      case 'auth/wrong-password':
+        return 'Incorrect password';
+      case 'auth/too-many-requests':
+        return 'Too many attempts. Try again later';
+      default:
+        return 'Login failed, please try again';
     }
   }
 
@@ -64,7 +70,7 @@ export class Login implements OnInit {
         this.successMessage = '✅ Login is success';
         this.router.navigate(['/home']);
       })
-      .catch(err => {
+      .catch((err) => {
         this.errorMessage = this.mapFirebaseError(err.code || err.message);
       })
       .finally(() => {

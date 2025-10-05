@@ -5,10 +5,9 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
-  standalone: true,
   imports: [RouterLink, CommonModule],
   templateUrl: './navbar.html',
-  styleUrls: ['./navbar.css']
+  styleUrls: ['./navbar.css'],
 })
 export class Navbar {
   // نخزن حالة المستخدم بشكل بسيط
@@ -25,7 +24,7 @@ export class Navbar {
     await signOut(this.auth);
     this.router.navigate(['/login']);
   }
-   isCurrentRoute(path: string): boolean {
+  isCurrentRoute(path: string): boolean {
     return this.router.url === path;
   }
 }
