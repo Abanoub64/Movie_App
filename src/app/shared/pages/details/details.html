@@ -74,12 +74,9 @@
   <section class="recs">
     <h2 class="recs-title">Recommendations</h2>
     <div class="recs-grid">
-      @for (i of [1,2,3,4,5,6]; track $index) {
-      <div class="rec-card">
-        <div class="rec-img-skeleton"></div>
-        <div class="rec-title-skeleton"></div>
-        <div class="score-badge">75</div>
-      </div>
+      @for (item of recommendations; track item.id) {
+      <app-movie-card [movie]="item"></app-movie-card>
+
       }
     </div>
   </section>

@@ -30,6 +30,13 @@ export class MoviesService {
       },
     });
   }
+  getMoivesRecommendations(movieId: number): Observable<IMoviesResponse> {
+    return this.http.get<IMoviesResponse>(`${this._baseUrl}/movie/${movieId}/recommendations`, {
+      headers: {
+        Authorization: `Bearer ${environment.apiKey}`,
+      },
+    });
+  }
   getMultiSearch(searchString: string): Observable<IMovieDetailsResponse> {
     return this.http.get<IMovieDetailsResponse>(`${this._baseUrl}/search/multi${searchString}`, {
       headers: {

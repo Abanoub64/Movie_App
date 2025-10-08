@@ -1,21 +1,24 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { IMovieDetails } from '@shared/interface/interfaces';
+import { IMovie, IMovieDetails, IMoviesResponse } from '@shared/interface/interfaces';
 import { MOCK_MOVIE_DETAILS } from '@shared/mocks/mock-movie-details';
 import { Footer } from '@shared/components/footer/footer';
 import { Navbar } from '@shared/components/navbar/navbar';
 import { MoviesService } from '@shared/services/movies-service';
+import { MovieCard } from '@shared/components/movie-card/movie-card';
 
 @Component({
   selector: 'app-details',
   standalone: true,
-  imports: [CommonModule, RouterModule, Footer, Navbar],
+  imports: [CommonModule, RouterModule, Footer, Navbar, MovieCard],
   templateUrl: './details.html',
   styleUrls: ['./details.css'],
 })
 export class Details implements OnInit {
   details?: IMovieDetails;
+  recommendations: IMovie[] = [];
+
   constructor(private route: ActivatedRoute, private moviesService: MoviesService) {}
   private imgBase = 'https://image.tmdb.org/t/p';
   private posterSize = 'w500';
@@ -34,6 +37,12 @@ export class Details implements OnInit {
         console.log(res);
 
         this.details = res;
+      },
+      error: (err) => console.error('Error loading movies', err),
+    });
+    this.moviesService.getMoivesRecommendations(+this.movieId).subscribe({
+      next: (res: IMoviesResponse) => {
+        this.recommendations = res.results;
       },
       error: (err) => console.error('Error loading movies', err),
     });
