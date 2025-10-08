@@ -8,8 +8,12 @@ import { ZardPaginationModule } from './pagination.module';
   standalone: true,
   styleUrl: './pagination.css',
   imports: [ZardPaginationModule, FormsModule],
-  template: ` <z-pagination [zPageIndex]="currentPage" [zTotal]="5" [(ngModel)]="currentPage" /> `,
+  template:  `<z-pagination  [zTotal]="5"[zPageIndex]="currentPage" (zPageIndexChange)="onPageChange($event)" /> `,
 })
 export class Pagination {
   protected currentPage = 2;
+   onPageChange(newPage: number) {
+    this.currentPage = newPage;
+    console.log('Page changed:', newPage);
+  }
 }

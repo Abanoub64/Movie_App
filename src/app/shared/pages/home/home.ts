@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { MovieCard } from '@shared/components/movie-card/movie-card';
 import { IMovie, IMoviesResponse } from '@shared/interface/interfaces';
 import { MoviesService } from '@shared/services/movies-service';
-import { FormsModule } from '@angular/forms';
 import { ZardPaginationComponent } from '@shared/components/pagination/pagination.component';
+import { Footer } from "@shared/components/footer/footer";
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MovieCard, ZardPaginationComponent, FormsModule],
+  imports: [MovieCard, ZardPaginationComponent, Footer, RouterModule],
   templateUrl: './home.html',
   styleUrls: ['./home.css'],
 })
