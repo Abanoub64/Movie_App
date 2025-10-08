@@ -1,7 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
-import { IMovie, IMovieDetailsResponse, IMoviesResponse } from '@shared/interface/interfaces';
+import {
+  IMovie,
+  IMovieDetails,
+  IMovieDetailsResponse,
+  IMoviesResponse,
+} from '@shared/interface/interfaces';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -18,8 +23,8 @@ export class MoviesService {
       },
     });
   }
-  getMoiveDetails(movieId: number): Observable<IMovieDetailsResponse> {
-    return this.http.get<IMovieDetailsResponse>(`${this._baseUrl}/movie/${movieId}`, {
+  getMoiveDetails(movieId: number): Observable<IMovieDetails> {
+    return this.http.get<IMovieDetails>(`${this._baseUrl}/movie/${movieId}`, {
       headers: {
         Authorization: `Bearer ${environment.apiKey}`,
       },

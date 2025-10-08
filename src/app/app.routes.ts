@@ -11,6 +11,6 @@ export const routes: Routes = [
   { path: 'register', component: Register },
   { path: 'home', component: Home },
   { path: 'wishlist', component: WishList },
-  { path: 'details/:id', component: Details },
+  { path: 'movie/:id', component: Details },
   // { path: 'account', component: Account },
 ];

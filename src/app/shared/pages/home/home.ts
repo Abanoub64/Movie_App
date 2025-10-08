@@ -3,7 +3,7 @@ import { MovieCard } from '@shared/components/movie-card/movie-card';
 import { IMovie, IMoviesResponse } from '@shared/interface/interfaces';
 import { MoviesService } from '@shared/services/movies-service';
 import { ZardPaginationComponent } from '@shared/components/pagination/pagination.component';
-import { Footer } from "@shared/components/footer/footer";
+import { Footer } from '@shared/components/footer/footer';
 import { RouterModule } from '@angular/router';
 
 @Component({

@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { IMovieDetails } from '@shared/interface/interfaces';
 import { MOCK_MOVIE_DETAILS } from '@shared/mocks/mock-movie-details';
-import { Footer } from "@shared/components/footer/footer";
-import { Navbar } from "@shared/components/navbar/navbar";
+import { Footer } from '@shared/components/footer/footer';
+import { Navbar } from '@shared/components/navbar/navbar';
+import { MoviesService } from '@shared/services/movies-service';
 
 @Component({
   selector: 'app-details',
@@ -13,14 +14,30 @@ import { Navbar } from "@shared/components/navbar/navbar";
   templateUrl: './details.html',
   styleUrls: ['./details.css'],
 })
-export class Details {
-  details: IMovieDetails = MOCK_MOVIE_DETAILS;
-
-  // TMDB images (مش API calls)
+export class Details implements OnInit {
+  details?: IMovieDetails;
+  constructor(private route: ActivatedRoute, private moviesService: MoviesService) {}
   private imgBase = 'https://image.tmdb.org/t/p';
   private posterSize = 'w500';
   private logoSize = 'w185';
+  public movieId: string = '';
 
+  ngOnInit(): void {
+    this.route.paramMap.subscribe((params) => {
+      const fullURL = params.get('id') ?? '';
+
+      const [idPart, ...slugParts] = fullURL?.split('-');
+      this.movieId = idPart;
+    });
+    this.moviesService.getMoiveDetails(+this.movieId).subscribe({
+      next: (res: IMovieDetails) => {
+        console.log(res);
+
+        this.details = res;
+      },
+      error: (err) => console.error('Error loading movies', err),
+    });
+  }
   imgPoster(path: string | null) {
     return path ? `${this.imgBase}/${this.posterSize}${path}` : 'assets/placeholder-poster.png';
   }
@@ -44,6 +61,6 @@ export class Details {
   languagesList(
     langs?: { english_name: string; iso_639_1: string; name: string }[] | null
   ): string {
-    return Array.isArray(langs) ? langs.map(l => l.english_name).join(', ') : '';
+    return Array.isArray(langs) ? langs.map((l) => l.english_name).join(', ') : '';
   }
 }
