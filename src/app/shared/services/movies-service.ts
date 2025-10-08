@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
-import { IMovie, IMoviesResponse } from '@shared/interface/interfaces';
+import { IMovie, IMovieDetailsResponse, IMoviesResponse } from '@shared/interface/interfaces';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -13,6 +13,20 @@ export class MoviesService {
 
   getpopular(page: number): Observable<IMoviesResponse> {
     return this.http.get<IMoviesResponse>(`${this._baseUrl}movie/popular?page=${page}`, {
+      headers: {
+        Authorization: `Bearer ${environment.apiKey}`,
+      },
+    });
+  }
+  getMoiveDetails(movieId: number): Observable<IMovieDetailsResponse> {
+    return this.http.get<IMovieDetailsResponse>(`${this._baseUrl}/movie/${movieId}`, {
+      headers: {
+        Authorization: `Bearer ${environment.apiKey}`,
+      },
+    });
+  }
+  getMultiSearch(searchString: string): Observable<IMovieDetailsResponse> {
+    return this.http.get<IMovieDetailsResponse>(`${this._baseUrl}/search/multi${searchString}`, {
       headers: {
         Authorization: `Bearer ${environment.apiKey}`,
       },

@@ -2,15 +2,15 @@ import { Component, computed, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { Auth, onAuthStateChanged, signOut } from '@angular/fire/auth';
 import { CommonModule } from '@angular/common';
+import { ButtonWithMenu } from '../button-with-menu/button-with-menu';
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink, CommonModule, ButtonWithMenu],
   templateUrl: './navbar.html',
   styleUrls: ['./navbar.css'],
 })
 export class Navbar {
-  // نخزن حالة المستخدم بشكل بسيط
   private userSignal = signal<{ uid: string | null } | null>(null);
   isLoggedIn = computed(() => !!this.userSignal()?.uid);
 

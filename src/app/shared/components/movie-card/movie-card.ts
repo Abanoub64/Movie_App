@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IMovie } from '@shared/interface/interfaces';
+import { Router } from '@angular/router';
 
 export interface Movie {
   id: number;
@@ -20,6 +21,8 @@ export interface Movie {
 })
 export class MovieCard {
   @Input() movie!: IMovie;
+
+  constructor(private router: Router) {}
 
   get slug(): string {
     return this.movie.title.toLowerCase().replace(/\s+/g, '-');
@@ -53,6 +56,10 @@ export class MovieCard {
     // if (score >= 70) return '#3b82f680';
     // if (score >= 40) return '#3b82f680';
     return '#032541';
+  }
+
+  goToMovie(id: number) {
+    this.router.navigate(['/movie', id]);
   }
 
   get ratingClass(): string {
