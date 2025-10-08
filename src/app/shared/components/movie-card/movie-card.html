@@ -1,41 +1,57 @@
 <div class="card style_1">
   <div (click)="goToMovie(movie.id)" class="image">
     <div class="wrapper glyphicons_v2 picture grey no_image_holder">
-      <a class="image" [href]="movieUrl" [title]="movie.title">
+      <a class="image" [routerLink]="['/movie', movie.id]" [title]="movie.title">
         <img
+        alt=""
           loading="lazy"
           class="poster w-full"
           [src]="posterUrl"
-          [srcset]="posterUrl + ' 1x, ' + posterUrl2x + ' 2x'"
+          [attr.srcset]="posterUrl + ' 1x, ' + posterUrl2x + ' 2x'"
           [alt]="movie.title"
         />
       </a>
     </div>
+
     <div class="options" [attr.data-id]="movie.id" data-media-type="movie" data-role="tooltip">
-      <a class="no_click" href="#" aria-label="View Item Options" (click)="onOptionsClick($event)">
-      </a>
+      <a class="no_click" href="#" aria-label="View Item Options" (click)="onOptionsClick($event)"></a>
     </div>
   </div>
 
   <div class="content flex flex-col items-start gap-2">
-    <div
-      class="radial-progress relative flex items-center justify-center"
-      [style.--value]="userScorePercent"
-      [attr.aria-valuenow]="userScorePercent"
-      role="progressbar"
-      [style.background]="trackColor"
-      [style.color]="scoreColor"
-      style="--size: 40px; --thickness: 3px"
-    >
-      <div class="percent text-white text-sm absolute flex items-center justify-center">
-        <span class="icon" [attr.data-percent]="userScorePercent"></span>
+    <div class="consensus">
+      <div class="outer_ring" [style.background]="trackColor">
+        <div class="user_score_chart" [style.background]="scoreColor">
+          <div class="percent">
+            <span class="icon" [attr.data-percent]="userScorePercent"></span>
+          </div>
+        </div>
       </div>
     </div>
 
     <h2>
-      <a [href]="movieUrl" [title]="movie.title">{{ movie.title }}</a>
+      <a [routerLink]="['/movie', movie.id]" [title]="movie.title">{{ movie.title }}</a>
     </h2>
-    <p>{{ movie.release_date }}</p>
+
+    <p>{{ displayDate }}</p>
+
+    <button
+      type="button"
+      class="wishlist-btn"
+      [class.active]="inWishlist"
+      [disabled]="toggling"
+      (click)="toggleWishlist($event)"
+      [attr.aria-pressed]="inWishlist"
+      aria-label="Toggle wishlist">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          d="M12 21s-6.2-4.35-9.33-7.48C.82 11.67 1 8.5 3.2 6.6c2.28-1.96 5.3-1.2 6.8.73C11.5 5.4 14.52 4.64 16.8 6.6c2.2 1.9 2.38 5.07.53 6.92C18.2 14.9 12 21 12 21z"
+          [attr.fill]="inWishlist ? '#FFE353' : 'none'"
+          [attr.stroke]="inWishlist ? '#000000' : '#9CA3AF'"
+          stroke-width="1.5"
+        />
+      </svg>
+    </button>
   </div>
 
   <div class="hover" [attr.data-id]="movie.id"></div>

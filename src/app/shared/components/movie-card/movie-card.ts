@@ -1,74 +1,92 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
+import { Auth } from '@angular/fire/auth';
 import { IMovie } from '@shared/interface/interfaces';
-import { Router } from '@angular/router';
-
-export interface Movie {
-  id: number;
-  title: string;
-  posterPath: string;
-  releaseDate: string;
-  voteAverage: number;
-  slug: string;
-}
+import { WishlistService } from '@shared/services/wishlist.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-movie-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './movie-card.html',
   styleUrls: ['./movie-card.css'],
 })
-export class MovieCard {
+export class MovieCard implements OnInit, OnDestroy {
   @Input() movie!: IMovie;
 
-  constructor(private router: Router) {}
+  inWishlist = false;
+  toggling = false;
+  private sub?: Subscription;
 
-  get slug(): string {
-    return this.movie.title.toLowerCase().replace(/\s+/g, '-');
+  constructor(
+    private router: Router,
+    private wishlist: WishlistService,
+    private auth: Auth
+  ) {}
+
+  ngOnInit() {
+    // ✅ متابعة حالة الويش ليست للمستخدم الحالي (بتشتغل بعد الريلود تلقائي)
+    this.sub = this.wishlist.wishlistIds$.subscribe(set => {
+      this.inWishlist = set.has(this.movie.id);
+    });
   }
 
-  get movieUrl(): string {
-    return `/movie/${this.movie.id}-${this.slug}`;
-  }
+  ngOnDestroy() { this.sub?.unsubscribe(); }
 
   get posterUrl(): string {
-    return `https://media.themoviedb.org/t/p/w220_and_h330_face${this.movie.poster_path}`;
+    return this.movie.poster_path
+      ? `https://media.themoviedb.org/t/p/w440_and_h660_face${this.movie.poster_path}`
+      : '/assets/placeholder-poster.png';
   }
-
   get posterUrl2x(): string {
-    return `https://media.themoviedb.org/t/p/w440_and_h660_face${this.movie.poster_path}`;
+    return this.movie.poster_path
+      ? `https://media.themoviedb.org/t/p/w880_and_h1320_face${this.movie.poster_path}`
+      : '/assets/placeholder-poster.png';
   }
 
-  get userScorePercent(): number {
-    return Math.round(this.movie.vote_average * 10);
-  }
-
+  get userScorePercent(): number { return Math.round(this.movie.vote_average * 10); }
   get scoreColor(): string {
-    const score = this.userScorePercent;
-    if (score >= 70) return '#21d07a';
-    if (score >= 40) return '#d2d531';
+    const s = this.userScorePercent;
+    if (s >= 70) return '#21d07a';
+    if (s >= 40) return '#d2d531';
     return '#db2360';
   }
+  get trackColor(): string { return '#032541'; }
 
-  get trackColor(): string {
-    const score = this.userScorePercent;
-    // if (score >= 70) return '#3b82f680';
-    // if (score >= 40) return '#3b82f680';
-    return '#032541';
+  get displayDate(): string {
+    const d = this.movie.release_date || (this.movie as any).first_air_date || '';
+    return d || '';
   }
 
-  goToMovie(id: number) {
-    this.router.navigate(['/movie', id]);
-  }
+  goToMovie(id: number) { this.router.navigate(['/movie', id]); }
+  onOptionsClick(e: Event) { e.preventDefault(); e.stopPropagation(); }
 
-  get ratingClass(): string {
-    return `icon-r${this.userScorePercent}`;
-  }
+  async toggleWishlist(e: Event) {
+    e.preventDefault(); e.stopPropagation();
+    if (!this.auth.currentUser) { this.router.navigate(['/login']); return; }
+    if (this.toggling) return;
 
-  onOptionsClick(event: Event): void {
-    event.preventDefault();
-    // Handle options menu click
-    console.log('Options clicked for movie:', this.movie.id);
+    this.toggling = true;
+    try {
+      if (this.inWishlist) {
+        await this.wishlist.remove(this.movie.id);
+        // مش لازم نحدّث inWishlist يدوي — الستريم هيعملها
+      } else {
+        await this.wishlist.add({
+          id: this.movie.id,
+          title: this.movie.title,
+          poster_path: this.movie.poster_path ?? null,
+          vote_average: this.movie.vote_average ?? 0,
+          release_date: this.movie.release_date ?? null,
+          first_air_date: (this.movie as any).first_air_date ?? null,
+          overview: (this.movie as any).overview ?? null,
+          vote_count: (this.movie as any).vote_count ?? null,
+        });
+      }
+    } finally {
+      this.toggling = false;
+    }
   }
 }

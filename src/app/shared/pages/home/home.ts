@@ -5,11 +5,12 @@ import { MoviesService } from '@shared/services/movies-service';
 import { ZardPaginationComponent } from '@shared/components/pagination/pagination.component';
 import { Footer } from '@shared/components/footer/footer';
 import { RouterModule } from '@angular/router';
+import { Navbar } from "@shared/components/navbar/navbar";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MovieCard, ZardPaginationComponent, Footer, RouterModule],
+  imports: [MovieCard, ZardPaginationComponent, Footer, RouterModule, Navbar],
   templateUrl: './home.html',
   styleUrls: ['./home.css'],
 })

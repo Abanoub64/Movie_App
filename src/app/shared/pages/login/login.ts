@@ -3,13 +3,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { Navbar } from "@shared/components/navbar/navbar";
 
 @Component({
   selector: 'app-login',
   standalone: true,
   templateUrl: './login.html',
   styleUrls: ['./login.css'],
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, Navbar],
 })
 export class Login implements OnInit {
   email = '';
@@ -23,7 +24,6 @@ export class Login implements OnInit {
   constructor(private auth: Auth, private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    // لو جاي من صفحة Register بعد SignUp نعرض رسالة نجاح
     const justSignedUp = this.route.snapshot.queryParamMap.get('justSignedUp');
     if (justSignedUp === '1') {
       this.successMessage = 'Account created successfully. Please log in.';
@@ -53,7 +53,6 @@ export class Login implements OnInit {
     this.errorMessage = '';
     this.successMessage = '';
 
-    // ✅ validation سريع قبل ما نكلم Firebase
     const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
     if (!emailRegex.test(this.email)) {
       this.errorMessage = 'Enter a valid email';
