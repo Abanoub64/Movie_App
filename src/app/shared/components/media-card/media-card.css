@@ -8,3 +8,12 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+.wishlist-btn{
+  position:absolute;
+  top:8px; right:8px;
+  background:rgba(0,0,0,.6);
+  color:#fff; border:none; border-radius:999px;
+  width:36px; height:36px; cursor:pointer; font-size:18px; line-height:36px;
+}
+.wishlist-btn.active{ background:#e11d48; }
+.wishlist-btn:disabled{ opacity:.6; cursor:default; }

@@ -1,26 +1,67 @@
 <div class="navbar shadow-sm bg-primary text-black">
   <div class="flex-1">
-    <a class="btn btn-ghost text-xl" routerLink="/home">Movie App</a>
-    <app-button-with-menu />
+    @if (isCurrentRoute('/login') || isCurrentRoute('/register')) {
+      <!-- صفحات الدخول/التسجيل: نص فقط -->
+      <span class="btn btn-ghost text-xl">Movie App</span>
+    } @else {
+      <!-- باقي الصفحات: العنوان كرابط + زر القائمة -->
+      <a class="btn btn-ghost text-xl" routerLink="/home" aria-label="Go to Home">Movie App</a>
+      <app-button-with-menu />
+    }
   </div>
 
   <div class="flex-none">
-    <ul class="menu menu-horizontal px-1">
-      @if (isCurrentRoute('/register')) {
-      <li><a routerLink="/login">Log in</a></li>
-      } @if (isCurrentRoute('/login')) {
-      <li><a routerLink="/register">Sign Up</a></li>
-      } @if (!isCurrentRoute('/login') && !isCurrentRoute('/register')) {
-      <li><a routerLink="/home">Home</a></li>
-      <li><a routerLink="/wishlist">Wish List</a></li>
+    <!-- صفحة /login: اعرض Sign Up -->
+    @if (isCurrentRoute('/login')) {
+      <ul class="menu menu-horizontal px-1">
+        <li><a routerLink="/register">Sign Up</a></li>
+      </ul>
+    }
+    <!-- صفحة /register: اعرض Log in -->
+    @else if (isCurrentRoute('/register')) {
+      <ul class="menu menu-horizontal px-1">
+        <li><a routerLink="/login">Log in</a></li>
+      </ul>
+    }
+    @else {
+      <ul class="menu menu-horizontal px-1">
+        @if (!isCurrentRoute('/home')) {
+          <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
+        }
 
-      @if (!isLoggedIn()) {
-      <li><a routerLink="/login">Log in</a></li>
-      <li><a routerLink="/register">Sign Up</a></li>
-      } @else {
-      <li><a routerLink="/account">Account Details</a></li>
-      <li><a (click)="logout()">Logout</a></li>
-      } }
-    </ul>
+        <li>
+          <a
+            routerLink="/wishlist"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            aria-label="Wish List"
+            class="wishlist-link"
+            title="Wish List"
+          >
+            <!-- أيقونة واحدة: تتحوّل بالألوان عبر الـ CSS لما تبقى Active -->
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 24 24"
+                 width="20" height="20"
+                 class="heart">
+              <path d="M12 21s-6.2-4.35-9.33-7.48C.82 11.67 1 8.5 3.2 6.6c2.28-1.96 5.3-1.2 6.8.73C11.5 5.4 14.52 4.64 16.8 6.6c2.2 1.9 2.38 5.07.53 6.92C18.2 14.9 12 21 12 21z"/>
+            </svg>
+
+            <!-- البادج: يعرض العدد لو > 0 -->
+            @let cnt = (count$ | async) ?? 0;
+            @if (cnt > 0) {
+              <span class="wishlist-badge" aria-label="Wishlist count">{{ cnt }}</span>
+            }
+          </a>
+        </li>
+
+        @if (!isLoggedIn()) {
+          <li><a routerLink="/login">Log in</a></li>
+          <li><a routerLink="/register">Sign Up</a></li>
+        } @else {
+          <li><a routerLink="/account">Account Details</a></li>
+          <li><a (click)="logout()">Logout</a></li>
+        }
+      </ul>
+    }
   </div>
 </div>

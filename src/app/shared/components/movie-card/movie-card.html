@@ -1,16 +1,17 @@
 <div class="card style_1">
   <div (click)="goToMovie(movie.id)" class="image">
     <div class="wrapper glyphicons_v2 picture grey no_image_holder">
-      <a class="image" [href]="movieUrl" [title]="movie.title">
+      <a class="image" [routerLink]="['/movie', movie.id]" [title]="movie.title">
         <img
           loading="lazy"
           class="poster w-full"
           [src]="posterUrl"
-          [srcset]="posterUrl + ' 1x, ' + posterUrl2x + ' 2x'"
+          [attr.srcset]="posterUrl + ' 1x, ' + posterUrl2x + ' 2x'"
           [alt]="movie.title"
         />
       </a>
     </div>
+
     <div class="options" [attr.data-id]="movie.id" data-media-type="movie" data-role="tooltip">
       <a class="no_click" href="#" aria-label="View Item Options" (click)="onOptionsClick($event)">
       </a>
@@ -18,17 +19,13 @@
   </div>
 
   <div class="content flex flex-col items-start gap-2">
-    <div
-      class="radial-progress relative flex items-center justify-center"
-      [style.--value]="userScorePercent"
-      [attr.aria-valuenow]="userScorePercent"
-      role="progressbar"
-      [style.background]="trackColor"
-      [style.color]="scoreColor"
-      style="--size: 40px; --thickness: 3px"
-    >
-      <div class="percent text-white text-sm absolute flex items-center justify-center">
-        <span class="icon" [attr.data-percent]="userScorePercent"></span>
+    <div class="consensus">
+      <div class="outer_ring" [style.background]="trackColor">
+        <div class="user_score_chart" [style.background]="scoreColor">
+          <div class="percent">
+            <span class="icon" [attr.data-percent]="userScorePercent"></span>
+          </div>
+        </div>
       </div>
     </div>
 

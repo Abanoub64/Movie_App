@@ -1,0 +1,78 @@
+.wl-page{ padding:16px 20px 28px; }
+
+.wl-topbar{
+  background:#FFE353; border-radius:8px; padding:10px 14px;
+  display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;
+}
+.wl-topbar .brand{ font-weight:700; }
+.wl-topbar .badge{ background:#000; color:#fff; border-radius:999px; padding:4px 10px; font-size:12px; }
+
+.wl-title{ font-size:28px; font-weight:800; color:#000; margin:10px 0 20px; }
+.wl-muted{ color:#666; }
+.wl-empty{
+  color:#999; background:#fff; border:1px solid #CFCFCF;
+  padding:18px; border-radius:10px; text-align:center; max-width:560px; margin:auto;
+}
+.wl-error{ color:#e53935; margin-bottom:10px; }
+
+/* grid */
+.wl-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(520px, 1fr));
+  gap:18px;
+}
+
+/* card row */
+.wl-card{
+  background:#fff; border:1px solid #CFCFCF; border-radius:12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+  padding:16px;
+  display:grid; grid-template-columns:130px 1fr; gap:16px;
+}
+
+.wl-poster{ width:130px; }
+.wl-poster img{
+  display:block; width:100%; aspect-ratio:2/3; object-fit:cover;
+  border-radius:16px; border:1px solid #E5E7EB;
+}
+
+.wl-body{ min-width:0; cursor:pointer; }
+.wl-head{ display:flex; align-items:flex-start; gap:12px; }
+
+.wl-name{
+  margin:0 0 6px 0; color:#000; font-weight:800; font-size:26px;
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex:1 1 auto;
+}
+
+.wl-heart{
+  width:32px; height:32px; border-radius:999px; border:1px solid #CFCFCF;
+  background:#fff; display:flex; align-items:center; justify-content:center;
+}
+.wl-heart svg{ width:18px; height:18px; }
+
+/* meta inline */
+.wl-meta{
+  display:flex; align-items:center; flex-wrap: wrap;
+  column-gap:12px; row-gap:6px;
+  color:#6f6f6f; font-size:13px; margin-bottom:8px;
+}
+.sep{ color:#CFCFCF; }
+
+.wl-stars{ display:inline-flex; gap:4px; }
+.star{ width:16px; height:16px; fill:#CFCFCF; }
+.star.filled{ fill:#000; }
+
+.wl-score{ font-weight:700; color:#000; }
+.wl-votes{ color:#6f6f6f; }
+
+.wl-overview{
+  margin:6px 0 0; color:#444; font-size:14px; line-height:1.5;
+  display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
+}
+
+@media (max-width: 560px){
+  .wl-grid{ grid-template-columns: 1fr; }
+  .wl-card{ grid-template-columns: 110px 1fr; }
+  .wl-poster{ width:110px; }
+  .wl-name{ font-size:22px; }
+}

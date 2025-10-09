@@ -9,7 +9,7 @@ export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: Login },
   { path: 'register', component: Register },
-  { path: 'home', component: Home },
+  { path: 'home', component: Home , },
   { path: 'wishlist', component: WishList },
   { path: 'movie/:id', component: Details },
   // { path: 'account', component: Account },

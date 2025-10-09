@@ -1,1 +1,65 @@
-<p>wish-list works!</p>
+ <div class="wl-page">
+  <!-- <div class="wl-topbar">
+    <div class="brand">Movie App</div>
+    <div class="badge">watchlist</div>
+  </div> -->
+
+  <h1 class="wl-title">Watch list</h1>
+
+  @if (loading) {
+    <div class="wl-muted">Loading…</div>
+  }
+
+  @if (!loading && !items.length) {
+    <div class="wl-empty">No Movies in watch list</div>
+  }
+
+  @if (error) {
+    <div class="wl-error">{{ error }}</div>
+  }
+
+  @if (items.length) {
+    <div class="wl-grid">
+      @for (it of items; track it.id) {
+        <div class="wl-card">
+          <!-- Poster -->
+          <div class="wl-poster" (click)="goToDetails(it.id)">
+            <img [src]="poster(it)" [alt]="it.title" alt="" />
+          </div>
+
+          <!-- Content -->
+          <div class="wl-body" (click)="goToDetails(it.id)">
+            <div class="wl-head">
+              <h2 class="wl-name">{{ it.title }}</h2>
+              <button class="wl-heart" title="Remove"
+                      (click)="remove(it, $event)" aria-label="Remove from wishlist">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 21s-6.2-4.35-9.33-7.48C.82 11.67 1 8.5 3.2 6.6c2.28-1.96 5.3-1.2 6.8.73C11.5 5.4 14.52 4.64 16.8 6.6c2.2 1.9 2.38 5.07.53 6.92C18.2 14.9 12 21 12 21z"
+                        fill="#FFE353" stroke="#000" stroke-width="1.5"/>
+                </svg>
+              </button>
+            </div>
+
+            <!-- Meta inline -->
+            <div class="wl-meta">
+              <span class="wl-date">{{ displayDate(it) }}</span>
+              @if (displayDate(it)) {
+                <span class="sep">•</span>
+              }
+              @if (it.vote_average != null) {
+                <span class="wl-score">
+                  {{ it.vote_average | number:'1.1-1' }}/10
+                </span>
+              }
+            </div>
+
+            <!-- ✅ استخدم overview بدل overviewText -->
+            @if (it.overview) {
+              <p class="wl-overview">{{ it.overview }}</p>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

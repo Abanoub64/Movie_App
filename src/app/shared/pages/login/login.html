@@ -1,14 +1,12 @@
 <div class="register-container container">
   <h2>Login</h2>
 
-  <!-- ✅ رسالة نجاح -->
   @if (successMessage) {
   <div class="alert alert-success text-center" role="alert">
     {{ successMessage }}
   </div>
   }
 
-  <!-- ❌ رسالة خطأ -->
   @if (errorMessage) {
   <div class="alert alert-danger text-center" role="alert">
     {{ errorMessage }}
@@ -16,7 +14,6 @@
   }
 
   <form (ngSubmit)="onLogin()" #loginForm="ngForm">
-    <!-- الايميل -->
     <div class="form-group">
       <label for="email">Email</label>
       <input
@@ -33,7 +30,6 @@
       }
     </div>
 
-    <!-- كلمة المرور -->
     <div class="form-group">
       <label for="password">Password</label>
       <input
@@ -50,16 +46,14 @@
       <div class="text-danger">Password must be at least 6 characters</div>
       }
       <small style="display: block; margin-top: 0.25rem">
-        <input type="checkbox" [(ngModel)]="showPass" name="showPass" /> Show password
+        <input type="checkbox" [(ngModel)]="showPass" name="showPass" placeholder="movie" /> Show password
       </small>
     </div>
 
-    <!-- زرار الدخول -->
     <button type="submit" [disabled]="loginForm.invalid || loading">
       {{ loading ? 'Signing in...' : 'Log In' }}
     </button>
 
-    <!-- رابط إنشاء حساب -->
     <p class="text-center mt-3">
       Don't have an account?
       <a routerLink="/register">Sign Up</a>
