@@ -64,6 +64,14 @@ export class MovieCard implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.sub?.unsubscribe();
   }
+  get slug(): string {
+    return (
+      this.getTitle(this.movie)
+        ?.toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-') // شيل أي رموز غير حروف أو أرقام
+        .replace(/^-+|-+$/g, '') ?? ''
+    );
+  }
 
   /** صور البوستر */
   get posterUrl(): string {

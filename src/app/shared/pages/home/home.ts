@@ -4,14 +4,36 @@ import { RouterModule } from '@angular/router';
 import { MovieCard } from '@shared/components/movie-card/movie-card';
 import { ZardPaginationComponent } from '@shared/components/pagination/pagination.component';
 import { Footer } from '@shared/components/footer/footer';
-import { RouterModule } from '@angular/router';
 import { Navbar } from '@shared/components/navbar/navbar';
-import { IMovie } from '@shared/interface/interfaces';
-
+import { IMovie, IMoviesResponse } from '@shared/interface/interfaces';
+import {
+  SegmentedControlOption,
+  SegmentedControlComponent,
+} from '@shared/components/switch/switch';
+import { MoviesService } from '@shared/services/movies-service';
+import { ListDialog } from '../list-dialog/list-dialog';
+import { Carousel } from '@shared/components/carousel/carousel';
+import { HeroSection } from '@shared/components/hero-section/hero-section';
+type MediaPayload = {
+  id: number;
+  title: string;
+  poster_path: string | null;
+  vote_average?: number | null;
+};
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterModule, Navbar, MovieCard, ZardPaginationComponent, Footer, ListDialog],
+  imports: [
+    RouterModule,
+    Navbar,
+    MovieCard,
+    ZardPaginationComponent,
+    Footer,
+    ListDialog,
+    Carousel,
+    SegmentedControlComponent,
+    HeroSection,
+  ],
   templateUrl: './home.html',
   styleUrls: ['./home.css'],
 })
@@ -20,10 +42,6 @@ export class Home implements OnInit {
   tredndingItems: IMovie[] = [];
   pageNumber = 1;
   totalPages = 1;
-
-  dialogOpen = false;
-  selectedMedia: MediaPayload | null = null;
-  timeRange = 'day';
 
   dialogOpen = false;
   selectedMedia: MediaPayload | null = null;

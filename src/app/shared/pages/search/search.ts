@@ -21,7 +21,9 @@ export class Search implements OnInit {
   getSeacrch() {
     this.movieService.getMultiSearch(this.searchString).subscribe({
       next: (res: IMoviesResponse) => {
-        this.resultItems = res.results;
+        this.resultItems = res.results.filter(
+          (item) => item.media_type !== 'person' && item.backdrop_path !== null
+        );
       },
       error: (err) => console.error('Error loading movies', err),
     });

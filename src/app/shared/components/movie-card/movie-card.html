@@ -13,14 +13,30 @@
       </a>
     </div>
 
-    <div class="options" [attr.data-id]="movie.id" data-media-type="movie" data-role="tooltip">
-      <a
-        class="no_click"
-        href="#"
-        aria-label="View Item Options"
-        (click)="onOptionsClick($event)"
-      ></a>
+    <button
+      type="button"
+      class="absolute top-2 right-2 w-9 h-9 rounded-full bg-[rgba(0,0,0,.6)] text-white flex items-center justify-center hover:bg-black/70"
+      aria-label="More options"
+      (click)="onMenuClick($event)"
+    >
+      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+        <circle cx="12" cy="5" r="2"></circle>
+        <circle cx="12" cy="12" r="2"></circle>
+        <circle cx="12" cy="19" r="2"></circle>
+      </svg>
+    </button>
+
+    @if (menuOpen) {
+    <div class="mc-menu absolute top-12 right-2 z-20">
+      <ul class="mc-menu-list">
+        @for (opt of menuOptions; track opt.label) {
+        <li (click)="handleOption(opt.key, $event)">
+          <span class="mi">{{ opt.icon }}</span> {{ opt.label }}
+        </li>
+        }
+      </ul>
     </div>
+    }
   </div>
 
   <div class="content flex flex-col items-start gap-2" (click)="goToMovie(movie.id)">
@@ -28,7 +44,12 @@
       <div class="outer_ring" [style.background]="trackColor">
         <div class="user_score_chart" [style.background]="scoreColor">
           <div class="percent">
+            @if (userScorePercent== 0) {
+            <span>NR</span>
+            }@else if(userScorePercent > 0) {
+
             <span class="icon" [attr.data-percent]="userScorePercent"></span>
+            }
           </div>
         </div>
       </div>
@@ -47,7 +68,13 @@
       [attr.aria-pressed]="inWishlist"
       aria-label="Toggle wishlist"
     >
-      <svg viewBox="0 0 24 24" aria-hidden="true">
+      <svg
+        width="30"
+        height="27"
+        viewBox="0 0 30 27"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <path
           d="M15.7225 24.8837C15.2831 25.0388 14.5595 25.0388 14.1202 24.8837C10.373 23.6045 2 18.268 2 9.22302C2 5.23033 5.21741 2 9.18426 2C11.5359 2 13.6163 3.13708 14.9213 4.89438C16.2264 3.13708 18.3196 2 20.6584 2C24.6253 2 27.8427 5.23033 27.8427 9.22302C27.8427 18.268 19.4696 23.6045 15.7225 24.8837Z"
           stroke="#292D32"
