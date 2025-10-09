@@ -1,21 +1,23 @@
 <div class="navbar shadow-sm bg-primary text-black">
+
+
   <div class="flex-1">
     <a class="btn btn-ghost text-xl" routerLink="/home">Movie App</a>
   </div>
 
   <div class="flex-none">
     <ul class="menu menu-horizontal px-1">
-      <!-- لو واقف على register: أظهر Log in بس -->
+
       @if (isCurrentRoute('/register')) {
       <li><a routerLink="/login">Log in</a></li>
       }
 
-      <!-- لو واقف على login: أظهر Sign Up بس -->
+      
       @if (isCurrentRoute('/login')) {
       <li><a routerLink="/register">Sign Up</a></li>
       }
 
-      <!-- باقي الصفحات -->
+      
       @if (!isCurrentRoute('/login') && !isCurrentRoute('/register')) {
       <li><a routerLink="/home">Home</a></li>
       <li><a routerLink="/wishlist">Wish List</a></li>
@@ -27,6 +29,18 @@
       <li><a routerLink="/account">Account Details</a></li>
       <li><a (click)="logout()">Logout</a></li>
       } }
+
+    @if (!isCurrentRoute('/login') && !isCurrentRoute('/register')) {
+  <li>
+    <button class="btn-theme" (click)="toggleTheme()">
+      {{ isDark() ? '☀️' : '🌙' }}
+    </button>
+  </li>
+}
+
+      
+
+      
     </ul>
   </div>
 </div>
