@@ -1,8 +1,10 @@
-<div class="navbar shadow-sm bg-primary text-black">
+<div class="navbar shadow-sm bg-primary text-white px-4 py-2">
   <div class="flex-1">
     @if (isCurrentRoute('/login') || isCurrentRoute('/register')) {
+      <!-- صفحات الدخول/التسجيل: نص فقط -->
       <span class="btn btn-ghost text-xl">Movie App</span>
     } @else {
+      <!-- باقي الصفحات: العنوان كرابط + زر القائمة -->
       <a class="btn btn-ghost text-xl" routerLink="/home" aria-label="Go to Home">Movie App</a>
       <app-button-with-menu />
     }
@@ -14,22 +16,16 @@
         <li><a routerLink="/register">Sign Up</a></li>
       </ul>
     }
+    <!-- صفحة /register: اعرض Log in -->
     @else if (isCurrentRoute('/register')) {
       <ul class="menu menu-horizontal px-1">
         <li><a routerLink="/login">Log in</a></li>
       </ul>
-    }
-    @else {
-      <ul class="menu menu-horizontal px-1">
+    } @else {
+      <ul class="menu menu-horizontal px-1 items-center gap-2">
         @if (!isCurrentRoute('/home')) {
           <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
         }
-
-        <li>
-          <a routerLink="/lists" routerLinkActive="active" aria-label="View My Lists">
-            View My Lists
-          </a>
-        </li>
 
         <li>
           <a
@@ -40,6 +36,7 @@
             class="wishlist-link"
             title="Wish List"
           >
+            <!-- أيقونة واحدة: تتحوّل بالألوان عبر الـ CSS لما تبقى Active -->
             <svg xmlns="http://www.w3.org/2000/svg"
                  viewBox="0 0 24 24"
                  width="20" height="20"
@@ -47,20 +44,83 @@
               <path d="M12 21s-6.2-4.35-9.33-7.48C.82 11.67 1 8.5 3.2 6.6c2.28-1.96 5.3-1.2 6.8.73C11.5 5.4 14.52 4.64 16.8 6.6c2.2 1.9 2.38 5.07.53 6.92C18.2 14.9 12 21 12 21z"/>
             </svg>
             @let cnt = (count$ | async) ?? 0;
-            @if (cnt > 0) {
-              <span class="wishlist-badge" aria-label="Wishlist count">{{ cnt }}</span>
-            }
+            @if (cnt > 0) { <span class="wishlist-badge">{{ cnt }}</span> }
           </a>
         </li>
 
-        @if (!isLoggedIn()) {
+        @if (isLoggedIn()) {
+          <li>
+            <button class="icon-btn" (click)="openAccountDrawer()" aria-label="Account menu">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+                <path d="M12 12c2.7 0 5-2.5 5-5.5S14.7 1 12 1 7 3.5 7 6.5 9.3 12 12 12Z" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M3 22c0-3.9 4-7 9-7s9 3.1 9 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </li>
+        } @else {
           <li><a routerLink="/login">Log in</a></li>
           <li><a routerLink="/register">Sign Up</a></li>
-        } @else {
-          <li><a routerLink="/account">Account Details</a></li>
-          <li><a (click)="logout()">Logout</a></li>
         }
       </ul>
     }
+  </div>
+</div>
+
+@if (!isCurrentRoute('/login') && !isCurrentRoute('/register') && isLoggedIn()) {
+  <div class="account-drawer" [class.open]="accountDrawerOpen" (click)="closeAccountDrawer()">
+    <div class="drawer-panel" (click)="$event.stopPropagation()">
+      <div class="drawer-header">
+        <div class="avatar"><span>{{ (displayName() || email() || 'U').slice(0,1).toUpperCase() }}</span></div>
+        <div class="info">
+          <div class="name">{{ displayName() || 'No name' }}</div>
+          <div class="mail">{{ email() }}</div>
+        </div>
+        <button class="close-btn" (click)="closeAccountDrawer()">×</button>
+      </div>
+
+      <div class="drawer-actions">
+        <button class="drawer-item" (click)="goChangePassword()">Change password</button>
+        <button class="drawer-item" (click)="goChangeUsername()">Change username</button>
+        <button class="drawer-item danger" (click)="deleteAccount()">Delete account</button>
+      </div>
+
+      <div class="drawer-footer">
+        <button class="logout-btn" (click)="logout()">Logout</button>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- Username Modal -->
+<div class="modal-backdrop" [class.open]="usernameModalOpen" (click)="closeUsernameModal()">
+  <div class="modal-panel" (click)="$event.stopPropagation()">
+    <h3 class="modal-title">Change Username</h3>
+    <label class="modal-label" for="username">New Username</label>
+    <input id="username" type="text" [(ngModel)]="newUsername" class="modal-input" placeholder="Enter new username" />
+    <div class="modal-actions">
+      <button class="btn-cancel" (click)="closeUsernameModal()">Cancel</button>
+      <button class="btn-save" (click)="saveUsername()">Save</button>
+    </div>
+    @if (usernameError) { <p class="text-danger">{{ usernameError }}</p> }
+    @if (usernameSuccess) { <p class="text-success">{{ usernameSuccess }}</p> }
+  </div>
+</div>
+
+<!-- Password Modal -->
+<div class="modal-backdrop" [class.open]="passwordModalOpen" (click)="closePasswordModal()">
+  <div class="modal-panel" (click)="$event.stopPropagation()">
+    <h3 class="modal-title">Change Password</h3>
+    <label class="modal-label" for="currentPassword">Current Password</label>
+    <input id="currentPassword" type="password" [(ngModel)]="currentPassword" class="modal-input" placeholder="Enter current password" />
+    <label class="modal-label" for="newPassword">New Password</label>
+    <input id="newPassword" type="password" [(ngModel)]="newPassword" class="modal-input" placeholder="Enter new password" />
+    <label class="modal-label" for="confirmPassword">Confirm New Password</label>
+    <input id="confirmPassword" type="password" [(ngModel)]="confirmPassword" class="modal-input" placeholder="Confirm new password" />
+    <div class="modal-actions">
+      <button class="btn-cancel" (click)="closePasswordModal()">Cancel</button>
+      <button class="btn-save" (click)="savePassword()">Save</button>
+    </div>
+    @if (passwordError) { <p class="text-danger">{{ passwordError }}</p> }
+    @if (passwordSuccess) { <p class="text-success">{{ passwordSuccess }}</p> }
   </div>
 </div>
