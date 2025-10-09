@@ -23,12 +23,10 @@ export class MovieCard implements OnInit, OnDestroy {
   constructor(private router: Router, private wishlist: WishlistService, private auth: Auth) {}
 
   ngOnInit() {
-    // ✅ متابعة حالة الويش ليست للمستخدم الحالي (بتشتغل بعد الريلود تلقائي)
     this.sub = this.wishlist.wishlistIds$.subscribe((set) => {
       this.inWishlist = set.has(this.movie.id);
     });
   }
-
   ngOnDestroy() {
     this.sub?.unsubscribe();
   }
@@ -51,8 +49,8 @@ export class MovieCard implements OnInit, OnDestroy {
       ? `https://media.themoviedb.org/t/p/w880_and_h1320_face${this.movie.poster_path}`
       : '/assets/placeholder-poster.png';
   }
-  getTitle(item: IMovie): string {
-    return item.title == undefined ? item.name : item.title;
+  get movieUrl(): string {
+    return `/movie/${this.movie.id}-${this.slug}`;
   }
   getTitle(item: IMovie): string {
     return item.title == undefined ? item.name : item.title;
@@ -97,7 +95,6 @@ export class MovieCard implements OnInit, OnDestroy {
     try {
       if (this.inWishlist) {
         await this.wishlist.remove(this.movie.id);
-        // مش لازم نحدّث inWishlist يدوي — الستريم هيعملها
       } else {
         await this.wishlist.add({
           id: this.movie.id,
