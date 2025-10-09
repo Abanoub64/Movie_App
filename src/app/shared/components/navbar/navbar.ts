@@ -4,6 +4,7 @@ import { Auth, onAuthStateChanged, signOut } from '@angular/fire/auth';
 import { CommonModule } from '@angular/common';
 import { ButtonWithMenu } from '../button-with-menu/button-with-menu';
 import { WishlistService } from '@shared/services/wishlist.service';
+import { LanguageService } from '@shared/services/language-service';
 
 @Component({
   selector: 'app-navbar',
@@ -13,8 +14,19 @@ import { WishlistService } from '@shared/services/wishlist.service';
   styleUrls: ['./navbar.css'],
 })
 export class Navbar {
+  private languageService = inject(LanguageService);
   private userSignal = signal<{ uid: string | null } | null>(null);
   isLoggedIn = computed(() => !!this.userSignal()?.uid);
+
+  currentLanguage = this.languageService.currentLanguage;
+ 
+
+  languages = [
+    { code: 'en', name: 'English' },
+    { code: 'ar', name: 'العربية' },
+    { code: 'fr', name: 'Français' },
+    { code: 'zh', name: '中文' },
+  ];
 
   // ✅ inject بدل الحقن في الكونستركتور علشان نتفادى use-before-init
   private wishlist = inject(WishlistService);
@@ -37,4 +49,10 @@ export class Navbar {
     return this.router.url.split('?')[0] === path;
     // أو: return this.router.url.startsWith(path);
   }
+   changeLanguage(lang: string) {
+    this.languageService.setLanguage(lang);
+  }
+  t(key: string) {
+  return this.languageService.t(key);
+}
 }

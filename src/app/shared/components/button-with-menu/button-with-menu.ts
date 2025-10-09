@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { LanguageService } from '@shared/services/language-service';
 
 @Component({
   selector: 'app-button-with-menu',
@@ -7,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './button-with-menu.css'
 })
 export class ButtonWithMenu {
-
+languageService = inject(LanguageService);
 }

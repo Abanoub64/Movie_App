@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output, signal } from '@angular/core';
+import { Component, EventEmitter, inject, Output, signal } from '@angular/core';
+import { LanguageService } from '@shared/services/language-service';
 
 @Component({
   selector: 'app-search-bar',
@@ -8,6 +9,7 @@ import { Component, EventEmitter, Output, signal } from '@angular/core';
   styleUrl: './search-bar.css',
 })
 export class SearchBar {
+   languageService = inject(LanguageService);
   searchString = signal('');
   @Output() searchChange = new EventEmitter<string>();
 

@@ -1,7 +1,7 @@
 <div class="join w-full">
   <input
     class="input join-item w-full focus:outline-none focus:ring-0 focus:border-transparent"
-    placeholder="Search and explore...."
+     [placeholder]="languageService.t('searchAndExplore')"
     [value]="searchString()"
     (input)="onChange($event)"
   />

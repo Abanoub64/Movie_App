@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, effect, inject, OnInit } from '@angular/core';
 import { MovieCard } from '@shared/components/movie-card/movie-card';
 import { IMovie, IMoviesResponse } from '@shared/interface/interfaces';
 import { MoviesService } from '@shared/services/movies-service';
@@ -12,6 +12,7 @@ import {
 import { Carousel } from '@shared/components/carousel/carousel';
 import { HeroSection } from '@shared/components/hero-section/hero-section';
 import { SearchBar } from '@shared/components/search-bar/search-bar';
+import { LanguageService } from '@shared/services/language-service';
 
 @Component({
   selector: 'app-home',
@@ -40,8 +41,14 @@ export class Home implements OnInit {
     { label: 'Today', value: 'day' },
     { label: 'This Week', value: 'week' },
   ];
-  constructor(private moviesService: MoviesService) {}
-
+  private languageService = inject(LanguageService);
+  constructor(private moviesService: MoviesService) {
+    effect(() => {
+      const lang = this.currentLanguage();
+      this.loadMovies(this.pageNumber);
+    });
+  }
+  currentLanguage = this.languageService.currentLanguage;
   ngOnInit(): void {
     this.loadMovies(this.pageNumber);
     this.loadTrending();
