@@ -10,7 +10,7 @@ import { Navbar } from "@shared/components/navbar/navbar";
   standalone: true,
   templateUrl: './login.html',
   styleUrls: ['./login.css'],
-  imports: [CommonModule, FormsModule, RouterLink, Navbar],
+  imports: [CommonModule, FormsModule, RouterLink],
 })
 export class Login implements OnInit {
   email = '';

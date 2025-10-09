@@ -16,9 +16,7 @@ export class Navbar {
   private userSignal = signal<{ uid: string | null } | null>(null);
   isLoggedIn = computed(() => !!this.userSignal()?.uid);
 
-  // ✅ inject بدل الحقن في الكونستركتور علشان نتفادى use-before-init
   private wishlist = inject(WishlistService);
-  // عداد الويش ليست (Observable)
   count$ = this.wishlist.count$;
 
   constructor(private auth: Auth, private router: Router) {

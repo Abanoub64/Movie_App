@@ -29,7 +29,7 @@
 }
 
 .register-container .form-control:focus {
-  border-color: #FFC107; /* أصفر */
+  border-color: #FFC107; 
   background-color: #fff;
   outline: none;
   box-shadow: 0 0 6px rgba(255, 193, 7, 0.5);

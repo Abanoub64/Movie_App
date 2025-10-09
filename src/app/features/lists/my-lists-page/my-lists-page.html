@@ -1,0 +1,37 @@
+<div class="page">
+  <h1 class="title">My Lists</h1>
+
+  @if (lists$ | async; as lists) {
+    @if (lists.length) {
+      <div class="grid">
+        @for (list of lists; track list.id) {
+          <div class="card list-card">
+            <div class="body">
+              <div class="name">
+                <a [routerLink]="['/lists', list.id]">{{ list.name }}</a>
+              </div>
+
+              @if (list.description?.trim()) {
+                <p class="desc">{{ list.description }}</p>
+              } @else {
+                <p class="desc" style="opacity:.6">No description</p>
+              }
+            </div>
+
+            <button
+              class="delete-btn"
+              (click)="deleteList(list)"
+              aria-label="Delete list"
+            >
+              Delete
+            </button>
+          </div>
+        }
+      </div>
+    } @else {
+      <p class="empty">You have no lists yet.</p>
+    }
+  } @else {
+    <p class="meta">Loading...</p>
+  }
+</div>

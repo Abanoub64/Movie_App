@@ -22,7 +22,6 @@
     'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 }
 
-/* Top small header */
 .topbar {
   max-width: 1120px;
   margin: 0 auto 16px;
@@ -54,7 +53,6 @@
   font-size: 12px;
 }
 
-/* Details card */
 .details-card {
   max-width: 1120px;
   margin: 0 auto;

@@ -3,71 +3,72 @@
     <div class="brand">Movie App</div>
     <div class="badge">watchlist</div>
   </div> -->
+  <div class="wl-page">
+    <h1 class="wl-title">Watch list</h1>
 
-  <h1 class="wl-title">Watch list</h1>
-
-  @if (loading) {
-  <div class="wl-muted">Loading…</div>
-  } @if (!loading && !items.length) {
-  <div class="wl-empty">No Movies in watch list</div>
-  } @if (error) {
-  <div class="wl-error">{{ error }}</div>
-  } @if (items.length) {
-  <div class="wl-grid">
-    @for (it of items; track it.id) {
-    <div class="wl-card">
-      <!-- Poster -->
-      <div class="wl-poster" (click)="goToDetails(it.id)">
-        <img [src]="poster(it)" [alt]="it.title" alt="" />
-      </div>
-
-      <!-- Content -->
-      <div class="wl-body" (click)="goToDetails(it.id)">
-        <div class="wl-head">
-          <h2 class="wl-name">{{ it.title }}</h2>
-          <button
-            class="wl-heart"
-            title="Remove"
-            (click)="remove(it, $event)"
-            aria-label="Remove from wishlist"
-          >
-            <svg
-              width="30"
-              height="27"
-              viewBox="0 0 30 27"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M15.7225 24.8837C15.2831 25.0388 14.5595 25.0388 14.1202 24.8837C10.373 23.6045 2 18.268 2 9.22302C2 5.23033 5.21741 2 9.18426 2C11.5359 2 13.6163 3.13708 14.9213 4.89438C16.2264 3.13708 18.3196 2 20.6584 2C24.6253 2 27.8427 5.23033 27.8427 9.22302C27.8427 18.268 19.4696 23.6045 15.7225 24.8837Z"
-                stroke="#000"
-                stroke-width="2.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                [attr.fill]="'#FFE353'"
-                [attr.stroke]="'#9CA3AF'"
-              />
-            </svg>
-          </button>
+    @if (loading) {
+    <div class="wl-muted">Loading…</div>
+    } @if (!loading && !items.length) {
+    <div class="wl-empty">No Movies in watch list</div>
+    } @if (error) {
+    <div class="wl-error">{{ error }}</div>
+    } @if (items.length) {
+    <div class="wl-grid">
+      @for (it of items; track it.id) {
+      <div class="wl-card">
+        <!-- Poster -->
+        <div class="wl-poster" (click)="goToDetails(it.id)">
+          <img [src]="poster(it)" [alt]="it.title" alt="" />
         </div>
 
-        <!-- Meta inline -->
-        <div class="wl-meta">
-          <span class="wl-date">{{ displayDate(it) }}</span>
-          @if (displayDate(it)) {
-          <span class="sep">•</span>
-          } @if (it.vote_average != null) {
-          <span class="wl-score"> {{ it.vote_average | number : '1.1-1' }}/10 </span>
+        <!-- Content -->
+        <div class="wl-body" (click)="goToDetails(it.id)">
+          <div class="wl-head">
+            <h2 class="wl-name">{{ it.title }}</h2>
+            <button
+              class="wl-heart"
+              title="Remove"
+              (click)="remove(it, $event)"
+              aria-label="Remove from wishlist"
+            >
+              <svg
+                width="30"
+                height="27"
+                viewBox="0 0 30 27"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M15.7225 24.8837C15.2831 25.0388 14.5595 25.0388 14.1202 24.8837C10.373 23.6045 2 18.268 2 9.22302C2 5.23033 5.21741 2 9.18426 2C11.5359 2 13.6163 3.13708 14.9213 4.89438C16.2264 3.13708 18.3196 2 20.6584 2C24.6253 2 27.8427 5.23033 27.8427 9.22302C27.8427 18.268 19.4696 23.6045 15.7225 24.8837Z"
+                  stroke="#000"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  [attr.fill]="'#FFE353'"
+                  [attr.stroke]="'#9CA3AF'"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Meta inline -->
+          <div class="wl-meta">
+            <span class="wl-date">{{ displayDate(it) }}</span>
+            @if (displayDate(it)) {
+            <span class="sep">•</span>
+            } @if (it.vote_average != null) {
+            <span class="wl-score"> {{ it.vote_average | number : '1.1-1' }}/10 </span>
+            }
+          </div>
+
+          <!-- ✅ استخدم overview بدل overviewText -->
+          @if (it.overview) {
+          <p class="wl-overview">{{ it.overview }}</p>
           }
         </div>
-
-        <!-- ✅ استخدم overview بدل overviewText -->
-        @if (it.overview) {
-        <p class="wl-overview">{{ it.overview }}</p>
-        }
       </div>
+      }
     </div>
     }
   </div>
-  }
 </div>

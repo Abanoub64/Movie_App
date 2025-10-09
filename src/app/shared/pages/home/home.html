@@ -1,5 +1,3 @@
-<app-hero-section />
-
 <div class="min-h-screen p-4 md:p-8">
   <div>
     <div class="flex items-center gap-6 py-3">
@@ -25,8 +23,11 @@
       class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6"
     >
       @for (item of mediaItems; track item.id) {
-      <app-movie-card [movie]="item"></app-movie-card>
-
+      <app-movie-card
+        class="block"
+        [movie]="item"
+        (addToList)="openAddToList($event)"
+      ></app-movie-card>
       }
     </div>
   </div>
@@ -42,3 +43,9 @@
 </div>
 
 <app-footer></app-footer>
+
+<app-list-dialog
+  [open]="dialogOpen"
+  [media]="selectedMedia || undefined"
+  (closed)="closeDialog()"
+></app-list-dialog>

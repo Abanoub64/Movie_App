@@ -1,17 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MediaCardComponent } from './media-card';
 
-describe('MediaCardComponent', () => {
-  let component: MediaCardComponent;
-  let fixture: ComponentFixture<MediaCardComponent>;
+import { MyListsPage } from './my-lists-page';
+
+describe('MyListsPage', () => {
+  let component: MyListsPage;
+  let fixture: ComponentFixture<MyListsPage>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MediaCardComponent]
+      imports: [MyListsPage]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MediaCardComponent);
+    fixture = TestBed.createComponent(MyListsPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

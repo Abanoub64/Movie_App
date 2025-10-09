@@ -1,31 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterModule } from '@angular/router';
+
 import { MovieCard } from '@shared/components/movie-card/movie-card';
-import { IMovie, IMoviesResponse } from '@shared/interface/interfaces';
-import { MoviesService } from '@shared/services/movies-service';
 import { ZardPaginationComponent } from '@shared/components/pagination/pagination.component';
 import { Footer } from '@shared/components/footer/footer';
 import { RouterModule } from '@angular/router';
-import {
-  SegmentedControlOption,
-  SegmentedControlComponent,
-} from '@shared/components/switch/switch';
-import { Carousel } from '@shared/components/carousel/carousel';
-import { HeroSection } from '@shared/components/hero-section/hero-section';
-import { SearchBar } from '@shared/components/search-bar/search-bar';
+import { Navbar } from '@shared/components/navbar/navbar';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [
-    MovieCard,
-    ZardPaginationComponent,
-    Footer,
-    RouterModule,
-    SegmentedControlComponent,
-    Carousel,
-    HeroSection,
-    SearchBar,
-  ],
+  imports: [RouterModule, Navbar, MovieCard, ZardPaginationComponent, Footer, ListDialog],
   templateUrl: './home.html',
   styleUrls: ['./home.css'],
 })
@@ -34,6 +19,13 @@ export class Home implements OnInit {
   tredndingItems: IMovie[] = [];
   pageNumber = 1;
   totalPages = 1;
+
+  dialogOpen = false;
+  selectedMedia: MediaPayload | null = null;
+  timeRange = 'day';
+
+  dialogOpen = false;
+  selectedMedia: MediaPayload | null = null;
   timeRange = 'day';
 
   timeOptions: SegmentedControlOption[] = [
@@ -68,6 +60,16 @@ export class Home implements OnInit {
 
   onPageChange(newPage: number) {
     this.loadMovies(newPage);
+  }
+
+  openAddToList(media: MediaPayload) {
+    this.selectedMedia = media;
+    this.dialogOpen = true;
+  }
+
+  closeDialog() {
+    this.dialogOpen = false;
+    this.selectedMedia = null;
   }
   onTimeRangeChange(value: string) {
     this.timeRange = value;

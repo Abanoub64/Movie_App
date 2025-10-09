@@ -19,12 +19,20 @@
   transform: translateY(-4px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
 
 .card .image {
   position: relative;
   width: 100%;
 }
 
+.card .image {
+  position: relative;
+  width: 100%;
+}
 .card .image .wrapper {
   position: relative;
   width: 100%;
@@ -71,6 +79,17 @@
   background: #000;
   border-radius: 50%;
 }
+.card .image .wrapper a.image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.card .image .wrapper img.poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
 .card .content {
   padding: 26px 10px 12px;
@@ -78,6 +97,16 @@
   height: 108px;
 }
 
+.card .content .consensus {
+  position: absolute;
+  top: -20px;
+  left: 10px;
+}
+.card .content .consensus .outer_ring {
+  border-radius: 50%;
+  padding: 2px;
+  display: inline-flex;
+}
 .card .content .consensus {
   position: absolute;
   top: -20px;
@@ -106,6 +135,21 @@
   justify-content: center;
 }
 .card .content .consensus .user_score_chart .percent .icon {
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+}
+.icon::before {
+  content: attr(data-percent) '%';
+}
+.card .content .consensus .percent {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card .content .consensus .percent .icon {
   font-size: 12px;
   font-weight: 700;
   color: #fff;
@@ -166,4 +210,67 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
+}
+.card .hover {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* menu + hint */
+.mc-menu-list {
+  background: #fff;
+  color: #18181b;
+  border: 1px solid #e4e4e7;
+  border-radius: 12px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+  width: 176px;
+  overflow: hidden;
+  margin: 0;
+  padding: 6px 0;
+  list-style: none;
+}
+.mc-menu-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.mc-menu-list li:hover {
+  background: #f3f4f6;
+}
+.mc-menu-list .mi {
+  width: 18px;
+  text-align: center;
+}
+
+.mc-hint {
+  background: #06b6d4;
+  color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+  padding: 12px 14px;
+  min-width: 230px;
+}
+.mc-hint-title {
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.mc-hint-sub {
+  opacity: 0.9;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+.mc-hint-btn {
+  background: #0ea5e9;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+.mc-hint-btn:hover {
+  filter: brightness(0.95);
 }
