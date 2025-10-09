@@ -1,4 +1,4 @@
-import { Component, effect, inject, OnInit } from '@angular/core';
+import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import { MovieCard } from '@shared/components/movie-card/movie-card';
 import { IMovie, IMoviesResponse } from '@shared/interface/interfaces';
 import { MoviesService } from '@shared/services/movies-service';
@@ -33,19 +33,25 @@ import { LanguageService } from '@shared/services/language-service';
 export class Home implements OnInit {
   mediaItems: IMovie[] = [];
   tredndingItems: IMovie[] = [];
+  languageService = inject(LanguageService);
+  timeOptions = signal<SegmentedControlOption[]>([]);
   pageNumber = 1;
   totalPages = 1;
   timeRange = 'day';
 
-  timeOptions: SegmentedControlOption[] = [
-    { label: 'Today', value: 'day' },
-    { label: 'This Week', value: 'week' },
-  ];
-  private languageService = inject(LanguageService);
+  
+   
   constructor(private moviesService: MoviesService) {
     effect(() => {
-      const lang = this.currentLanguage();
+      const lang = this.languageService.currentLanguage();
+      this.timeOptions.set([
+        { label: this.languageService.t('today'), value: 'day' },
+        { label: this.languageService.t('thisWeek'), value: 'week' },
+      ]);
+
+      
       this.loadMovies(this.pageNumber);
+      this.loadTrending();
     });
   }
   currentLanguage = this.languageService.currentLanguage;

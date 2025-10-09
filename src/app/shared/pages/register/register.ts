@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, updateProfile } from '@angular/fire/auth';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { Navbar } from '@shared/components/navbar/navbar';
+import { LanguageService } from '@shared/services/language-service';
 
 @Component({
   selector: 'app-register',
@@ -13,6 +14,7 @@ import { Navbar } from '@shared/components/navbar/navbar';
   imports: [FormsModule,CommonModule,Navbar,RouterLink]
 })
 export class Register {
+  languageService = inject(LanguageService);
   name = '';
   email = '';
   password = '';

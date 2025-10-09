@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { SearchBar } from '../search-bar/search-bar';
 import { Router, RouterModule } from '@angular/router';
+import { LanguageService } from '@shared/services/language-service';
 
 @Component({
   selector: 'app-hero-section',
@@ -9,6 +10,7 @@ import { Router, RouterModule } from '@angular/router';
   styleUrl: './hero-section.css',
 })
 export class HeroSection {
+  languageService = inject(LanguageService);
   constructor(private router: Router) {}
 
   onClick() {

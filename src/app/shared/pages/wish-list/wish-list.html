@@ -4,12 +4,12 @@
     <div class="badge">watchlist</div>
   </div> -->
 
-  <h1 class="wl-title">Watch list</h1>
+  <h1 class="wl-title">{{ languageService.t('watchlist') }}</h1>
 
   @if (loading) {
   <div class="wl-muted">Loading…</div>
   } @if (!loading && !items.length) {
-  <div class="wl-empty">No Movies in watch list</div>
+  <div class="wl-empty">{{ languageService.t('noMoviesInWatchlist') }}</div>
   } @if (error) {
   <div class="wl-error">{{ error }}</div>
   } @if (items.length) {

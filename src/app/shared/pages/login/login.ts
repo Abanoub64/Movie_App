@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { Navbar } from "@shared/components/navbar/navbar";
+import { LanguageService } from '@shared/services/language-service';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +14,7 @@ import { Navbar } from "@shared/components/navbar/navbar";
   imports: [CommonModule, FormsModule, RouterLink, Navbar],
 })
 export class Login implements OnInit {
+  languageService = inject(LanguageService)
   email = '';
   password = '';
   showPass = false;

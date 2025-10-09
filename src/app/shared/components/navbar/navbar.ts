@@ -5,11 +5,12 @@ import { CommonModule } from '@angular/common';
 import { ButtonWithMenu } from '../button-with-menu/button-with-menu';
 import { WishlistService } from '@shared/services/wishlist.service';
 import { LanguageService } from '@shared/services/language-service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, CommonModule, ButtonWithMenu],
+  imports: [RouterLink, RouterLinkActive, CommonModule, ButtonWithMenu,FormsModule],
   templateUrl: './navbar.html',
   styleUrls: ['./navbar.css'],
 })

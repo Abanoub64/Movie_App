@@ -10,7 +10,7 @@
 
   <div class="flex-none">
 
-    <select id="lang" #langSelect [value]="currentLanguage()" (change)="changeLanguage(langSelect.value)"
+    <select id="lang" #langSelect [ngModel]="currentLanguage()" (change)="changeLanguage(langSelect.value)"
       class="text-black px-3 py-2 rounded bg-transparent focus:outline-none appearance-none">
       <option *ngFor="let lang of languages" [value]="lang.code">
         {{ lang.name }}
