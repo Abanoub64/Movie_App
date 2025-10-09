@@ -10,6 +10,7 @@ import { CreateListPage } from './features/lists/create-list-page/create-list-pa
 import { ListDetailsPage } from './features/lists/list-details-page/list-details-page';
 
 import { Search } from '@shared/pages/search/search';
+import { NotFound } from '@shared/pages/not-found/not-found';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -20,9 +21,8 @@ export const routes: Routes = [
   { path: 'wishlist', component: WishList },
   { path: 'movie/:id', component: Details },
   { path: 'search', component: Search },
-
   { path: 'lists', component: MyListsPage },
   { path: 'lists/create', component: CreateListPage },
   { path: 'lists/:id', component: ListDetailsPage },
-  { path: '**', redirectTo: 'login' },
+  { path: '**', component: NotFound },
 ];
