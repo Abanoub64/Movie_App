@@ -28,15 +28,6 @@ export class Navbar {
     { code: 'zh', name: '中文' },
   ];
 
-  currentLanguage = this.languageService.currentLanguage;
-
-  languages = [
-    { code: 'en', name: 'English' },
-    { code: 'ar', name: 'العربية' },
-    { code: 'fr', name: 'Français' },
-    { code: 'zh', name: '中文' },
-  ];
-
   private wishlist = inject(WishlistService);
   count$ = this.wishlist.count$;
 
