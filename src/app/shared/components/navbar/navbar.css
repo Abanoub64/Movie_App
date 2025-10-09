@@ -1,0 +1,41 @@
+/* أيقونة القلب: افتراضيًا outline */
+.wishlist-link .heart path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+/* لما اللينك يبقى Active (بفضل routerLinkActive="active") */
+.wishlist-link.active .heart path {
+  fill: #e11d48 !important;  /* أحمر */
+  stroke: none !important;
+}
+
+/* البادج فوق الأيقونة */
+.wishlist-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.wishlist-link .wishlist-badge {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 999px;
+  font-size: 11px;
+  line-height: 16px;
+  text-align: center;
+  background: #e11d48; /* نفس لون القلب */
+  color: #fff;
+  font-weight: 600;
+}
+
+/* لمسة hover */
+.wishlist-link:hover .heart {
+  transform: scale(1.06);
+  transition: transform 0.12s ease;
+}

@@ -1,6 +1,4 @@
-:host {
-  display: block;
-}
+:host { display: block; }
 
 .line-clamp-2 {
   display: -webkit-box;
@@ -8,3 +6,31 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* Dropdown menu */
+.menu-panel { pointer-events: auto; }
+.menu {
+  background: #fff; color: #18181b; border: 1px solid #e4e4e7;
+  border-radius: 12px; box-shadow: 0 10px 24px rgba(0,0,0,.12);
+  width: 176px; overflow: hidden; margin: 0; padding: 6px 0; list-style: none;
+}
+.menu li {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px; cursor: pointer; white-space: nowrap;
+}
+.menu li:hover { background: #f3f4f6; }
+.menu .mi { width: 18px; text-align: center; }
+
+/* Hint */
+.hint-card {
+  background: #06b6d4; color: #fff; border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0,0,0,.25);
+  padding: 12px 14px; min-width: 230px;
+}
+.hint-title { font-weight: 700; margin-bottom: 4px; }
+.hint-sub { opacity: .9; font-size: 13px; margin-bottom: 10px; }
+.hint-btn {
+  background: #0ea5e9; color: #fff; border: none; border-radius: 8px;
+  padding: 6px 10px; cursor: pointer;
+}
+.hint-btn:hover { filter: brightness(0.95); }

@@ -2,25 +2,77 @@
 
 
   <div class="flex-1">
-    <a class="btn btn-ghost text-xl" routerLink="/home">Movie App</a>
+    @if (isCurrentRoute('/login') || isCurrentRoute('/register')) {
+    <span class="btn btn-ghost text-xl">Movie App</span>
+    } @else {
+    <a class="btn btn-ghost text-xl" routerLink="/home" aria-label="Go to Home">Movie App</a>
+    <app-button-with-menu />
+    }
   </div>
 
   <div class="flex-none">
+    <select
+      id="lang"
+      #langSelect
+      [ngModel]="currentLanguage()"
+      (change)="changeLanguage(langSelect.value)"
+      class="text-black px-3 py-2 rounded bg-transparent focus:outline-none appearance-none"
+    >
+      <option *ngFor="let lang of languages" [value]="lang.code">
+        {{ lang.name }}
+      </option>
+    </select>
+    @if (isCurrentRoute('/login')) {
     <ul class="menu menu-horizontal px-1">
-
-      @if (isCurrentRoute('/register')) {
-      <li><a routerLink="/login">Log in</a></li>
-      }
-
-      
-      @if (isCurrentRoute('/login')) {
       <li><a routerLink="/register">Sign Up</a></li>
+    </ul>
+    } @else if (isCurrentRoute('/register')) {
+    <ul class="menu menu-horizontal px-1">
+      <li><a routerLink="/login">Log in</a></li>
+    </ul>
+    } @else {
+    <ul class="menu menu-horizontal px-1">
+      @if (!isCurrentRoute('/home')) {
+      <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
       }
+      <li>
+        <a routerLink="/lists" routerLinkActive="active" aria-label="View My Lists">
+          View My Lists
+        </a>
+      </li>
 
-      
-      @if (!isCurrentRoute('/login') && !isCurrentRoute('/register')) {
-      <li><a routerLink="/home">Home</a></li>
-      <li><a routerLink="/wishlist">Wish List</a></li>
+      <li>
+        <a
+          routerLink="/wishlist"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          aria-label="Wish List"
+          class="wishlist-link"
+          title="Wish List"
+        >
+          <svg
+            width="30"
+            height="27"
+            viewBox="0 0 30 27"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M15.7225 24.8837C15.2831 25.0388 14.5595 25.0388 14.1202 24.8837C10.373 23.6045 2 18.268 2 9.22302C2 5.23033 5.21741 2 9.18426 2C11.5359 2 13.6163 3.13708 14.9213 4.89438C16.2264 3.13708 18.3196 2 20.6584 2C24.6253 2 27.8427 5.23033 27.8427 9.22302C27.8427 18.268 19.4696 23.6045 15.7225 24.8837Z"
+              stroke="#292D32"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              [attr.fill]="'#FFE353'"
+              [attr.stroke]="'#9CA3AF'"
+            />
+          </svg>
+
+          <!-- @let cnt = (count$ | async) ?? 0; @if (cnt > 0) {
+          <span class="wishlist-badge" aria-label="Wishlist count">{{ cnt }}</span>
+          } -->
+        </a>
+      </li>
 
       @if (!isLoggedIn()) {
       <li><a routerLink="/login">Log in</a></li>

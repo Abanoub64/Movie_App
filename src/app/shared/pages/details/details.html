@@ -1,1 +1,75 @@
-<p>details works!</p>
+<div class="page">
+
+
+  <section class="details-card">
+    <div class="poster-col">
+      <img
+        alt=""
+        [src]="imgPoster(details?.poster_path || null)"
+        [alt]="details?.title || 'poster'"
+        class="poster"
+        loading="eager"
+      />
+    </div>
+
+    <div class="info-col">
+      <h1 class="title">{{ details?.title }}</h1>
+      <div>{{ details?.release_date | date : 'MMM d, y' }}</div>
+
+      @if (details) {
+      <div class="rating-row">
+        <div class="stars">
+          @for (s of ratingStars(details.vote_average); track $index) {
+          <span class="star filled">★</span>
+          } @for (s of emptyStars(details.vote_average); track $index) {
+          <span class="star">★</span>
+          }
+        </div>
+        <div class="vote-count">{{ details.vote_count | number }}</div>
+      </div>
+      }
+
+      <p class="overview">
+        {{ details?.overview }}
+      </p>
+
+      <div class="chips">
+        @for (g of details?.genres; track g.id) {
+        <span class="chip">{{ g.name }}</span>
+        }
+      </div>
+
+      <div class="meta">
+        <div class="meta-item">
+          <span>Duration:</span>
+          <span class="value">{{ details?.runtime }} Min.</span>
+        </div>
+        <div class="meta-item">
+          <span>Languages:</span>
+          <span class="value">{{ languagesList(details?.spoken_languages) }}</span>
+        </div>
+      </div>
+
+      <div class="companies">
+        @for (c of details?.production_companies; track c.id) { @if (c.logo_path) {
+        <img [src]="imgLogo(c.logo_path)" [alt]="c.name" class="company-logo" alt="" />
+        } }
+      </div>
+
+      @if (details?.homepage) {
+      <a [href]="details?.homepage" target="_blank" class="btn-ghost"> Website </a>
+      }
+    </div>
+  </section>
+
+  <section class="recs">
+    <h2 class="recs-title">Recommendations</h2>
+    <app-carousel>
+      @for (item of recommendations; track item.id) {
+      <div class="carousel-item p-3">
+        <app-movie-card [movie]="item"></app-movie-card>
+      </div>
+      }
+    </app-carousel>
+  </section>
+</div>

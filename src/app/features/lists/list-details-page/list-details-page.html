@@ -1,0 +1,29 @@
+<div class="page">
+  @if (list$ | async; as list) {
+    @if (items$ | async; as items) {
+      @if (!items.length) {
+        <div class="empty">No items yet.</div>
+      } @else {
+        <div class="grid">
+          @for (m of items; track m.id) {
+            <div class="it">
+              <img alt=""
+                class="poster"
+                [src]="posterUrl(m.poster_path)" 
+                [alt]="m.title" />
+              <div class="info">
+                <div class="name">{{ m.title }}</div>
+                @if (m.vote_average != null) {
+                  <div class="score">{{ m.vote_average | number:'1.1-1' }}/10</div>
+                }
+                <button class="rm" (click)="remove(m.id)">Remove</button>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    }
+  } @else {
+    <div class="page"><p>List not found.</p></div>
+  }
+</div>

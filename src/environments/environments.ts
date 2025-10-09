@@ -3,6 +3,7 @@ export const environment = {
   firebase: {
     apiKey: "AIzaSyAxhCLSW7IRqguSoJ_VUgmC0PG4rl4A2tU",
     authDomain: "angular-moveapp.firebaseapp.com",
+    databaseURL: "https://angular-moveapp-default-rtdb.firebaseio.com",
     projectId: "angular-moveapp",
     storageBucket: "angular-moveapp.appspot.com",
     messagingSenderId: "289191368743",
