@@ -1,12 +1,9 @@
 <div class="join w-full">
-  <div class="w-full">
-    <input
-      class="input join-item w-full focus:outline-none focus:ring-0 focus:border-transparent"
-      placeholder="Search and explore...."
-    />
-  </div>
-
-  <div class="indicator">
-    <button class="btn join-item bg-primary">Search</button>
-  </div>
+  <input
+    class="input join-item w-full focus:outline-none focus:ring-0 focus:border-transparent"
+    placeholder="Search and explore...."
+    [value]="searchString()"
+    (input)="onChange($event)"
+  />
+  <ng-content></ng-content>
 </div>

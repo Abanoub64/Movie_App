@@ -43,10 +43,10 @@ export class MoviesService {
         },
       }
     );
-  }
-  getMultiSearch(searchString: string): Observable<IMovieDetailsResponse> {
-    return this.http.get<IMovieDetailsResponse>(
-      `${this._baseUrl}/search/multi${searchString}?language=${this.lang}`,
+  } //search/multi?query=fggrgfweffffes&include_adult=false&language=en-US&page=1
+  getMultiSearch(searchString: string): Observable<IMoviesResponse> {
+    return this.http.get<IMoviesResponse>(
+      `${this._baseUrl}search/multi?query=${searchString}&include_adult=false?language=${this.lang}&page=1`,
       {
         headers: {
           Authorization: `Bearer ${environment.apiKey}`,
