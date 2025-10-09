@@ -1,5 +1,5 @@
 <div class="register-container container">
-  <h2>Login</h2>
+  <h2>{{ languageService.t('login') }}</h2>
 
   @if (successMessage) {
   <div class="alert alert-success text-center" role="alert">
@@ -15,7 +15,7 @@
 
   <form (ngSubmit)="onLogin()" #loginForm="ngForm">
     <div class="form-group">
-      <label for="email">Email</label>
+      <label for="email">{{ languageService.t('email') }}</label>
       <input
         type="email"
         id="email"
@@ -26,12 +26,12 @@
         class="form-control"
       />
       @if (emailCtrl.invalid && emailCtrl.touched) {
-      <div class="text-danger">Enter Your Email</div>
+      <div class="text-danger">{{ languageService.t('enterYourEmail') }}</div>
       }
     </div>
 
     <div class="form-group">
-      <label for="password">Password</label>
+      <label for="password">{{ languageService.t('password') }}</label>
       <input
         [type]="showPass ? 'text' : 'password'"
         id="password"
@@ -43,20 +43,20 @@
         class="form-control"
       />
       @if (passCtrl.invalid && passCtrl.touched) {
-      <div class="text-danger">Password must be at least 6 characters</div>
+      <div class="text-danger">{{ languageService.t('passwordMustBeAtLeast6') }}</div>
       }
       <small style="display: block; margin-top: 0.25rem">
-        <input type="checkbox" [(ngModel)]="showPass" name="showPass" placeholder="movie" /> Show password
+        <input type="checkbox" [(ngModel)]="showPass" name="showPass" placeholder="movie" /> {{ languageService.t('showPassword') }}
       </small>
     </div>
 
     <button type="submit" [disabled]="loginForm.invalid || loading">
-      {{ loading ? 'Signing in...' : 'Log In' }}
+      {{ loading ? languageService.t('signingIn') : languageService.t('login') }}
     </button>
 
     <p class="text-center mt-3">
-      Don't have an account?
-      <a routerLink="/register">Sign Up</a>
+      {{ languageService.t('dontHaveAccount') }}
+      <a routerLink="/register">{{ languageService.t('signUp') }}</a>
     </p>
   </form>
 </div>

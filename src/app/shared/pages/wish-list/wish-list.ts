@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { WishlistService, WishlistMovie } from '@shared/services/wishlist.service';
+import { LanguageService } from '@shared/services/language-service';
 
 @Component({
   selector: 'app-wish-list',
@@ -11,6 +12,7 @@ import { WishlistService, WishlistMovie } from '@shared/services/wishlist.servic
   styleUrls: ['./wish-list.css'],
 })
 export class WishList implements OnInit {
+  languageService = inject(LanguageService);
   private wishlist = inject(WishlistService);
   private router = inject(Router);
 

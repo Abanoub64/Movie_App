@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { LanguageService } from '@shared/services/language-service';
 
 @Component({
   selector: 'app-footer',
@@ -7,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './footer.css'
 })
 export class Footer {
-
+ languageService = inject(LanguageService);
 }

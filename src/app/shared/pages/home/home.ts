@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { MovieCard } from '@shared/components/movie-card/movie-card';
@@ -20,6 +20,8 @@ type MediaPayload = {
   poster_path: string | null;
   vote_average?: number | null;
 };
+import { LanguageService } from '@shared/services/language-service';
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -40,6 +42,8 @@ type MediaPayload = {
 export class Home implements OnInit {
   mediaItems: IMovie[] = [];
   tredndingItems: IMovie[] = [];
+  languageService = inject(LanguageService);
+  timeOptions = signal<SegmentedControlOption[]>([]);
   pageNumber = 1;
   totalPages = 1;
 
@@ -47,12 +51,19 @@ export class Home implements OnInit {
   selectedMedia: MediaPayload | null = null;
   timeRange = 'day';
 
-  timeOptions: SegmentedControlOption[] = [
-    { label: 'Today', value: 'day' },
-    { label: 'This Week', value: 'week' },
-  ];
-  constructor(private moviesService: MoviesService) {}
+  constructor(private moviesService: MoviesService) {
+    effect(() => {
+      const lang = this.languageService.currentLanguage();
+      this.timeOptions.set([
+        { label: this.languageService.t('today'), value: 'day' },
+        { label: this.languageService.t('thisWeek'), value: 'week' },
+      ]);
 
+      this.loadMovies(this.pageNumber);
+      this.loadTrending();
+    });
+  }
+  currentLanguage = this.languageService.currentLanguage;
   ngOnInit(): void {
     this.loadMovies(this.pageNumber);
     this.loadTrending();

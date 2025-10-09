@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { SearchBar } from '@shared/components/search-bar/search-bar';
 import { IMovie, IMoviesResponse } from '@shared/interface/interfaces';
 import { MoviesService } from '@shared/services/movies-service';
 import { MovieCard } from '@shared/components/movie-card/movie-card';
+import { LanguageService } from '@shared/services/language-service';
 
 @Component({
   selector: 'app-search',
@@ -13,7 +14,7 @@ import { MovieCard } from '@shared/components/movie-card/movie-card';
 export class Search implements OnInit {
   resultItems: IMovie[] = [];
   @Input() searchString: string = '';
-
+  languageService = inject(LanguageService);
   constructor(private movieService: MoviesService) {}
   ngOnInit(): void {
     this.getSeacrch();

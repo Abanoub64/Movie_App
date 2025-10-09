@@ -11,6 +11,17 @@
   </div>
 
   <div class="flex-none">
+    <select
+      id="lang"
+      #langSelect
+      [ngModel]="currentLanguage()"
+      (change)="changeLanguage(langSelect.value)"
+      class="text-black px-3 py-2 rounded bg-transparent focus:outline-none appearance-none"
+    >
+      <option *ngFor="let lang of languages" [value]="lang.code">
+        {{ lang.name }}
+      </option>
+    </select>
     @if (isCurrentRoute('/login')) {
     <ul class="menu menu-horizontal px-1">
       <li><a routerLink="/register">Sign Up</a></li>
