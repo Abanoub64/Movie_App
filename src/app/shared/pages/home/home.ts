@@ -6,6 +6,7 @@ import { ZardPaginationComponent } from '@shared/components/pagination/paginatio
 import { Footer } from '@shared/components/footer/footer';
 import { RouterModule } from '@angular/router';
 import { Navbar } from '@shared/components/navbar/navbar';
+import { IMovie } from '@shared/interface/interfaces';
 
 @Component({
   selector: 'app-home',
