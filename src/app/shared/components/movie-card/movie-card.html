@@ -1,9 +1,8 @@
-<div class="card style_1">
-  <div (click)="goToMovie(movie.id)" class="image">
+<div class="card style_1 relative">
+  <div (click)="goToMovie(movie.id)" class="image relative">
     <div class="wrapper glyphicons_v2 picture grey no_image_holder">
       <a class="image" [routerLink]="['/movie', movie.id]" [title]="movie.title">
-        <img
-        alt=""
+        <img alt=""
           loading="lazy"
           class="poster w-full"
           [src]="posterUrl"
@@ -13,12 +12,33 @@
       </a>
     </div>
 
-    <div class="options" [attr.data-id]="movie.id" data-media-type="movie" data-role="tooltip">
-      <a class="no_click" href="#" aria-label="View Item Options" (click)="onOptionsClick($event)"></a>
-    </div>
+    <button
+      type="button"
+      class="absolute top-2 right-2 w-9 h-9 rounded-full bg-[rgba(0,0,0,.6)] text-white flex items-center justify-center hover:bg-black/70"
+      aria-label="More options"
+      (click)="onMenuClick($event)"
+    >
+      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+        <circle cx="12" cy="5" r="2"></circle>
+        <circle cx="12" cy="12" r="2"></circle>
+        <circle cx="12" cy="19" r="2"></circle>
+      </svg>
+    </button>
+
+    @if (menuOpen) {
+      <div class="mc-menu absolute top-12 right-2 z-20">
+        <ul class="mc-menu-list">
+          @for (opt of menuOptions; track opt.label) {
+            <li (click)="handleOption(opt.key, $event)">
+              <span class="mi">{{ opt.icon }}</span> {{ opt.label }}
+            </li>
+          }
+        </ul>
+      </div>
+    }
   </div>
 
-  <div class="content flex flex-col items-start gap-2">
+  <div class="content flex flex-col items-start gap-2" (click)="goToMovie(movie.id)">
     <div class="consensus">
       <div class="outer_ring" [style.background]="trackColor">
         <div class="user_score_chart" [style.background]="scoreColor">
@@ -35,6 +55,7 @@
 
     <p>{{ displayDate }}</p>
 
+    <!-- ❤️ زر الويش لست (Toggle) -->
     <button
       type="button"
       class="wishlist-btn"
@@ -42,7 +63,8 @@
       [disabled]="toggling"
       (click)="toggleWishlist($event)"
       [attr.aria-pressed]="inWishlist"
-      aria-label="Toggle wishlist">
+      aria-label="Toggle wishlist"
+    >
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path
           d="M12 21s-6.2-4.35-9.33-7.48C.82 11.67 1 8.5 3.2 6.6c2.28-1.96 5.3-1.2 6.8.73C11.5 5.4 14.52 4.64 16.8 6.6c2.2 1.9 2.38 5.07.53 6.92C18.2 14.9 12 21 12 21z"

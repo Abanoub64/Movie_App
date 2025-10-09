@@ -11,50 +11,29 @@
   overflow: hidden;
   transition: transform .2s ease, box-shadow .2s ease;
 }
-
 .card:hover { transform: translateY(-4px); box-shadow: 0 4px 12px rgba(0,0,0,.15); }
 
 .card .image { position: relative; width: 100%; }
-
 .card .image .wrapper {
-  position: relative;
-  width: 100%;
+  position: relative; width: 100%;
   padding-bottom: 150%; /* 2:3 */
   background-color: #dbdbdb;
   border-bottom: 1px solid #CFCFCF;
 }
-
 .card .image .wrapper a.image { position: absolute; inset: 0; width: 100%; height: 100%; }
-
 .card .image .wrapper img.poster { width: 100%; height: 100%; object-fit: cover; }
-
-.card .image .options { position: absolute; top: 8px; right: 8px; z-index: 2; }
-.card .image .options a{
-  display:flex; align-items:center; justify-content:center;
-  width:26px; height:26px; background: rgba(255,255,255,.9); border-radius: 50%;
-  transition: background-color .2s ease;
-}
-.card .image .options a:hover{ background:#fff; }
-.card .image .options .glyphicons_v2 { width:16px; height:16px; background:#000; border-radius:50%; }
 
 .card .content { padding: 26px 10px 12px; position: relative; height: 108px; }
 
 .card .content .consensus { position: absolute; top: -20px; left: 10px; }
-.card .content .consensus .outer_ring {
-  border-radius: 50%; padding: 2px; display: inline-flex;
-}
+.card .content .consensus .outer_ring { border-radius: 50%; padding: 2px; display: inline-flex; }
 .card .content .consensus .user_score_chart {
   position: relative; display: inline-flex; align-items: center; justify-content: center;
   width: 38px; height: 38px; border-radius: 999px;
   box-shadow: inset 0 0 0 2px rgba(0,0,0,.28);
 }
-.card .content .consensus .user_score_chart .percent {
-  position: absolute; inset: 0;
-  display: flex; align-items: center; justify-content: center;
-}
-.card .content .consensus .user_score_chart .percent .icon {
-  font-size: 12px; font-weight: 700; color: #fff;
-}
+.card .content .consensus .percent { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+.card .content .consensus .percent .icon { font-size: 12px; font-weight: 700; color: #fff; }
 .icon::before { content: attr(data-percent) '%'; }
 
 .card .content h2 {
@@ -76,3 +55,29 @@
 .wishlist-btn svg{ width: 18px; height: 18px; }
 
 .card .hover { position: absolute; inset: 0; pointer-events: none; }
+
+/* menu + hint */
+.mc-menu-list{
+  background: #fff; color: #18181b; border: 1px solid #e4e4e7;
+  border-radius: 12px; box-shadow: 0 10px 24px rgba(0,0,0,.12);
+  width: 176px; overflow: hidden; margin: 0; padding: 6px 0; list-style: none;
+}
+.mc-menu-list li{
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px; cursor: pointer; white-space: nowrap;
+}
+.mc-menu-list li:hover{ background: #f3f4f6; }
+.mc-menu-list .mi{ width: 18px; text-align: center; }
+
+.mc-hint{
+  background: #06b6d4; color: #fff; border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0,0,0,.25);
+  padding: 12px 14px; min-width: 230px;
+}
+.mc-hint-title{ font-weight: 700; margin-bottom: 4px; }
+.mc-hint-sub{ opacity: .9; font-size: 13px; margin-bottom: 10px; }
+.mc-hint-btn{
+  background: #0ea5e9; color: #fff; border: none; border-radius: 8px;
+  padding: 6px 10px; cursor: pointer;
+}
+.mc-hint-btn:hover{ filter: brightness(0.95); }

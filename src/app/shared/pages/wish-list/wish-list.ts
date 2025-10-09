@@ -6,7 +6,7 @@ import { WishlistService, WishlistMovie } from '@shared/services/wishlist.servic
 @Component({
   selector: 'app-wish-list',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule],
   templateUrl: './wish-list.html',
   styleUrls: ['./wish-list.css'],
 })

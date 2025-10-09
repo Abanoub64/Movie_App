@@ -3,11 +3,11 @@
   --card: #ffcf33;
   --muted: #ffcf33;      
   --text:  #ffcf33;        
-  --border: #ffcf33;      /* رمادي فاتح للحدود */
+  --border: #ffcf33;      
   --shadow: #ffcf33;
-  --primary: #ffcf33;     /* أصفر مائل للذهبي */
-  --primary-ink: #ffcf33; /* نص على الأصفر */
-  --star-empty: #ffcf33;  /* نجمة فاضية */
+  --primary: #ffcf33;     
+  --primary-ink: #ffcf33; 
+  --star-empty: #ffcf33;  
 }
 
 * { box-sizing: border-box; }
@@ -19,7 +19,6 @@
   font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
 }
 
-/* Top small header */
 .topbar {
   max-width: 1120px;
   margin: 0 auto 16px;
@@ -45,7 +44,6 @@
   font-size: 12px;
 }
 
-/* Details card */
 .details-card {
   max-width: 1120px;
   margin: 0 auto;
@@ -62,7 +60,6 @@
   .details-card { grid-template-columns: 1fr; }
 }
 
-.poster-col { }
 .poster {
   width: 100%;
   border-radius: 14px;

@@ -1,0 +1,43 @@
+<ng-container *ngIf="open">
+  <div class="dlg-backdrop" (click)="close()">
+    <div class="dlg" role="dialog" aria-modal="true" (click)="stop($event)">
+      <h3 class="title">Add to list</h3>
+
+      <div class="picked" *ngIf="media">
+        <div class="thumb" *ngIf="media.poster_path">
+          <img  alt="" [src]="'https://media.themoviedb.org/t/p/w154' + media.poster_path" [alt]="media.title">
+        </div>
+        <div class="meta">
+          <div class="name">{{ media.title }}</div>
+          <div class="sub" *ngIf="media.vote_average != null">{{ media.vote_average | number:'1.1-1' }}/10</div>
+        </div>
+      </div>
+
+      <h4 class="section">Choose a list</h4>
+      <div class="lists" *ngIf="lists$ | async as lists">
+        <label class="row" *ngFor="let l of lists">
+          <input type="radio" name="list" [value]="l.id" [(ngModel)]="selectedListId">
+          <span class="name">{{ l.name }}</span>
+          <span class="meta">{{ l.isPublic ? 'Public' : 'Private' }}</span>
+        </label>
+
+        <div class="empty" *ngIf="!lists.length">
+          You don't have any lists yet.
+        </div>
+      </div>
+
+      <p class="err" *ngIf="error">{{ error }}</p>
+
+      <div class="actions">
+        <button class="btn primary"
+                (click)="addToSelectedList()"
+                [disabled]="!selectedListId || saving">
+          {{ saving ? 'Adding…' : 'Add' }}
+        </button>
+
+        <button class="btn" (click)="createList()">+ Create List</button>
+        <button class="btn ghost" (click)="viewMyLists()">View My Lists</button>
+      </div>
+    </div>
+  </div>
+</ng-container>

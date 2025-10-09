@@ -1,14 +1,6 @@
 <div class="page">
-  <!-- شريط علوي بسيط (اختياري) -->
-  <!-- <div class="topbar">
-    <div class="app-badge">Movie App</div>
-    <div class="watchlist">
-      <span class="heart">★</span>
-      <span class="count">5</span>
-    </div>
-  </div> -->
 
-  <!-- بطاقة التفاصيل -->
+
   <section class="details-card">
     <div class="poster-col">
       <img
@@ -33,7 +25,7 @@
           <span class="star">★</span>
           }
         </div>
-        <div class="vote-count">{{ details?.vote_count | number }}</div>
+        <div class="vote-count">{{ details.vote_count | number }}</div>
       </div>
       }
 
@@ -70,7 +62,6 @@
     </div>
   </section>
 
-  <!-- Recommendations (Placeholder شكل فقط) -->
   <section class="recs">
     <h2 class="recs-title">Recommendations</h2>
     <div class="recs-grid">

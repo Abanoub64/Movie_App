@@ -2,7 +2,6 @@
   <h2>Register</h2>
 
   <form (ngSubmit)="onRegister()" #registerForm="ngForm">
-    <!-- الاسم -->
     <div class="form-group">
       <label for="name">Name</label>
       <input
@@ -20,7 +19,6 @@
       }
     </div>
 
-    <!-- الايميل -->
     <div class="form-group">
       <label for="email">Email</label>
       <input
@@ -38,7 +36,6 @@
       }
     </div>
 
-    <!-- كلمة المرور -->
     <div class="form-group">
       <label for="password">PassWord</label>
       <input
@@ -57,7 +54,6 @@
       }
     </div>
 
-    <!-- تأكيد كلمة المرور -->
     <div class="form-group">
       <label for="confirmPassword">Confirm PassWord</label>
       <input
@@ -75,20 +71,16 @@
       }
     </div>
 
-    <!-- خطأ لو الباسورد مش متطابق -->
     @if (passwordMismatch) {
     <div class="text-danger small mb-3">PassWord Not Match</div>
     }
 
-    <!-- زرار إنشاء الحساب -->
     <button type="submit" [disabled]="registerForm.invalid">Sign Up</button>
 
-    <!-- رسالة خطأ عامة -->
     @if (errorMessage) {
     <p class="text-danger text-center mt-3">{{ errorMessage }}</p>
     }
 
-    <!-- رابط تسجيل الدخول -->
     <p class="text-center mt-3">
       This Account Exist
       <a routerLink="/login">Log in</a>
