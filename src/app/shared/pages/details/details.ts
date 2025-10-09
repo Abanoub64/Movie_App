@@ -7,11 +7,12 @@ import { Footer } from '@shared/components/footer/footer';
 import { Navbar } from '@shared/components/navbar/navbar';
 import { MoviesService } from '@shared/services/movies-service';
 import { MovieCard } from '@shared/components/movie-card/movie-card';
+import { Carousel } from '@shared/components/carousel/carousel';
 
 @Component({
   selector: 'app-details',
   standalone: true,
-  imports: [CommonModule, RouterModule, Footer, Navbar, MovieCard],
+  imports: [CommonModule, RouterModule, Footer, Navbar, MovieCard, Carousel],
   templateUrl: './details.html',
   styleUrls: ['./details.css'],
 })

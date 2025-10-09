@@ -73,11 +73,12 @@
   <!-- Recommendations (Placeholder شكل فقط) -->
   <section class="recs">
     <h2 class="recs-title">Recommendations</h2>
-    <div class="recs-grid">
+    <app-carousel>
       @for (item of recommendations; track item.id) {
-      <app-movie-card [movie]="item"></app-movie-card>
-
+      <div class="carousel-item p-3">
+        <app-movie-card [movie]="item"></app-movie-card>
+      </div>
       }
-    </div>
+    </app-carousel>
   </section>
 </div>

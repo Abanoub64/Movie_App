@@ -6,6 +6,7 @@ export interface IMoviesResponse {
 }
 
 export interface IMovie {
+  name: string;
   adult: boolean;
   backdrop_path: string | null;
   genre_ids: number[];

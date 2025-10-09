@@ -1,22 +1,25 @@
 :root {
   --bg: #ffcf33;
   --card: #ffcf33;
-  --muted: #ffcf33;      
-  --text:  #ffcf33;        
-  --border: #ffcf33;      /* رمادي فاتح للحدود */
+  --muted: #ffcf33;
+  --text: #ffcf33;
+  --border: #ffcf33; /* رمادي فاتح للحدود */
   --shadow: #ffcf33;
-  --primary: #ffcf33;     /* أصفر مائل للذهبي */
+  --primary: #ffcf33; /* أصفر مائل للذهبي */
   --primary-ink: #ffcf33; /* نص على الأصفر */
-  --star-empty: #ffcf33;  /* نجمة فاضية */
+  --star-empty: #ffcf33; /* نجمة فاضية */
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 .page {
   background: var(--bg);
   min-height: 100vh;
   padding: 16px 16px 56px;
   color: var(--text);
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 }
 
 /* Top small header */
@@ -35,8 +38,14 @@
   border-radius: 8px;
   box-shadow: var(--shadow);
 }
-.watchlist { display: flex; align-items: center; gap: 8px; }
-.watchlist .heart { color: #ffc107; }
+.watchlist {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.watchlist .heart {
+  color: #ffc107;
+}
 .watchlist .count {
   background: var(--card);
   border: 1px solid var(--border);
@@ -59,10 +68,13 @@
   padding: 20px;
 }
 @media (max-width: 860px) {
-  .details-card { grid-template-columns: 1fr; }
+  .details-card {
+    grid-template-columns: 1fr;
+  }
 }
 
-.poster-col { }
+.poster-col {
+}
 .poster {
   width: 100%;
   border-radius: 14px;
@@ -71,19 +83,41 @@
   object-fit: cover;
 }
 
-.info-col { display: flex; flex-direction: column; gap: 10px; }
-.title { font-size: 32px; font-weight: 800; margin: 0; }
-.sub-date { color: var(--muted); font-size: 13px; }
+.info-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.title {
+  font-size: 32px;
+  font-weight: 800;
+  margin: 0;
+}
+.sub-date {
+  color: var(--muted);
+  font-size: 13px;
+}
 
 .rating-row {
   display: flex;
   align-items: center;
   gap: 10px;
 }
-.stars { display: flex; gap: 4px; }
-.star { color: var(--star-empty); font-size: 18px; }
-.star.filled { color: #f6b11a; }
-.vote-count { color: var(--muted); font-size: 13px; }
+.stars {
+  display: flex;
+  gap: 4px;
+}
+.star {
+  color: var(--star-empty);
+  font-size: 18px;
+}
+.star.filled {
+  color: #f6b11a;
+}
+.vote-count {
+  color: var(--muted);
+  font-size: 13px;
+}
 
 .overview {
   color: #333d4b;
@@ -91,50 +125,104 @@
   margin-top: 4px;
 }
 
-.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
 .chip {
   background: #ffcf33;
   color: ffcf33;
-  border: 1px solid rgba(255, 207, 51, .45);
+  border: 1px solid rgba(255, 207, 51, 0.45);
   padding: 6px 12px;
   font-size: 12px;
   border-radius: 999px;
   font-weight: 600;
 }
 
-.meta { display: flex; gap: 24px; flex-wrap: wrap; margin-top: 2px; }
-.meta-item { display: flex; gap: 6px; align-items: baseline; }
-.label { color: var(--muted); font-weight: 600; }
-.value { color: var(--text); }
+.meta {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+.meta-item {
+  display: flex;
+  gap: 6px;
+  align-items: baseline;
+}
+.label {
+  color: var(--muted);
+  font-weight: 600;
+}
+.value {
+  color: var(--text);
+}
 
-.companies { display: flex; gap: 16px; align-items: center; margin-top: 4px; }
-.company-logo { height: 32px; object-fit: contain; filter: contrast(1.2); }
+.companies {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-top: 4px;
+}
+.company-logo {
+  height: 32px;
+  object-fit: contain;
+  filter: contrast(1.2);
+}
 
 /* Ghost button */
 .btn-ghost {
-  display: inline-flex; align-items: center; gap: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   border: 1px solid var(--border);
   padding: 6px 12px;
   border-radius: 999px;
   text-decoration: none;
   color: var(--text);
   background: #ffcf33;
-  transition: background .2s ease, transform .1s ease;
+  transition: background 0.2s ease, transform 0.1s ease;
 }
-.btn-ghost:hover { background: #ffcf33; }
+.btn-ghost:hover {
+  background: #ffcf33;
+}
 
 /* Recommendations section (UI فقط للعرض) */
-.recs { max-width: 1120px; margin: 24px auto 0; }
-.recs-title { font-size: 24px; font-weight: 800; margin: 0 0 12px; }
+.recs {
+  max-width: 1120px;
+  margin: 24px auto 0;
+}
+.recs-title {
+  font-size: 24px;
+  font-weight: 800;
+  margin: 0 0 12px;
+}
 .recs-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 16px;
 }
-@media (max-width: 1100px) { .recs-grid { grid-template-columns: repeat(5, 1fr); } }
-@media (max-width: 900px)  { .recs-grid { grid-template-columns: repeat(4, 1fr); } }
-@media (max-width: 700px)  { .recs-grid { grid-template-columns: repeat(3, 1fr); } }
-@media (max-width: 520px)  { .recs-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 1100px) {
+  .recs-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+@media (max-width: 900px) {
+  .recs-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (max-width: 700px) {
+  .recs-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 520px) {
+  .recs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 
 .rec-card {
   position: relative;
@@ -158,12 +246,24 @@
 }
 .score-badge {
   position: absolute;
-  bottom: 8px; left: 8px;
+  bottom: 8px;
+  left: 8px;
   background: var(--primary);
   color: var(--primary-ink);
-  width: 28px; height: 28px;
+  width: 28px;
+  height: 28px;
   border-radius: 999px;
-  display: grid; place-items: center;
-  font-weight: 800; font-size: 12px;
-  border: 1px solid rgba(0,0,0,.05);
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+.carousel {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }

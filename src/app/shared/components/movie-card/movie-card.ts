@@ -25,7 +25,12 @@ export class MovieCard {
   constructor(private router: Router) {}
 
   get slug(): string {
-    return this.movie.title.toLowerCase().replace(/\s+/g, '-');
+    return (
+      this.getTitle(this.movie)
+        ?.toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-') // شيل أي رموز غير حروف أو أرقام
+        .replace(/^-+|-+$/g, '') ?? ''
+    );
   }
 
   get movieUrl(): string {
@@ -38,6 +43,9 @@ export class MovieCard {
 
   get posterUrl2x(): string {
     return `https://media.themoviedb.org/t/p/w440_and_h660_face${this.movie.poster_path}`;
+  }
+  getTitle(item: IMovie): string {
+    return item.title == undefined ? item.name : item.title;
   }
 
   get userScorePercent(): number {
