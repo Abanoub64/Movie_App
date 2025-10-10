@@ -1,4 +1,4 @@
-<div class="hero bg-base-200 min-h-fit mt-4 mb-4 pb-3">
+<div class="hero min-h-fit mt-4 mb-4 pb-3" [ngClass]="{ 'bg-base-200': !isDark }">
   <div>
     <h1 class="text-5xl font-bold">{{languageService.t('welcomeTitle')}}</h1>
     <p class="py-6">{{languageService.t('welcomeSubtitle')}}</p>
