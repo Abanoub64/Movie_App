@@ -1,23 +1,48 @@
-/* أيقونة القلب: افتراضيًا outline */
-.wishlist-link .heart path {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 2;
+/* ===== Navbar base ===== */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-
-/* لما اللينك يبقى Active (بفضل routerLinkActive="active") */
-.wishlist-link.active .heart path {
-  fill: #e11d48 !important;  /* أحمر */
-  stroke: none !important;
+.menu.menu-horizontal {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
-
-/* البادج فوق الأيقونة */
+.btn.btn-ghost {
+  background: transparent;
+  border: 0;
+} /* زر أيقونة */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: transparent;
+  border: 2px solid white;
+  color: inherit;
+  transition: background 0.15s ease, transform 0.12s ease;
+}
+.icon-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: scale(1.04);
+} /* ===== Wishlist ===== */
 .wishlist-link {
   position: relative;
   display: inline-flex;
   align-items: center;
 }
-
+.wishlist-link .heart path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+.wishlist-link.active .heart path {
+  fill: #e11d48 !important;
+  stroke: none !important;
+}
 .wishlist-link .wishlist-badge {
   position: absolute;
   top: -6px;
@@ -29,15 +54,198 @@
   font-size: 11px;
   line-height: 16px;
   text-align: center;
-  background: #e11d48; /* نفس لون القلب */
+  background: #e11d48;
   color: #fff;
   font-weight: 600;
 }
-
-/* لمسة hover */
 .wishlist-link:hover .heart {
   transform: scale(1.06);
   transition: transform 0.12s ease;
+} /* ===== Drawer ===== */
+.account-drawer {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+  z-index: 60;
+}
+.account-drawer.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.drawer-panel {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: min(320px, 85vw);
+  background: #fff;
+  color: #111;
+  box-shadow: -8px 0 24px rgba(0, 0, 0, 0.18);
+  transform: translateX(100%);
+  transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+.account-drawer.open .drawer-panel {
+  transform: translateX(0);
+}
+.drawer-header {
+  display: grid;
+  grid-template-columns: 48px 1fr 28px;
+  gap: 12px;
+  align-items: center;
+  padding: 16px 14px;
+  border-bottom: 1px solid #eee;
+}
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  background: #eef2ff;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 18px;
+  color: #3b82f6;
+}
+.info .name {
+  font-weight: 600;
+  line-height: 1.1;
+}
+.info .mail {
+  font-size: 13px;
+  color: #6b7280;
+  word-break: break-all;
+}
+.close-btn {
+  border: 0;
+  background: transparent;
+  font-size: 24px;
+  cursor: pointer;
+  color: #6b7280;
+}
+.drawer-actions {
+  padding: 10px;
+  display: grid;
+  gap: 6px;
+}
+.drawer-item {
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  cursor: pointer;
+}
+.drawer-item:hover {
+  background: #f9fafb;
+}
+.drawer-item.danger {
+  border-color: #fecaca;
+  color: #b91c1c;
+}
+.drawer-item.danger:hover {
+  background: #fef2f2;
+}
+.drawer-footer {
+  margin-top: auto;
+  padding: 12px;
+  border-top: 1px solid #eee;
+}
+.logout-btn {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #111827;
+  color: #fff;
+  border: 0;
+  cursor: pointer;
+}
+.logout-btn:hover {
+  opacity: 0.95;
+} /* ===== Modal ===== */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 1000; /* فوق أي عنصر */
+}
+.modal-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.modal-panel {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  width: min(400px, 90%);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  color: #111 !important; /* تأكيد لون النص */
+}
+.modal-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #111 !important;
+}
+.modal-label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #111 !important;
+}
+.modal-input {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin-bottom: 12px;
+  color: #111 !important;
+  background: #fff;
+  caret-color: #111;
+}
+.modal-input::placeholder {
+  color: #9ca3af;
+}
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.btn-cancel,
+.btn-save {
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+}
+.btn-cancel {
+  background: #f3f4f6;
+  color: #111;
+}
+.btn-save {
+  background: #2563eb;
+  color: #fff;
+}
+.btn-save:hover {
+  background: #1d4ed8;
+}
+.text-danger {
+  color: #b91c1c;
+}
+.text-success {
+  color: #16a34a;
 }
 
 

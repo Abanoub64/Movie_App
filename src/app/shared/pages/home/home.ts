@@ -14,7 +14,7 @@ import { MoviesService } from '@shared/services/movies-service';
 import { ListDialog } from '../list-dialog/list-dialog';
 import { Carousel } from '@shared/components/carousel/carousel';
 import { HeroSection } from '@shared/components/hero-section/hero-section';
-type MediaPayload = {
+export type MediaPayload = {
   id: number;
   title: string;
   poster_path: string | null;
