@@ -1,1 +1,33 @@
-<p>top-rated-movies works!</p>
+<div class="max-w-7xl mx-auto">
+  <h1 class="text-3xl md:text-4xl font-bold text-black mb-8">
+    {{ languageService.t('topRated') }}
+  </h1>
+
+  <div
+    class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6"
+  >
+    @for (item of mediaItems; track item.id) {
+    <app-movie-card
+      class="block"
+      [movie]="item"
+      [routerLinkBase]="'/tv'"
+      (addToList)="openAddToList($event)"
+    ></app-movie-card>
+    }
+  </div>
+</div>
+
+<div class="mt-8 flex justify-center">
+  <z-pagination
+    [zTotal]="totalPages"
+    [zPageIndex]="pageNumber"
+    (zPageIndexChange)="onPageChange($event)"
+  >
+  </z-pagination>
+</div>
+
+<app-list-dialog
+  [open]="dialogOpen"
+  [media]="selectedMedia || undefined"
+  (closed)="closeDialog()"
+></app-list-dialog>

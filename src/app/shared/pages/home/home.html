@@ -15,6 +15,7 @@
         <app-movie-card
           class="block"
           [movie]="item"
+          [routerLinkBase]="item.media_type === 'tv' ? '/tv' : '/movie'"
           (addToList)="openAddToList($event)"
         ></app-movie-card>
       </div>
@@ -33,6 +34,7 @@
       <app-movie-card
         class="block"
         [movie]="item"
+        [routerLinkBase]="item.media_type === 'tv' ? '/tv' : '/movie'"
         (addToList)="openAddToList($event)"
       ></app-movie-card>
       }

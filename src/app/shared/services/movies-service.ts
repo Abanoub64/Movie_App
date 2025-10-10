@@ -22,7 +22,7 @@ export class MoviesService {
   getpopular(page: number): Observable<IMoviesResponse> {
     const language = this.languageService.currentLanguage();
     return this.http.get<IMoviesResponse>(
-      `${this._baseUrl}movie/popular?page=${page}&language=${language}`,
+      `${this._baseUrl}movie/popular?page=${page}?language=${language}`,
       {
         headers: {
           Authorization: `Bearer ${environment.apiKey}`,
@@ -32,7 +32,7 @@ export class MoviesService {
   }
   getMoiveDetails(movieId: number): Observable<IMovieDetails> {
     const language = this.languageService.currentLanguage();
-    return this.http.get<IMovieDetails>(`${this._baseUrl}/movie/${movieId}?language=${language}`, {
+    return this.http.get<IMovieDetails>(`${this._baseUrl}movie/${movieId}?language=${language}`, {
       headers: {
         Authorization: `Bearer ${environment.apiKey}`,
       },
@@ -41,7 +41,7 @@ export class MoviesService {
   getMoivesRecommendations(movieId: number): Observable<IMoviesResponse> {
     const language = this.languageService.currentLanguage();
     return this.http.get<IMoviesResponse>(
-      `${this._baseUrl}/movie/${movieId}/recommendations?language=${language}`,
+      `${this._baseUrl}movie/${movieId}/recommendations?language=${language}`,
       {
         headers: {
           Authorization: `Bearer ${environment.apiKey}`,
@@ -62,7 +62,7 @@ export class MoviesService {
   }
   getTrending(timeWindow: string): Observable<IMoviesResponse> {
     return this.http.get<IMoviesResponse>(
-      `${this._baseUrl}/trending/all/${timeWindow}?language=${this.lang}`,
+      `${this._baseUrl}trending/all/${timeWindow}?language=${this.lang}`,
       {
         headers: {
           Authorization: `Bearer ${environment.apiKey}`,
@@ -70,9 +70,9 @@ export class MoviesService {
       }
     );
   }
-  gettop_ratedMovies(): Observable<IMoviesResponse> {
+  gettop_ratedMovies(page: number): Observable<IMoviesResponse> {
     return this.http.get<IMoviesResponse>(
-      `${this._baseUrl}/movie/top_rated?language=${this.lang}`,
+      `${this._baseUrl}/movie/top_rated?language=${this.lang}?page=${page}`,
       {
         headers: {
           Authorization: `Bearer ${environment.apiKey}`,
@@ -80,18 +80,10 @@ export class MoviesService {
       }
     );
   }
-  getupcomingMovies(): Observable<IMoviesResponse> {
-    const language = this.languageService.currentLanguage();
-    return this.http.get<IMoviesResponse>(`${this._baseUrl}/movie/upcoming?language=${language}`, {
-      headers: {
-        Authorization: `Bearer ${environment.apiKey}`,
-      },
-    });
-  }
-  getNow_playingMovies(): Observable<IMoviesResponse> {
+  getupcomingMovies(page: number): Observable<IMoviesResponse> {
     const language = this.languageService.currentLanguage();
     return this.http.get<IMoviesResponse>(
-      `${this._baseUrl}/movie/now_playing?language=${language}`,
+      `${this._baseUrl}/movie/upcoming?language=${language}?page=${page}`,
       {
         headers: {
           Authorization: `Bearer ${environment.apiKey}`,
@@ -99,12 +91,26 @@ export class MoviesService {
       }
     );
   }
-  getPopularMovies(): Observable<IMoviesResponse> {
+  getNow_playingMovies(page: number): Observable<IMoviesResponse> {
     const language = this.languageService.currentLanguage();
-    return this.http.get<IMoviesResponse>(`${this._baseUrl}/movie/popular?language=${language}`, {
-      headers: {
-        Authorization: `Bearer ${environment.apiKey}`,
-      },
-    });
+    return this.http.get<IMoviesResponse>(
+      `${this._baseUrl}/movie/now_playing?language=${language}?page=${page}`,
+      {
+        headers: {
+          Authorization: `Bearer ${environment.apiKey}`,
+        },
+      }
+    );
+  }
+  getPopularMovies(page: number): Observable<IMoviesResponse> {
+    const language = this.languageService.currentLanguage();
+    return this.http.get<IMoviesResponse>(
+      `${this._baseUrl}/movie/popular?language=${language}?page=${page}`,
+      {
+        headers: {
+          Authorization: `Bearer ${environment.apiKey}`,
+        },
+      }
+    );
   }
 }

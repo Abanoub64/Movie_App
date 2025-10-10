@@ -36,18 +36,17 @@ type MenuOptionKey = 'add' | 'fav';
 export class MovieCard implements OnInit, OnDestroy {
   @Input() movie!: IMovie;
 
-  /** للأب علشان يفتح الدايالوج برّه الكارد */
   @Output() addToList = new EventEmitter<MediaPayload>();
 
   inWishlist = false;
   toggling = false;
   menuOpen = false;
 
-  /** عناصر قائمة الثلاث نقاط */
   readonly menuOptions: { label: string; icon: string; key: MenuOptionKey }[] = [
     { label: 'Add to list', icon: '≡', key: 'add' },
     { label: 'WishList  ', icon: '♥', key: 'fav' },
   ];
+  @Input() routerLinkBase: string = '/movie';
 
   private hostEl: ElementRef<HTMLElement> = inject(ElementRef);
   private sub?: Subscription;
@@ -55,7 +54,6 @@ export class MovieCard implements OnInit, OnDestroy {
   constructor(private router: Router, private wishlist: WishlistService, private auth: Auth) {}
 
   ngOnInit() {
-    // ✅ متابعة حالة الويش ليست للمستخدم الحالي (بتشتغل بعد الريلود تلقائي)
     this.sub = this.wishlist.wishlistIds$.subscribe((set) => {
       this.inWishlist = set.has(this.movie.id);
     });
@@ -212,6 +210,10 @@ export class MovieCard implements OnInit, OnDestroy {
     if (!this.hostEl.nativeElement.contains(target)) {
       this.menuOpen = false;
     }
+  }
+
+  get movieLink() {
+    return [this.routerLinkBase, this.movie.id];
   }
 
   /** Escape يقفل المينيو */

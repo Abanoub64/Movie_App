@@ -1,7 +1,7 @@
 <div class="card style_1 relative">
   <div (click)="goToMovie(movie.id)" class="image relative">
     <div class="wrapper glyphicons_v2 picture grey no_image_holder">
-      <a class="image" [routerLink]="['/movie', movie.id]" [title]="movie.title">
+      <a class="image" [routerLink]="movieLink" [title]="movie.title">
         <img
           alt=""
           loading="lazy"

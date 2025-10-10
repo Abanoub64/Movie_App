@@ -8,6 +8,7 @@ import { Navbar } from '@shared/components/navbar/navbar';
 import { MoviesService } from '@shared/services/movies-service';
 import { MovieCard } from '@shared/components/movie-card/movie-card';
 import { Carousel } from '@shared/components/carousel/carousel';
+import { TvServices } from '@shared/services/tv-services';
 
 @Component({
   selector: 'app-details',
@@ -19,8 +20,13 @@ import { Carousel } from '@shared/components/carousel/carousel';
 export class Details implements OnInit {
   details?: IMovieDetails;
   recommendations: IMovie[] = [];
+  mediaType: 'movie' | 'tv' = 'movie';
 
-  constructor(private route: ActivatedRoute, private moviesService: MoviesService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private moviesService: MoviesService,
+    private tvservice: TvServices
+  ) {}
   private imgBase = 'https://image.tmdb.org/t/p';
   private posterSize = 'w500';
   private logoSize = 'w185';
@@ -29,10 +35,17 @@ export class Details implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       const fullURL = params.get('id') ?? '';
-
-      const [idPart, ...slugParts] = fullURL?.split('-');
+      const [idPart] = fullURL.split('-');
       this.movieId = idPart;
+      const isTv = this.route.snapshot.routeConfig?.path?.startsWith('tv');
+      if (isTv) {
+        this.loadTvDetails();
+      } else {
+        this.loadMovieDetails();
+      }
     });
+  }
+  loadMovieDetails() {
     this.moviesService.getMoiveDetails(+this.movieId).subscribe({
       next: (res: IMovieDetails) => {
         console.log(res);
@@ -41,7 +54,24 @@ export class Details implements OnInit {
       },
       error: (err) => console.error('Error loading movies', err),
     });
+
     this.moviesService.getMoivesRecommendations(+this.movieId).subscribe({
+      next: (res: IMoviesResponse) => {
+        this.recommendations = res.results;
+      },
+      error: (err) => console.error('Error loading movies', err),
+    });
+  }
+  loadTvDetails() {
+    this.tvservice.getTVDetails(+this.movieId).subscribe({
+      next: (res: IMovieDetails) => {
+        console.log(res);
+
+        this.details = res;
+      },
+      error: (err) => console.error('Error loading movies', err),
+    });
+    this.tvservice.getTvRecommendations(+this.movieId).subscribe({
       next: (res: IMoviesResponse) => {
         this.recommendations = res.results;
       },

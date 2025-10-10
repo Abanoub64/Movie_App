@@ -1,7 +1,7 @@
 import { effect, Injectable, signal } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LanguageService {
   currentLanguage = signal(localStorage.getItem('language') || 'en');
@@ -100,21 +100,22 @@ export class LanguageService {
       nowPlaying: 'En Salle',
       upcoming: 'À Venir',
       topRated: 'Les Mieux Notés',
-      airingToday: 'Diffusé Aujourd\'hui',
+      airingToday: "Diffusé Aujourd'hui",
       onTv: 'À la Télé',
       home: 'Accueil',
       wishlist: 'Liste de Souhaits',
       login: 'Connexion',
-      signup: 'S\'inscrire',
+      signup: "S'inscrire",
       account: 'Détails du Compte',
       logout: 'Se Déconnecter',
       search: 'Rechercher',
       searchAndExplore: 'Rechercher et explorer...',
       searchResults: 'Résultats de recherche',
-      today: 'Aujourd\'hui',
+      today: "Aujourd'hui",
       thisWeek: 'Cette semaine',
       welcomeTitle: 'Bienvenue sur notre application de films',
-      welcomeSubtitle: 'Des millions de films, séries et personnes à découvrir. Explorez maintenant.',
+      welcomeSubtitle:
+        'Des millions de films, séries et personnes à découvrir. Explorez maintenant.',
       companyName: 'ACME Industries Ltd.',
       companySlogan: 'Fournir une technologie fiable depuis 1992',
       social: 'Réseaux sociaux',
