@@ -1,172 +1,173 @@
 <div class="navbar shadow-sm bg-primary text-white px-4 py-2">
   <div class="flex-1">
     @if (isCurrentRoute('/login') || isCurrentRoute('/register')) {
-      <span class="btn btn-ghost text-xl"><img src="شفاف.png" style="max-width: 80px !important;" alt=""></span>
+      <span class="btn btn-ghost text-xl">
+        <img src="شفاف.png" style="max-width: 80px !important;" alt="">
+      </span>
     } @else {
-      <a class="btn btn-ghost text-xl" routerLink="/home" aria-label="Go to Home">Movie App</a>
+      <a class="btn btn-ghost text-xl" routerLink="/home" aria-label="Go to Home"><img src="شفاف.png" style="max-width: 80px !important;" alt=""></a>
       <app-button-with-menu />
     }
-    @if (isCurrentRoute('/login') || isCurrentRoute('/register')) { } @else {
-    <a class="btn btn-ghost text-xl" routerLink="/home" aria-label="Go to Home">Movie App</a>
-    <app-button-with-menu /> }
   </div>
-  <div class="flex-none">
+
+ <div class="flex flex-wrap items-center justify-end gap-4 sm:gap-6 md:gap-8 flex-none">
+
+  <!-- Language Selector -->
+  <div class="relative">
     <select
       id="lang"
       #langSelect
       [ngModel]="currentLanguage()"
       (change)="changeLanguage(langSelect.value)"
-      class="text-black px-3 py-2 rounded bg-transparent focus:outline-none appearance-none"
+      class="text-white px-4 py-2 pr-10 rounded-lg 
+             focus:ring-2 focus:ring-yellow-400 focus:outline-none appearance-none cursor-pointer"
     >
-      <option *ngFor="let lang of languages" [value]="lang.code">{{ lang.name }}</option>
+      <option
+        *ngFor="let lang of languages"
+        [value]="lang.code"
+        class="text-white bg-gray-700"
+      >
+        {{ lang.name }}
+      </option>
     </select>
+    <!-- Arrow icon positioned beside text -->
+    <svg
+      class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white pointer-events-none"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+    </svg>
+  </div>
 
-    @if (isCurrentRoute('/login')) {
-      <ul class="menu menu-horizontal px-1">
-        <li><a routerLink="/register">Sign Up</a></li>
-      </ul>
-    } @else if (isCurrentRoute('/register')) {
-      <ul class="menu menu-horizontal px-1">
-        <li><a routerLink="/login">Log in</a></li>
-      </ul>
-    } @else {
-      <ul class="menu menu-horizontal px-1">
-        @if (!isCurrentRoute('/home')) {
-          <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
-        }
-        <li>
-          <a routerLink="/lists" routerLinkActive="active" aria-label="View My Lists">View My Lists</a>
-        </li>
-        <li>
-          <a
-            routerLink="/wishlist"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }"
-            aria-label="Wish List"
-            class="wishlist-link"
-            title="Wish List"
-          >
-            <svg
-              width="30"
-              height="27"
-              viewBox="0 0 30 27"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M15.7225 24.8837C15.2831 25.0388 14.5595 25.0388 14.1202 24.8837C10.373 23.6045 2 18.268 2 9.22302C2 5.23033 5.21741 2 9.18426 2C11.5359 2 13.6163 3.13708 14.9213 4.89438C16.2264 3.13708 18.3196 2 20.6584 2C24.6253 2 27.8427 5.23033 27.8427 9.22302C27.8427 18.268 19.4696 23.6045 15.7225 24.8837Z"
-                stroke="#292D32"
-                stroke-width="2.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                [attr.fill]="'#FFE353'"
-                [attr.stroke]="'#9CA3AF'"
-              />
-            </svg>
-          </a>
-        </li>
-
-        @if (!isLoggedIn()) {
-          <li><a routerLink="/login">Log in</a></li>
-          <li><a routerLink="/register">Sign Up</a></li>
-        } @else {
-          <li><a routerLink="/account">Account Details</a></li>
-          <li><a (click)="logout()">Logout</a></li>
-        }
-
-        @if (!isCurrentRoute('/login') && !isCurrentRoute('/register')) {
-          <li>
-            <button class="btn-theme" (click)="toggleTheme()">
-              {{ isDark() ? '☀️' : '🌙' }}
-            </button>
-          </li>
-        }
-      </ul>
-    } 
-    <ul class="menu menu-horizontal px-1">
+  <!-- Auth-based Menus -->
+  @if (isCurrentRoute('/login')) {
+    <ul class="menu menu-horizontal px-1 text-sm sm:text-base">
+      <li><a routerLink="/register" class="text-white hover:text-yellow-400">Sign Up</a></li>
+    </ul>
+  } @else if (isCurrentRoute('/register')) {
+    <ul class="menu menu-horizontal px-1 text-sm sm:text-base">
+      <li><a routerLink="/login" class="text-white hover:text-yellow-400">Log in</a></li>
+    </ul>
+  } @else {
+    <ul
+      class="menu menu-horizontal px-1 text-sm sm:text-base flex-wrap items-center justify-end gap-2 sm:gap-4 md:gap-6"
+    >
       @if (!isCurrentRoute('/home')) {
-      <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
+        <li><a routerLink="/home" routerLinkActive="active" class="text-white hover:text-yellow-400">Home</a></li>
       }
+
       <li>
-        <a routerLink="/lists" routerLinkActive="active" aria-label="View My Lists">
+        <a routerLink="/lists" routerLinkActive="active" class="text-white hover:text-yellow-400" aria-label="View My Lists">
           View My Lists
         </a>
       </li>
-      <li>
+
+      <li class="relative">
         <a
           routerLink="/wishlist"
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
           aria-label="Wish List"
-          class="wishlist-link"
           title="Wish List"
+          class="relative flex items-center justify-center text-white hover:text-yellow-400"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            width="20"
-            height="20"
-            class="heart"
-          >
+          <svg width="26" height="24" viewBox="0 0 30 27" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
-              d="M12 21s-6.2-4.35-9.33-7.48C.82 11.67 1 8.5 3.2 6.6c2.28-1.96 5.3-1.2 6.8.73C11.5 5.4 14.52 4.64 16.8 6.6c2.2 1.9 2.38 5.07.53 6.92C18.2 14.9 12 21 12 21z"
+              d="M15.7225 24.8837C15.2831 25.0388 14.5595 25.0388 14.1202 24.8837C10.373 23.6045 2 18.268 2 9.22302C2 5.23033 5.21741 2 9.18426 2C11.5359 2 13.6163 3.13708 14.9213 4.89438C16.2264 3.13708 18.3196 2 20.6584 2C24.6253 2 27.8427 5.23033 27.8427 9.22302C27.8427 18.268 19.4696 23.6045 15.7225 24.8837Z"
+              stroke="#9CA3AF"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              [attr.fill]="'#FFE353'"
             />
           </svg>
-          @let cnt = (count$ | async) ?? 0; @if (cnt > 0) {
-          <span class="wishlist-badge" aria-label="Wishlist count">{{ cnt }}</span> }
+          @let cnt = (count$ | async) ?? 0;
+          @if (cnt > 0) {
+            <span
+              class="absolute -top-1 -right-1 bg-yellow-400 text-black text-xs font-bold rounded-full px-1.5 py-0.5"
+              aria-label="Wishlist count"
+              >{{ cnt }}</span
+            >
+          }
         </a>
       </li>
+
       @if (!isLoggedIn()) {
-      <li><a routerLink="/login">Log in</a></li>
-      <li><a routerLink="/register">Sign Up</a></li>
-      } @else { }
+        <li><a routerLink="/login" class="text-white hover:text-yellow-400">Log in</a></li>
+        <li><a routerLink="/register" class="text-white hover:text-yellow-400">Sign Up</a></li>
+      } @else {
+        <li>
+          <button
+            class="icon-btn text-white hover:text-yellow-400"
+            (click)="openAccountDrawer()"
+            aria-label="Account menu"
+          >
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M12 12c2.7 0 5-2.5 5-5.5S14.7 1 12 1 7 3.5 7 6.5 9.3 12 12 12Z"
+                stroke="currentColor"
+                stroke-width="1.5"
+              />
+              <path
+                d="M3 22c0-3.9 4-7 9-7s9 3.1 9 7"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
+        </li>
+        <li><a (click)="logout()" class="text-white hover:text-yellow-400 cursor-pointer">Logout</a></li>
+      }
+
+      @if (!isCurrentRoute('/login') && !isCurrentRoute('/register')) {
+        <li>
+          <button
+            class="btn-theme px-3 py-1 rounded-lg text-white hover:bg-yellow-400 hover:text-black transition"
+            (click)="toggleTheme()"
+          >
+            {{ isDark() ? '☀️' : '🌙' }}
+          </button>
+        </li>
+      }
     </ul>
-    @if (isLoggedIn()) {
-    <li>
-      <button class="icon-btn" (click)="openAccountDrawer()" aria-label="Account menu">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-          <path
-            d="M12 12c2.7 0 5-2.5 5-5.5S14.7 1 12 1 7 3.5 7 6.5 9.3 12 12 12Z"
-            stroke="currentColor"
-            stroke-width="1.5"
-          />
-          <path
-            d="M3 22c0-3.9 4-7 9-7s9 3.1 9 7"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-          />
-        </svg>
-      </button>
-    </li>
-    } @else {
-    <li><a routerLink="/login">Log in</a></li>
-    <li><a routerLink="/register">Sign Up</a></li>
-    } }
-  </div>
+  }
 </div>
+
+
+
+</div>
+
+<!-- Account Drawer -->
 @if (!isCurrentRoute('/login') && !isCurrentRoute('/register') && isLoggedIn()) {
-<div class="account-drawer" [class.open]="accountDrawerOpen" (click)="closeAccountDrawer()">
-  <div class="drawer-panel" (click)="$event.stopPropagation()">
-    <div class="drawer-header">
-      <div class="avatar">
-        <span>{{ (displayName() || email() || 'U').slice(0, 1).toUpperCase() }}</span>
+  <div class="account-drawer" [class.open]="accountDrawerOpen" (click)="closeAccountDrawer()">
+    <div class="drawer-panel" (click)="$event.stopPropagation()">
+      <div class="drawer-header">
+        <div class="avatar">
+          <span>{{ (displayName() || email() || 'U').slice(0, 1).toUpperCase() }}</span>
+        </div>
+        <div class="info">
+          <div class="name">{{ displayName() || 'No name' }}</div>
+          <div class="mail">{{ email() }}</div>
+        </div>
+        <button class="close-btn" (click)="closeAccountDrawer()">×</button>
       </div>
-      <div class="info">
-        <div class="name">{{ displayName() || 'No name' }}</div>
-        <div class="mail">{{ email() }}</div>
+
+      <div class="drawer-actions">
+        <button class="drawer-item" (click)="goChangePassword()">Change password</button>
+        <button class="drawer-item" (click)="goChangeUsername()">Change username</button>
+        <button class="drawer-item danger" (click)="deleteAccount()">Delete account</button>
       </div>
-      <button class="close-btn" (click)="closeAccountDrawer()">×</button>
+
+      <div class="drawer-footer">
+        <button class="logout-btn" (click)="logout()">Logout</button>
+      </div>
     </div>
-    <div class="drawer-actions">
-      <button class="drawer-item" (click)="goChangePassword()">Change password</button>
-      <button class="drawer-item" (click)="goChangeUsername()">Change username</button>
-      <button class="drawer-item danger" (click)="deleteAccount()">Delete account</button>
-    </div>
-    <div class="drawer-footer"><button class="logout-btn" (click)="logout()">Logout</button></div>
   </div>
-</div>
 }
+
 <!-- Username Modal -->
 <div class="modal-backdrop" [class.open]="usernameModalOpen" (click)="closeUsernameModal()">
   <div class="modal-panel" (click)="$event.stopPropagation()">
@@ -184,16 +185,19 @@
       <button class="btn-save" (click)="saveUsername()">Save</button>
     </div>
     @if (usernameError) {
-    <p class="text-danger">{{ usernameError }}</p>
-    } @if (usernameSuccess) {
-    <p class="text-success">{{ usernameSuccess }}</p>
+      <p class="text-danger">{{ usernameError }}</p>
+    }
+    @if (usernameSuccess) {
+      <p class="text-success">{{ usernameSuccess }}</p>
     }
   </div>
 </div>
+
 <!-- Password Modal -->
 <div class="modal-backdrop" [class.open]="passwordModalOpen" (click)="closePasswordModal()">
   <div class="modal-panel" (click)="$event.stopPropagation()">
     <h3 class="modal-title">Change Password</h3>
+
     <label class="modal-label" for="currentPassword">Current Password</label>
     <input
       id="currentPassword"
@@ -202,6 +206,7 @@
       class="modal-input"
       placeholder="Enter current password"
     />
+
     <label class="modal-label" for="newPassword">New Password</label>
     <input
       id="newPassword"
@@ -210,6 +215,7 @@
       class="modal-input"
       placeholder="Enter new password"
     />
+
     <label class="modal-label" for="confirmPassword">Confirm New Password</label>
     <input
       id="confirmPassword"
@@ -218,14 +224,17 @@
       class="modal-input"
       placeholder="Confirm new password"
     />
+
     <div class="modal-actions">
       <button class="btn-cancel" (click)="closePasswordModal()">Cancel</button>
       <button class="btn-save" (click)="savePassword()">Save</button>
     </div>
+
     @if (passwordError) {
-    <p class="text-danger">{{ passwordError }}</p>
-    } @if (passwordSuccess) {
-    <p class="text-success">{{ passwordSuccess }}</p>
+      <p class="text-danger">{{ passwordError }}</p>
+    }
+    @if (passwordSuccess) {
+      <p class="text-success">{{ passwordSuccess }}</p>
     }
   </div>
 </div>

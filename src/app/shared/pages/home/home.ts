@@ -21,12 +21,14 @@ export type MediaPayload = {
   vote_average?: number | null;
 };
 import { LanguageService } from '@shared/services/language-service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
     RouterModule,
+    CommonModule,
     Navbar,
     MovieCard,
     ZardPaginationComponent,
@@ -104,5 +106,20 @@ export class Home implements OnInit {
   onTimeRangeChange(value: string) {
     this.timeRange = value;
     this.loadTrending();
+  }
+
+  isDark = signal(false);
+  
+  toggleTheme() {
+    const newTheme = !this.isDark();
+    this.isDark.set(newTheme);
+
+    if (newTheme) {
+      document.body.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.body.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
   }
 }

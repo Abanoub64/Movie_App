@@ -3,6 +3,11 @@
   box-sizing: border-box;
 }
 
+.dark-mode-card {
+  background-color: #A9D1E9; /* Soft Blue */
+  color: #333; /* Adjust text color for readability */
+}
+
 .card {
   position: relative;
   display: inline-block;
