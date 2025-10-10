@@ -185,7 +185,7 @@ export class ZardPaginationEllipsisComponent {
     ZardPaginationButtonComponent,
   ],
   template: `
-    <z-pagination-content>
+    <z-pagination-content class="p-2">
       <z-pagination-item>
         <z-pagination-button
           aria-label="Go to previous page"

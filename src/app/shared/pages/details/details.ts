@@ -1,7 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, DestroyRef, inject } from '@angular/core';
 import { ActivatedRoute, RouterModule, Router } from '@angular/router';
-import { IMovie, IMovieDetails, IMoviesResponse } from '@shared/interface/interfaces';
+import {
+  IMovie,
+  IMovieDetails,
+  IMoviesResponse,
+  TrailerResponse,
+  TrailerResult,
+} from '@shared/interface/interfaces';
 import { Footer } from '@shared/components/footer/footer';
 import { Navbar } from '@shared/components/navbar/navbar';
 import { MoviesService } from '@shared/services/movies-service';
@@ -11,11 +17,12 @@ import { TvServices } from '@shared/services/tv-services';
 import { WishlistService } from '@shared/services/wishlist.service';
 import { Auth } from '@angular/fire/auth';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TrailerPlayerComponent } from '@shared/components/trailer-player/trailer-player';
 
 @Component({
   selector: 'app-details',
   standalone: true,
-  imports: [CommonModule, RouterModule,  MovieCard, Carousel],
+  imports: [CommonModule, RouterModule, MovieCard, Carousel, TrailerPlayerComponent],
   templateUrl: './details.html',
   styleUrls: ['./details.css'],
 })
@@ -41,70 +48,101 @@ export class Details implements OnInit {
   errorMsg = '';
   inWishlist = false;
   toggling = false;
+  showTrailer = false;
+  trailerKey = '';
+  openTrailer() {
+    this.showTrailer = true;
+  }
+
+  closeTrailer() {
+    this.showTrailer = false;
+  }
 
   private latestWishlistSet: Set<number> = new Set();
 
   ngOnInit(): void {
-    this.wishlist.wishlistIds$
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((set) => {
-        this.latestWishlistSet = set;
-        if (this.movieId) this.inWishlist = set.has(+this.movieId);
-      });
+    this.wishlist.wishlistIds$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((set) => {
+      this.latestWishlistSet = set;
+      if (this.movieId) this.inWishlist = set.has(+this.movieId);
+    });
 
-    this.route.paramMap
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((params) => {
-        const fullURL = params.get('id') ?? '';
-        const [idPart] = fullURL.split('-');
-        this.movieId = idPart;
+    this.route.paramMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
+      const fullURL = params.get('id') ?? '';
+      const [idPart] = fullURL.split('-');
+      this.movieId = idPart;
 
-        const path = this.route.snapshot.routeConfig?.path ?? '';
-        const isTv = path.startsWith('tv');
-        this.mediaType = isTv ? 'tv' : 'movie';
-        this.inWishlist = this.latestWishlistSet.has(+this.movieId);
+      const path = this.route.snapshot.routeConfig?.path ?? '';
+      const isTv = path.startsWith('tv');
+      this.mediaType = isTv ? 'tv' : 'movie';
+      this.inWishlist = this.latestWishlistSet.has(+this.movieId);
 
-        this.errorMsg = '';
-        this.loading = true;
-        if (isTv) this.loadTvDetails();
-        else this.loadMovieDetails();
-      });
+      this.errorMsg = '';
+      this.loading = true;
+      if (isTv) this.loadTvDetails();
+      else this.loadMovieDetails();
+    });
   }
 
   private loadMovieDetails(): void {
-    this.moviesService.getMoiveDetails(+this.movieId).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
-      next: (res: IMovieDetails) => {
-        this.details = res;
-        this.loading = false;
-      },
-      error: (err) => {
-        this.errorMsg = 'Failed to load movie details.';
-        this.loading = false;
-      },
-    });
+    this.moviesService
+      .getMoiveDetails(+this.movieId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (res: IMovieDetails) => {
+          this.details = res;
+          this.loading = false;
+        },
+        error: (err) => {
+          this.errorMsg = 'Failed to load movie details.';
+          this.loading = false;
+        },
+      });
 
-    this.moviesService.getMoivesRecommendations(+this.movieId).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
-      next: (res: IMoviesResponse) => (this.recommendations = res?.results ?? []),
-      error: (err) => console.error(err),
-    });
+    this.moviesService
+      .getMoivesRecommendations(+this.movieId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (res: IMoviesResponse) => (this.recommendations = res?.results ?? []),
+        error: (err) => console.error(err),
+      });
   }
 
   private loadTvDetails(): void {
-    this.tvservice.getTVDetails(+this.movieId).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
-      next: (res: IMovieDetails) => {
-        this.details = res;
-        this.loading = false;
-      },
-      error: (err) => {
-        this.errorMsg = 'Failed to load TV details.';
-        this.loading = false;
-      },
-    });
+    this.tvservice
+      .getTVDetails(+this.movieId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (res: IMovieDetails) => {
+          this.details = res;
+          this.loading = false;
+        },
+        error: (err) => {
+          this.errorMsg = 'Failed to load TV details.';
+          this.loading = false;
+        },
+      });
 
-    this.tvservice.getTvRecommendations(+this.movieId).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
-      next: (res: IMoviesResponse) => (this.recommendations = res?.results ?? []),
-      error: (err) => console.error(err),
-    });
+    this.tvservice
+      .getTvRecommendations(+this.movieId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (res: IMoviesResponse) => (this.recommendations = res?.results ?? []),
+        error: (err) => console.error(err),
+      });
+    this.tvservice
+      .getTvTrailer(+this.movieId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (res: TrailerResponse) => {
+          const trailer = res.results.find((v) => v.site === 'YouTube' && v.type === 'Trailer');
+
+          if (trailer) {
+            this.trailerKey = trailer.key;
+          } else {
+            this.trailerKey = '';
+          }
+        },
+      });
   }
 
   // 🧩 Getters لتفادي Parser Error
@@ -144,7 +182,12 @@ export class Details implements OnInit {
     return Array.from({ length: 5 - filled });
   }
   languagesList(langs?: { english_name: string }[] | null): string {
-    return Array.isArray(langs) ? langs.map((l) => l.english_name).filter(Boolean).join(', ') : '';
+    return Array.isArray(langs)
+      ? langs
+          .map((l) => l.english_name)
+          .filter(Boolean)
+          .join(', ')
+      : '';
   }
 
   // ❤️ Toggle wishlist من صفحة التفاصيل

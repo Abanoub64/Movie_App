@@ -1,3 +1,14 @@
-<div class="justify-center container align-middle">
-  <img src="/public/404-error.png" />
+<div class="min-h-screen flex flex-col items-center justify-center text-black px-4">
+  <h1 class="text-[8rem] font-extrabold text-red-600 select-none">
+    {{ languageService.t('notFoundTitle') }}
+  </h1>
+  <h2 class="text-2xl font-semibold mb-4">
+    {{ languageService.t('notFoundMessage') }}
+  </h2>
+  <button
+    class="px-6 py-3 bg-primary hover:bg-red-700 rounded-lg text-black font-medium transition"
+    (click)="goHome()"
+  >
+    {{ languageService.t('goHome') }}
+  </button>
 </div>

@@ -29,7 +29,7 @@ export class LanguageService {
       searchResults: 'Search Results',
       today: 'Today',
       thisWeek: 'This Week',
-      welcomeTitle: 'Welcome to our movie app',
+      welcomeTitle: 'Welcome to our Movie app',
       welcomeSubtitle: 'Millions of movies, TV shows and people to discover. Explore now.',
       companyName: 'ACME Industries Ltd.',
       companySlogan: 'Providing reliable tech since 1992',
@@ -47,6 +47,11 @@ export class LanguageService {
       name: 'Name',
       accountExists: 'This Account Exists',
       passwordNotMatch: 'Password Not Match',
+
+      // 🆕 Not Found Page
+      notFoundTitle: '404',
+      notFoundMessage: 'The page you are looking for was not found. Check the URL or return home.',
+      goHome: 'Back to Home',
     },
 
     ar: {
@@ -89,6 +94,11 @@ export class LanguageService {
       name: 'الاسم',
       accountExists: 'هذا الحساب موجود',
       passwordNotMatch: 'كلمة المرور غير متطابقة',
+
+      // 🆕 Not Found Page
+      notFoundTitle: '٤٠٤',
+      notFoundMessage: 'يبدو أنك دخلت على رابط غير موجود. تأكد من العنوان أو ارجع للصفحة الرئيسية.',
+      goHome: '⬅ الرجوع للرئيسية',
     },
 
     fr: {
@@ -132,6 +142,12 @@ export class LanguageService {
       name: 'Nom',
       accountExists: 'Ce compte existe',
       passwordNotMatch: 'Le mot de passe ne correspond pas',
+
+      // 🆕 Not Found Page
+      notFoundTitle: '404',
+      notFoundMessage:
+        "La page que vous recherchez n'existe pas. Vérifiez l'URL ou retournez à l'accueil.",
+      goHome: 'Retour à la page d’accueil',
     },
 
     zh: {
@@ -174,6 +190,11 @@ export class LanguageService {
       name: '姓名',
       accountExists: '该账户已存在',
       passwordNotMatch: '密码不匹配',
+
+      // 🆕 Not Found Page
+      notFoundTitle: '404',
+      notFoundMessage: '您访问的页面不存在。请检查 URL 或返回主页。',
+      goHome: '返回主页',
     },
   };
   constructor() {

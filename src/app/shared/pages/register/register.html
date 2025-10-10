@@ -1,91 +1,132 @@
-<div class="register-container container">
-  <h2>{{ languageService.t('signup') }}</h2>
+<body class="min-h-screen flex flex-col">
+  <!-- 📝 Register Section -->
+  <div class="flex-1 flex items-center justify-center">
+    <div class="w-full max-w-sm bg-white p-8 rounded-xl shadow-lg">
+      <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">
+        {{ languageService.t('signup') }}
+      </h2>
 
-  <form (ngSubmit)="onRegister()" #registerForm="ngForm" novalidate>
-    <div class="form-group">
-      <label for="name">{{ languageService.t('name') }}</label>
-      <input
-        type="text"
-        id="name"
-        name="name"
-        [(ngModel)]="name"
-        required
-        #nameCtrl="ngModel"
-        class="form-control"
-        placeholder="{{ languageService.t('name') }}"
-      />
-      @if (nameCtrl.invalid && nameCtrl.touched) {
-        <div class="text-danger">{{ languageService.t('name') }}</div>
-      }
+      <form (ngSubmit)="onRegister()" #registerForm="ngForm" novalidate class="space-y-4">
+        <!-- Name -->
+        <div>
+          <label for="name" class="block font-medium mb-1">
+            {{ languageService.t('name') }}
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            [(ngModel)]="name"
+            required
+            #nameCtrl="ngModel"
+            placeholder="{{ languageService.t('name') }}"
+            class="w-full rounded-lg border border-gray-300 bg-gray-50 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:bg-white"
+          />
+          @if (nameCtrl.invalid && nameCtrl.touched) {
+          <div class="text-sm text-red-600 mt-1">
+            {{ languageService.t('name') }}
+          </div>
+          }
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label for="email" class="block font-medium mb-1">
+            {{ languageService.t('email') }}
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            [(ngModel)]="email"
+            required
+            #emailCtrl="ngModel"
+            placeholder="{{ languageService.t('email') }}"
+            class="w-full rounded-lg border border-gray-300 bg-gray-50 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:bg-white"
+          />
+          @if (emailCtrl.invalid && emailCtrl.touched) {
+          <div class="text-sm text-red-600 mt-1">
+            {{ languageService.t('enterYourEmail') }}
+          </div>
+          }
+        </div>
+
+        <!-- Password -->
+        <div>
+          <label for="password" class="block font-medium mb-1">
+            {{ languageService.t('password') }}
+          </label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            [(ngModel)]="password"
+            required
+            minlength="6"
+            #passCtrl="ngModel"
+            placeholder="{{ languageService.t('password') }}"
+            class="w-full rounded-lg border border-gray-300 bg-gray-50 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:bg-white"
+          />
+          @if (passCtrl.invalid && passCtrl.touched) {
+          <div class="text-sm text-red-600 mt-1">
+            {{ languageService.t('passwordMustBeAtLeast6') }}
+          </div>
+          }
+        </div>
+
+        <!-- Confirm Password -->
+        <div>
+          <label for="confirmPassword" class="block font-medium mb-1">
+            {{ languageService.t('confirmPassword') }}
+          </label>
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            [(ngModel)]="confirmPassword"
+            required
+            #confirmCtrl="ngModel"
+            placeholder="{{ languageService.t('confirmPassword') }}"
+            class="w-full rounded-lg border border-gray-300 bg-gray-50 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:bg-white"
+          />
+          @if (confirmCtrl.invalid && confirmCtrl.touched) {
+          <div class="text-sm text-red-600 mt-1">
+            {{ languageService.t('confirmPassword') }}
+          </div>
+          }
+        </div>
+
+        <!-- Password mismatch -->
+        @if (passwordMismatch) {
+        <div class="text-sm text-red-600">
+          {{ languageService.t('passwordNotMatch') }}
+        </div>
+        }
+
+        <!-- Submit -->
+        <button
+          type="submit"
+          [disabled]="registerForm.invalid"
+          class="w-full bg-yellow-400 text-black font-medium py-2 rounded-lg transition hover:bg-yellow-500 disabled:opacity-60 disabled:cursor-not-allowed"
+        >
+          {{ languageService.t('signup') }}
+        </button>
+
+        <!-- Error Message -->
+        @if (errorMessage) {
+        <p class="text-center text-red-600 text-sm mt-3">
+          {{ errorMessage }}
+        </p>
+        }
+
+        <!-- Login link -->
+        <p class="text-center text-sm mt-4">
+          {{ languageService.t('accountExists') }}
+          <a routerLink="/login" class="text-blue-600 font-medium hover:underline">
+            {{ languageService.t('login') }}
+          </a>
+        </p>
+      </form>
     </div>
-
-    <div class="form-group">
-      <label for="email">{{ languageService.t('email') }}</label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        [(ngModel)]="email"
-        required
-        #emailCtrl="ngModel"
-        class="form-control"
-        placeholder="{{ languageService.t('email') }}"
-      />
-      @if (emailCtrl.invalid && emailCtrl.touched) {
-        <div class="text-danger">{{ languageService.t('enterYourEmail') }}</div>
-      }
-    </div>
-
-    <div class="form-group">
-      <label for="password">{{ languageService.t('Password') }}</label>
-      <input
-        type="password"
-        id="password"
-        name="password"
-        [(ngModel)]="password"
-        required
-        minlength="6"
-        #passCtrl="ngModel"
-        class="form-control"
-        placeholder="{{ languageService.t('Password') }}"
-      />
-      @if (passCtrl.invalid && passCtrl.touched) {
-        <div class="text-danger">{{ languageService.t('passwordMustBeAtLeast6') }}</div>
-      }
-    </div>
-
-    <div class="form-group">
-      <label for="confirmPassword">{{ languageService.t('confirmPassword') }}</label>
-      <input
-        type="password"
-        id="confirmPassword"
-        name="confirmPassword"
-        [(ngModel)]="confirmPassword"
-        required
-        #confirmCtrl="ngModel"
-        class="form-control"
-        placeholder="{{ languageService.t('confirmPassword') }}"
-      />
-      @if (confirmCtrl.invalid && confirmCtrl.touched) {
-        <div class="text-danger">{{ languageService.t('confirmPassword') }}</div>
-      }
-    </div>
-
-    @if (passwordMismatch) {
-      <div class="text-danger small mb-3">{{ languageService.t('passwordNotMatch') }}</div>
-    }
-
-    <button type="submit" [disabled]="registerForm.invalid">
-      {{ languageService.t('signup') }}
-    </button>
-
-    @if (errorMessage) {
-      <p class="text-danger text-center mt-3">{{ errorMessage }}</p>
-    }
-
-    <p class="text-center mt-3">
-      {{ languageService.t('accountExists') }}
-      <a routerLink="/login">{{ languageService.t('login') }}</a>
-    </p>
-  </form>
-</div>
+  </div>
+</body>

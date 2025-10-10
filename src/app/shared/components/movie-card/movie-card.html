@@ -1,5 +1,4 @@
 <div class="card style_1 relative" [attr.data-id]="movie.id">
-  <!-- Poster / Image -->
   <div class="image relative" (click)="goToMovie(movie.id)">
     <div class="wrapper glyphicons_v2 picture grey no_image_holder">
       <a class="image" [routerLink]="movieLink" [title]="getTitle(movie)" (click)="$event.stopPropagation()">
@@ -14,7 +13,6 @@
       </a>
     </div>
 
-    <!-- Kebab menu -->
     <button
       type="button"
       class="absolute top-2 right-2 w-9 h-9 rounded-full bg-[rgba(0,0,0,.6)] text-white flex items-center justify-center hover:bg-black/70 focus:outline-none focus:ring-2 focus:ring-white/70"
@@ -58,9 +56,7 @@
     }
   </div>
 
-  <!-- Content -->
   <div class="content flex flex-col items-start gap-2" (click)="goToMovie(movie.id)">
-    <!-- Score ring -->
     <div class="consensus" aria-label="User score">
       <div class="outer_ring" [style.background]="trackColor">
         <div class="user_score_chart" [style.background]="scoreColor">
@@ -75,17 +71,14 @@
       </div>
     </div>
 
-    <!-- Title -->
     <h2 class="line-clamp-2">
       <a [routerLink]="movieLink" [title]="getTitle(movie)" (click)="$event.stopPropagation()">
         {{ getTitle(movie) }}
       </a>
     </h2>
 
-    <!-- Date -->
     <p class="text-sm opacity-80">{{ displayDate }}</p>
 
-    <!-- Wishlist -->
     <button
       type="button"
       class="wishlist-btn"

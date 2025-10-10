@@ -6,6 +6,7 @@ import {
   IMovieDetails,
   IMovieDetailsResponse,
   IMoviesResponse,
+  TrailerResponse,
 } from '@shared/interface/interfaces';
 import { Observable } from 'rxjs';
 import { LanguageService } from './language-service';
@@ -34,6 +35,17 @@ export class TvServices {
     const language = this.languageService.currentLanguage();
     return this.http.get<IMoviesResponse>(
       `${this._baseUrl}/tv/${movieId}/recommendations?language=${this.languge}`,
+      {
+        headers: {
+          Authorization: `Bearer ${environment.apiKey}`,
+        },
+      }
+    );
+  }
+  getTvTrailer(movieId: number): Observable<TrailerResponse> {
+    const language = this.languageService.currentLanguage();
+    return this.http.get<TrailerResponse>(
+      `${this._baseUrl}tv/${movieId}/videos?language=${this.languge}`,
       {
         headers: {
           Authorization: `Bearer ${environment.apiKey}`,

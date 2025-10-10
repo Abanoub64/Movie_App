@@ -1,6 +1,6 @@
 .nav-dd__label {
-  color: #fff !important;
-  transition: color .15s ease;
+  color: black;
+  transition: color 0.15s ease;
 }
 
 .group:hover .nav-dd__label {
@@ -23,18 +23,25 @@
   background: #f3f4f6;
 }
 
-.nav-dd { position: relative; z-index: 1100; }
-.nav-dd__menu { z-index: 1200; overflow: visible; }
+.nav-dd {
+  position: relative;
+  z-index: 1100;
+}
+.nav-dd__menu {
+  z-index: 1200;
+  overflow: visible;
+}
 
-.navbar { overflow: visible; } 
+.navbar {
+  overflow: visible;
+}
 .nav-dd__menu .nav-dd__link:hover,
 .nav-dd__menu li:hover > .nav-dd__link {
   background: #facc15 !important;
-  color: #000 !important;         
+  color: #000 !important;
 }
 
 .nav-dd__menu .nav-dd__link:where(:hover, :focus) {
   background: #facc15 !important;
   color: #000 !important;
 }
-
