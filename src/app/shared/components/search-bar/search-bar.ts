@@ -18,4 +18,28 @@ export class SearchBar {
     this.searchString.set(input.value);
     this.searchChange.emit(input.value); // 👈 نبعت القيمة للـ parent
   }
+
+  isDark = signal(false);
+
+    ngOnInit() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      this.isDark.set(true);
+      document.body.classList.add('dark');
+    }
+  }
+
+  toggleTheme() {
+    const newTheme = !this.isDark();
+    this.isDark.set(newTheme);
+
+    if (newTheme) {
+      document.body.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.body.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }
+
 }

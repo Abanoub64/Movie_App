@@ -4,6 +4,7 @@
      [placeholder]="languageService.t('searchAndExplore')"
     [value]="searchString()"
     (input)="onChange($event)"
+  [attr.style]="isDark() ? '--placeholder-color: black;' : '--placeholder-color: gray;'"
   />
   <ng-content></ng-content>
 </div>
