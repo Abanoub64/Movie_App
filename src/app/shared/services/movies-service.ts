@@ -1,13 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
-import {
-  IMovie,
-  IMovieDetails,
-  IMovieDetailsResponse,
-  IMoviesResponse,
-  TrailerResponse,
-} from '@shared/interface/interfaces';
+import { IMovieDetails, IMoviesResponse, TrailerResponse } from '@shared/interface/interfaces';
 import { Observable } from 'rxjs';
 import { LanguageService } from './language-service';
 
@@ -16,14 +10,13 @@ import { LanguageService } from './language-service';
 })
 export class MoviesService {
   private _baseUrl: string = 'https://api.themoviedb.org/3/';
-  public lang: string = 'en-US';
   private languageService = inject(LanguageService);
   constructor(private http: HttpClient) {}
 
   getpopular(page: number): Observable<IMoviesResponse> {
     const language = this.languageService.currentLanguage();
     return this.http.get<IMoviesResponse>(
-      `${this._baseUrl}movie/popular?page=${page}?language=${language}`,
+      `${this._baseUrl}movie/popular?language=${language}&page=${page}`,
       {
         headers: {
           Authorization: `Bearer ${environment.apiKey}`,
@@ -62,8 +55,10 @@ export class MoviesService {
     );
   }
   getTrending(timeWindow: string): Observable<IMoviesResponse> {
+    const language = this.languageService.currentLanguage();
+
     return this.http.get<IMoviesResponse>(
-      `${this._baseUrl}trending/all/${timeWindow}?language=${this.lang}`,
+      `${this._baseUrl}trending/all/${timeWindow}?language=${language}`,
       {
         headers: {
           Authorization: `Bearer ${environment.apiKey}`,
@@ -72,8 +67,10 @@ export class MoviesService {
     );
   }
   gettop_ratedMovies(page: number): Observable<IMoviesResponse> {
+    const language = this.languageService.currentLanguage();
+
     return this.http.get<IMoviesResponse>(
-      `${this._baseUrl}/movie/top_rated?language=${this.lang}?page=${page}`,
+      `${this._baseUrl}movie/top_rated?language=${language}&page=${page}`,
       {
         headers: {
           Authorization: `Bearer ${environment.apiKey}`,
@@ -84,7 +81,7 @@ export class MoviesService {
   getupcomingMovies(page: number): Observable<IMoviesResponse> {
     const language = this.languageService.currentLanguage();
     return this.http.get<IMoviesResponse>(
-      `${this._baseUrl}/movie/upcoming?language=${language}?page=${page}`,
+      `${this._baseUrl}movie/upcoming?language=${language}&page=${page}`,
       {
         headers: {
           Authorization: `Bearer ${environment.apiKey}`,
@@ -95,7 +92,7 @@ export class MoviesService {
   getNow_playingMovies(page: number): Observable<IMoviesResponse> {
     const language = this.languageService.currentLanguage();
     return this.http.get<IMoviesResponse>(
-      `${this._baseUrl}/movie/now_playing?language=${language}?page=${page}`,
+      `${this._baseUrl}movie/now_playing?language=${language}&page=${page}`,
       {
         headers: {
           Authorization: `Bearer ${environment.apiKey}`,
@@ -106,7 +103,7 @@ export class MoviesService {
   getMovieTrailer(movieId: number): Observable<TrailerResponse> {
     const language = this.languageService.currentLanguage();
     return this.http.get<TrailerResponse>(
-      `${this._baseUrl}movie/${movieId}/videos?language=${this.lang}`,
+      `${this._baseUrl}movie/${movieId}/videos?language=${language}`,
       {
         headers: {
           Authorization: `Bearer ${environment.apiKey}`,
@@ -117,7 +114,7 @@ export class MoviesService {
   getPopularMovies(page: number): Observable<IMoviesResponse> {
     const language = this.languageService.currentLanguage();
     return this.http.get<IMoviesResponse>(
-      `${this._baseUrl}/movie/popular?language=${language}?page=${page}`,
+      `${this._baseUrl}movie/popular?language=${language}&page=${page}`,
       {
         headers: {
           Authorization: `Bearer ${environment.apiKey}`,

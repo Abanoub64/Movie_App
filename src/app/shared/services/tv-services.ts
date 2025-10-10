@@ -15,14 +15,13 @@ import { LanguageService } from './language-service';
 })
 export class TvServices {
   private _baseUrl: string = 'https://api.themoviedb.org/3/';
-  public lang: string = 'en-US';
   private languageService = inject(LanguageService);
   public languge = this.languageService.currentLanguage();
   constructor(private http: HttpClient) {}
 
   getTVpopular(page: number): Observable<IMoviesResponse> {
     return this.http.get<IMoviesResponse>(
-      `${this._baseUrl}tv/popular?page=${page}?language=${this.languge}`,
+      `${this._baseUrl}tv/popular?language=${this.languge}&page=${page}`,
       {
         headers: {
           Authorization: `Bearer ${environment.apiKey}`,
@@ -55,7 +54,7 @@ export class TvServices {
   }
   getTVDetails(movieId: number): Observable<IMovieDetails> {
     const language = this.languageService.currentLanguage();
-    return this.http.get<IMovieDetails>(`${this._baseUrl}tv/${movieId}?language=${language}`, {
+    return this.http.get<IMovieDetails>(`${this._baseUrl}tv/${movieId}?language=${this.languge}`, {
       headers: {
         Authorization: `Bearer ${environment.apiKey}`,
       },
@@ -63,7 +62,7 @@ export class TvServices {
   }
   getairing_today(page: number): Observable<IMoviesResponse> {
     return this.http.get<IMoviesResponse>(
-      `${this._baseUrl}tv/airing_today?page=${page}?language=${this.languge}`,
+      `${this._baseUrl}tv/airing_today?language=${this.languge}&page=${page}`,
       {
         headers: {
           Authorization: `Bearer ${environment.apiKey}`,
@@ -73,7 +72,7 @@ export class TvServices {
   }
   gettop_ratedMovies(page: number): Observable<IMoviesResponse> {
     return this.http.get<IMoviesResponse>(
-      `${this._baseUrl}tv/top_rated?page=${page}?language=${this.languge}`,
+      `${this._baseUrl}tv/top_rated?language=${this.languge}&page=${page}`,
       {
         headers: {
           Authorization: `Bearer ${environment.apiKey}`,
@@ -84,7 +83,7 @@ export class TvServices {
   geton_tv(page: number): Observable<IMoviesResponse> {
     const language = this.languageService.currentLanguage();
     return this.http.get<IMoviesResponse>(
-      `${this._baseUrl}tv/on_the_air?page=${page}?language=${this.languge}`,
+      `${this._baseUrl}tv/on_the_air?language=${this.languge}&page=${page}`,
       {
         headers: {
           Authorization: `Bearer ${environment.apiKey}`,
@@ -92,11 +91,11 @@ export class TvServices {
       }
     );
   }
-
+  //?language=${this.languge}&page=${page}
   getPopularMovies(page: number): Observable<IMoviesResponse> {
     const language = this.languageService.currentLanguage();
     return this.http.get<IMoviesResponse>(
-      `${this._baseUrl}tv/popular?page=${page}?language=${this.languge}`,
+      `${this._baseUrl}tv/popular?language=${this.languge}&page=${page}`,
       {
         headers: {
           Authorization: `Bearer ${environment.apiKey}`,
