@@ -1,4 +1,4 @@
-.nav-dd__label {
+/* .nav-dd__label {
   color: black;
   transition: color 0.15s ease;
 }
@@ -44,4 +44,9 @@
 .nav-dd__menu .nav-dd__link:where(:hover, :focus) {
   background: #facc15 !important;
   color: #000 !important;
+} */
+/* مش ضروري — للمرونة فقط */
+:host {
+  display: flex;
+  align-items: center;
 }

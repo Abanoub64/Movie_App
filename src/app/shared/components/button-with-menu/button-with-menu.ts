@@ -4,6 +4,7 @@ import { LanguageService } from '@shared/services/language-service';
 
 @Component({
   selector: 'app-button-with-menu',
+  standalone: true,
   imports: [RouterModule],
   templateUrl: './button-with-menu.html',
   styleUrl: './button-with-menu.css',

@@ -24,7 +24,7 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./navbar.css'],
 })
 export class Navbar {
-  private languageService = inject(LanguageService);
+  public languageService = inject(LanguageService);
 
   private userSignal = signal<{
     uid: string | null;

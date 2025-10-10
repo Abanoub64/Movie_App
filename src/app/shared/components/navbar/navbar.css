@@ -2,12 +2,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: nowrap;          
+  flex-wrap: nowrap;
   width: 100%;
-  white-space: nowrap;      
-  overflow: visible;         
-  position: relative;       
-  z-index: 1000;             
+  white-space: nowrap;
+  overflow: visible;
+  position: relative;
+  z-index: 1000;
 }
 
 .navbar > .flex-1,
@@ -25,8 +25,7 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  overflow: visible;  
-         
+  overflow: visible;
 }
 
 .menu.menu-horizontal li a {
@@ -36,7 +35,7 @@
   border-radius: 8px;
 }
 .menu.menu-horizontal li a:hover {
-  background: rgba(255,255,255,0.12);
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .btn.btn-ghost {
@@ -105,7 +104,7 @@
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.15s ease;
-  z-index: 1500; 
+  z-index: 1500;
 }
 .account-drawer.open {
   opacity: 1;
@@ -216,7 +215,7 @@
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s ease;
-  z-index: 2000; 
+  z-index: 2000;
 }
 .modal-backdrop.open {
   opacity: 1;
@@ -279,13 +278,17 @@
 .btn-save:hover {
   background: #1d4ed8;
 }
-.text-danger { color: #b91c1c; }
-.text-success { color: #16a34a; }
+.text-danger {
+  color: #b91c1c;
+}
+.text-success {
+  color: #16a34a;
+}
 
 /* ===== إصلاحات ال-dropdown الخاصة بـ DaisyUI ===== */
 /* أي عنصر dropdown داخل النافبار يكون فوق وبنص أسود */
 .navbar .dropdown,
- .navbar .menu li.dropdown {
+.navbar .menu li.dropdown {
   position: relative;
   overflow: visible;
   z-index: 1100;
@@ -296,18 +299,18 @@
 .navbar .dropdown .dropdown-content,
 .navbar .menu li .dropdown-content {
   position: absolute !important;
-  top: 100% !important;   
+  top: 100% !important;
   left: 0 !important;
-  display: none;          
+  display: none;
   min-width: 200px;
   max-height: 70vh;
   overflow: auto;
-  background: red ;
+  background: red;
   color: red;
   box-shadow: 0 12px 24px red;
   border-radius: 10px;
   padding: 6px 0;
-  z-index: 1200;         
+  z-index: 1200;
 }
 
 /* لو بتفتح بالهوفر */
@@ -318,7 +321,7 @@
 } */
 
 /* الروابط جوه القائمة */
- /* .dropdown .dropdown-content a,
+/* .dropdown .dropdown-content a,
  .menu .dropdown-content a {
   display: block;
   padding: 10px 14px;
@@ -330,5 +333,5 @@
 .navbar .menu .dropdown-content a:hover {
   background: red;
   color: red;
-  
+
 } */

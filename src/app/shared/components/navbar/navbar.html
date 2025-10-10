@@ -1,40 +1,26 @@
-<div class="navbar shadow-sm bg-primary text-black px-4 py-2 mb-2">
-  <div class="flex-1">
-    @if (isCurrentRoute('/login') || isCurrentRoute('/register')) { } @else {
-    <a class="btn btn-ghost text-xl" routerLink="/home" aria-label="Go to Home">Movie App</a>
-    <app-button-with-menu />
-    }
-  </div>
-
-  <div class="flex-none">
-    <!-- Language -->
-    <select
-      id="lang"
-      #langSelect
-      [ngModel]="currentLanguage()"
-      (change)="changeLanguage(langSelect.value)"
-      class="text-black px-3 py-2 rounded bg-transparent cursor-pointer focus:outline-none appearance-none"
-      aria-label="Change language"
+<nav class="bg-primary text-black shadow-lg">
+  <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+    <!-- Logo -->
+    <a
+      routerLink="/home"
+      class="text-xl text-black font-bold tracking-wide hover:opacity-90 transition"
     >
-      <option *ngFor="let lang of languages" [value]="lang.code">{{ lang.name }}</option>
-    </select>
+      🎬 Movie App
+    </a>
 
-    <!-- Auth links by route -->
-    @if (isCurrentRoute('/login')) {
-    <ul class="menu menu-horizontal px-1">
-      <li><a routerLink="/register">Sign Up</a></li>
-    </ul>
-    } @else if (isCurrentRoute('/register')) {
-    <ul class="menu menu-horizontal px-1">
-      <li><a routerLink="/login">Log in</a></li>
-    </ul>
-    } @else {
-    <ul class="menu menu-horizontal px-1">
-      @if (!isCurrentRoute('/home')) {
-      <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
-      }
+    <!-- Navigation Links -->
+    <ul class="hidden md:flex space-x-6 list-none">
       <li>
-        <a routerLink="/lists" routerLinkActive="active" aria-label="View My Lists">
+        <a routerLink="/home" routerLinkActive="font-semibold ">{{ t('home') }}</a>
+      </li>
+      <app-button-with-menu class="text-black" />
+      <li>
+        <a
+          routerLink="/lists"
+          routerLinkActive="active"
+          class="font-semibold"
+          aria-label="View My Lists"
+        >
           View My Lists
         </a>
       </li>
@@ -59,136 +45,175 @@
             />
           </svg>
           @let cnt = (count$ | async) ?? 0; @if (cnt > 0) {
-          <span class="wishlist-badge" aria-label="Wishlist count">{{ cnt }}</span> }
+          <span class="wishlist-badge" aria-label="Wishlist count">{{ cnt }}</span>
+          }
         </a>
       </li>
-      @if (!isLoggedIn()) {
-      <li><a routerLink="/login">Log in</a></li>
-      <li><a routerLink="/register">Sign Up</a></li>
-      } @else { }
     </ul>
 
-    @if (isLoggedIn()) {
-    <li>
-      <button class="icon-btn" (click)="openAccountDrawer()" aria-label="Account menu">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-          <path
-            d="M12 12c2.7 0 5-2.5 5-5.5S14.7 1 12 1 7 3.5 7 6.5 9.3 12 12 12Z"
-            stroke="currentColor"
-            stroke-width="1.5"
-          />
-          <path
-            d="M3 22c0-3.9 4-7 9-7s9 3.1 9 7"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-          />
-        </svg>
-      </button>
-    </li>
-    } @else {
-    <li><a routerLink="/login">Log in</a></li>
-    <li><a routerLink="/register">Sign Up</a></li>
-    } }
-  </div>
-</div>
-
-<!-- Drawer (hidden on /login & /register) -->
-@if (!isCurrentRoute('/login') && !isCurrentRoute('/register') && isLoggedIn()) {
-<div class="account-drawer" [class.open]="accountDrawerOpen" (click)="closeAccountDrawer()">
-  <div class="drawer-panel" (click)="$event.stopPropagation()">
-    <div class="drawer-header">
-      <div class="avatar">
-        <span>{{ (displayName() || email() || 'U').slice(0, 1).toUpperCase() }}</span>
+    <!-- Right side (Account + Language) -->
+    <div class="flex items-center space-x-4">
+      <!-- Language Dropdown -->
+      <div class="relative">
+        <select
+          class="text-black rounded px-2 py-1 text-sm focus:outline-none"
+          [ngModel]="currentLanguage()"
+          (ngModelChange)="changeLanguage($event)"
+        >
+          @for (lang of languages; track lang.code) {
+          <option [value]="lang.code">{{ lang.name }}</option>
+          }
+        </select>
       </div>
-      <div class="info">
-        <div class="name">{{ displayName() || 'No name' }}</div>
-        <div class="mail">{{ email() }}</div>
+
+      <!-- Account Button / Auth Links -->
+      <uL class="list-none flex">
+        @if (isLoggedIn()) {
+
+        <li>
+          <button
+            (click)="openAccountDrawer()"
+            aria-label="Account menu"
+            class="flex items-center justify-center w-10 h-10 rounded-full bg-white text-black hover:bg-gray-100 transition"
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path d="M12 12c2.7 0 5-2.5 5-5.5S14.7 1 12 1 7 3.5 7 6.5 9.3 12 12 12Z" />
+              <path d="M3 22c0-3.9 4-7 9-7s9 3.1 9 7" stroke-linecap="round" />
+            </svg>
+          </button>
+        </li>
+        } @else {
+        <li>
+          <a routerLink="/login" class="px-3 py-1 rounded-full text-black"> Log in </a>
+        </li>
+        <li>
+          <a routerLink="/register" class="px-3 py-1 rounded-full text-black"> Sign Up </a>
+        </li>
+        }
+      </uL>
+      @if (!isCurrentRoute('/login') && !isCurrentRoute('/register') && isLoggedIn()) {
+      <div
+        class="fixed inset-0 bg-black/50 z-50"
+        [class.hidden]="!accountDrawerOpen"
+        (click)="closeAccountDrawer()"
+      >
+        <div
+          class="absolute right-0 top-0 h-full w-80 bg-white text-black shadow-2xl transform transition-transform duration-300"
+          [class.translate-x-0]="accountDrawerOpen"
+          [class.translate-x-full]="!accountDrawerOpen"
+          (click)="$event.stopPropagation()"
+        >
+          <!-- Header -->
+          <div class="flex items-center justify-between p-4 border-b">
+            <div class="flex items-center space-x-3">
+              <div
+                class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-lg font-semibold"
+              >
+                {{ (displayName() || email() || 'U').slice(0, 1).toUpperCase() }}
+              </div>
+              <div>
+                <div class="font-semibold">{{ displayName() || 'No name' }}</div>
+                <div class="text-sm text-gray-600">{{ email() }}</div>
+              </div>
+            </div>
+            <button
+              (click)="closeAccountDrawer()"
+              class="text-gray-500 hover:text-black text-2xl leading-none"
+            >
+              ×
+            </button>
+          </div>
+
+          <!-- Actions -->
+          <div class="p-4 space-y-2">
+            <button
+              (click)="goChangePassword()"
+              class="w-full text-left px-4 py-2 rounded hover:bg-gray-100 transition"
+            >
+              Change password
+            </button>
+            <button
+              (click)="goChangeUsername()"
+              class="w-full text-left px-4 py-2 rounded hover:bg-gray-100 transition"
+            >
+              Change username
+            </button>
+            <button
+              (click)="deleteAccount()"
+              class="w-full text-left px-4 py-2 rounded text-red-600 hover:bg-red-50 transition"
+            >
+              Delete account
+            </button>
+          </div>
+
+          <!-- Footer -->
+          <div class="p-4 border-t">
+            <button
+              (click)="logout()"
+              class="w-full py-2 rounded bg-red-600 text-white hover:bg-red-700 transition"
+            >
+              Logout
+            </button>
+          </div>
+        </div>
       </div>
-      <button class="close-btn" (click)="closeAccountDrawer()">×</button>
-    </div>
+      } @if (passwordModalOpen) {
+      <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+        <div
+          class="bg-white text-black rounded-xl shadow-lg p-6 w-full max-w-sm"
+          (click)="$event.stopPropagation()"
+        >
+          <h3 class="text-lg font-semibold mb-4">Change Password</h3>
 
-    <div class="drawer-actions">
-      <button class="drawer-item" (click)="goChangePassword()">Change password</button>
-      <button class="drawer-item" (click)="goChangeUsername()">Change username</button>
-      <button class="drawer-item danger" (click)="deleteAccount()">Delete account</button>
-    </div>
+          <input
+            type="password"
+            [(ngModel)]="currentPassword"
+            placeholder="Current Password"
+            class="w-full px-3 py-2 border rounded mb-2 focus:outline-none focus:ring-2 focus:ring-primary"
+          />
+          <input
+            type="password"
+            [(ngModel)]="newPassword"
+            placeholder="New Password"
+            class="w-full px-3 py-2 border rounded mb-2 focus:outline-none focus:ring-2 focus:ring-primary"
+          />
+          <input
+            type="password"
+            [(ngModel)]="confirmPassword"
+            placeholder="Confirm New Password"
+            class="w-full px-3 py-2 border rounded mb-2 focus:outline-none focus:ring-2 focus:ring-primary"
+          />
 
-    <div class="drawer-footer">
-      <button class="logout-btn" (click)="logout()">Logout</button>
+          @if (passwordError) {
+          <p class="text-red-500 text-sm mb-2">{{ passwordError }}</p>
+          } @if (passwordSuccess) {
+          <p class="text-green-600 text-sm mb-2">{{ passwordSuccess }}</p>
+          }
+
+          <div class="flex justify-end space-x-2">
+            <button
+              (click)="closePasswordModal()"
+              class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+            >
+              Cancel
+            </button>
+            <button
+              (click)="savePassword()"
+              class="px-3 py-1 bg-primary text-white rounded hover:bg-primary/90"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+      }
     </div>
   </div>
-</div>
-}
-
-<!-- Username Modal -->
-<div class="modal-backdrop" [class.open]="usernameModalOpen" (click)="closeUsernameModal()">
-  <div class="modal-panel" (click)="$event.stopPropagation()">
-    <h3 class="modal-title">Change Username</h3>
-
-    <label class="modal-label" for="username">New Username</label>
-    <input
-      id="username"
-      type="text"
-      [(ngModel)]="newUsername"
-      class="modal-input"
-      placeholder="Enter new username"
-    />
-
-    <div class="modal-actions">
-      <button class="btn-cancel" (click)="closeUsernameModal()">Cancel</button>
-      <button class="btn-save" (click)="saveUsername()">Save</button>
-    </div>
-
-    @if (usernameError) {
-    <p class="text-danger">{{ usernameError }}</p>
-    } @if (usernameSuccess) {
-    <p class="text-success">{{ usernameSuccess }}</p>
-    }
-  </div>
-</div>
-
-<!-- Password Modal -->
-<div class="modal-backdrop" [class.open]="passwordModalOpen" (click)="closePasswordModal()">
-  <div class="modal-panel" (click)="$event.stopPropagation()">
-    <h3 class="modal-title">Change Password</h3>
-
-    <label class="modal-label" for="currentPassword">Current Password</label>
-    <input
-      id="currentPassword"
-      type="password"
-      [(ngModel)]="currentPassword"
-      class="modal-input"
-      placeholder="Enter current password"
-    />
-
-    <label class="modal-label" for="newPassword">New Password</label>
-    <input
-      id="newPassword"
-      type="password"
-      [(ngModel)]="newPassword"
-      class="modal-input"
-      placeholder="Enter new password"
-    />
-
-    <label class="modal-label" for="confirmPassword">Confirm New Password</label>
-    <input
-      id="confirmPassword"
-      type="password"
-      [(ngModel)]="confirmPassword"
-      class="modal-input"
-      placeholder="Confirm new password"
-    />
-
-    <div class="modal-actions">
-      <button class="btn-cancel" (click)="closePasswordModal()">Cancel</button>
-      <button class="btn-save" (click)="savePassword()">Save</button>
-    </div>
-
-    @if (passwordError) {
-    <p class="text-danger">{{ passwordError }}</p>
-    } @if (passwordSuccess) {
-    <p class="text-success">{{ passwordSuccess }}</p>
-    }
-  </div>
-</div>
+</nav>

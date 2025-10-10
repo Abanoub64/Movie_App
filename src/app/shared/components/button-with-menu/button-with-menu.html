@@ -1,59 +1,111 @@
-<!-- Movies -->
-<div class="nav-dd group relative inline-block text-black mx-5">
-  <div class="nav-dd__label cursor-pointer font-semibold text-sm">
-    {{ languageService.t('movies') }}
-  </div>
+<!-- Movies Dropdown -->
+<div class="relative group mx-3">
+  <button
+    class="font-semibold text-sm flex items-center space-x-1 cursor-pointer hover:text-yellow-400 transition"
+  >
+    <span>{{ languageService.t('movies') }}</span>
+    <svg
+      class="w-4 h-4 transition-transform group-hover:rotate-180"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      viewBox="0 0 24 24"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+    </svg>
+  </button>
 
+  <!-- Menu -->
   <ul
-    class="nav-dd__menu menu menu-vertical absolute left-0 mt-0 bg-base-200 rounded-box shadow-lg hidden group-hover:block"
+    class="absolute left-0 mt-1 w-40 bg-white rounded-lg shadow-lg border border-gray-200 py-1 opacity-0 scale-y-0 group-hover:opacity-100 group-hover:scale-y-100 origin-top transition-all duration-200 ease-out z-50"
   >
     <li>
-      <a class="nav-dd__link" [routerLink]="['/movie/populer']">{{
-        languageService.t('popular')
-      }}</a>
+      <a
+        [routerLink]="['/movie/populer']"
+        class="block px-4 py-2 text-sm text-gray-800 hover:bg-yellow-400 hover:text-black transition"
+      >
+        {{ languageService.t('popular') }}
+      </a>
     </li>
     <li>
-      <a class="nav-dd__link" [routerLink]="['/movie/nowplaying']">{{
-        languageService.t('nowPlaying')
-      }}</a>
+      <a
+        [routerLink]="['/movie/nowplaying']"
+        class="block px-4 py-2 text-sm text-gray-800 hover:bg-yellow-400 hover:text-black transition"
+      >
+        {{ languageService.t('nowPlaying') }}
+      </a>
     </li>
     <li>
-      <a class="nav-dd__link" [routerLink]="['/movie/upcoming']">{{
-        languageService.t('upcoming')
-      }}</a>
+      <a
+        [routerLink]="['/movie/upcoming']"
+        class="block px-4 py-2 text-sm text-gray-800 hover:bg-yellow-400 hover:text-black transition"
+      >
+        {{ languageService.t('upcoming') }}
+      </a>
     </li>
     <li>
-      <a class="nav-dd__link" [routerLink]="['/movie/toprated']">{{
-        languageService.t('topRated')
-      }}</a>
+      <a
+        [routerLink]="['/movie/toprated']"
+        class="block px-4 py-2 text-sm text-gray-800 hover:bg-yellow-400 hover:text-black transition"
+      >
+        {{ languageService.t('topRated') }}
+      </a>
     </li>
   </ul>
 </div>
 
-<!-- TV Shows -->
-<div class="nav-dd group relative inline-block mx-5">
-  <div class="nav-dd__label cursor-pointer font-semibold text-sm">
-    {{ languageService.t('tvShows') }}
-  </div>
+<!-- TV Shows Dropdown -->
+<div class="relative group mx-3">
+  <button
+    class="font-semibold text-sm flex items-center space-x-1 cursor-pointer hover:text-yellow-400 transition"
+  >
+    <span>{{ languageService.t('tvShows') }}</span>
+    <svg
+      class="w-4 h-4 transition-transform group-hover:rotate-180"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      viewBox="0 0 24 24"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+    </svg>
+  </button>
 
+  <!-- Menu -->
   <ul
-    class="nav-dd__menu menu menu-vertical absolute left-0 mt-0 bg-base-200 rounded-box shadow-lg hidden group-hover:block"
+    class="absolute left-0 mt-1 w-40 bg-white rounded-lg shadow-lg border border-gray-200 py-1 opacity-0 scale-y-0 group-hover:opacity-100 group-hover:scale-y-100 origin-top transition-all duration-200 ease-out z-50"
   >
     <li>
-      <a class="nav-dd__link" [routerLink]="['/tv/populer']">{{ languageService.t('popular') }}</a>
+      <a
+        [routerLink]="['/tv/populer']"
+        class="block px-4 py-2 text-sm text-gray-800 hover:bg-yellow-400 hover:text-black transition"
+      >
+        {{ languageService.t('popular') }}
+      </a>
     </li>
     <li>
-      <a class="nav-dd__link" [routerLink]="['/tv/airing']">{{
-        languageService.t('airingToday')
-      }}</a>
+      <a
+        [routerLink]="['/tv/airing']"
+        class="block px-4 py-2 text-sm text-gray-800 hover:bg-yellow-400 hover:text-black transition"
+      >
+        {{ languageService.t('airingToday') }}
+      </a>
     </li>
     <li>
-      <a class="nav-dd__link" [routerLink]="['/tv/ontv']">{{ languageService.t('onTv') }}</a>
+      <a
+        [routerLink]="['/tv/ontv']"
+        class="block px-4 py-2 text-sm text-gray-800 hover:bg-yellow-400 hover:text-black transition"
+      >
+        {{ languageService.t('onTv') }}
+      </a>
     </li>
     <li>
-      <a class="nav-dd__link" [routerLink]="['/tv/toprated']">{{
-        languageService.t('topRated')
-      }}</a>
+      <a
+        [routerLink]="['/tv/toprated']"
+        class="block px-4 py-2 text-sm text-gray-800 hover:bg-yellow-400 hover:text-black transition"
+      >
+        {{ languageService.t('topRated') }}
+      </a>
     </li>
   </ul>
 </div>
