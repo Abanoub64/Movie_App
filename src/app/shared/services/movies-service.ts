@@ -102,14 +102,11 @@ export class MoviesService {
   }
   getMovieTrailer(movieId: number): Observable<TrailerResponse> {
     const language = this.languageService.currentLanguage();
-    return this.http.get<TrailerResponse>(
-      `${this._baseUrl}movie/${movieId}/videos?language=${language}`,
-      {
-        headers: {
-          Authorization: `Bearer ${environment.apiKey}`,
-        },
-      }
-    );
+    return this.http.get<TrailerResponse>(`${this._baseUrl}movie/${movieId}/videos`, {
+      headers: {
+        Authorization: `Bearer ${environment.apiKey}`,
+      },
+    });
   }
   getPopularMovies(page: number): Observable<IMoviesResponse> {
     const language = this.languageService.currentLanguage();

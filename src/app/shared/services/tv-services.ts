@@ -43,14 +43,11 @@ export class TvServices {
   }
   getTvTrailer(movieId: number): Observable<TrailerResponse> {
     const language = this.languageService.currentLanguage();
-    return this.http.get<TrailerResponse>(
-      `${this._baseUrl}tv/${movieId}/videos?language=${this.languge}`,
-      {
-        headers: {
-          Authorization: `Bearer ${environment.apiKey}`,
-        },
-      }
-    );
+    return this.http.get<TrailerResponse>(`${this._baseUrl}tv/${movieId}/videos`, {
+      headers: {
+        Authorization: `Bearer ${environment.apiKey}`,
+      },
+    });
   }
   getTVDetails(movieId: number): Observable<IMovieDetails> {
     const language = this.languageService.currentLanguage();
