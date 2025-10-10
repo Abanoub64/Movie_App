@@ -16,12 +16,10 @@
   <div class="wl-grid">
     @for (it of items; track it.id) {
     <div class="wl-card">
-      <!-- Poster -->
       <div class="wl-poster" (click)="goToDetails(it.id)">
         <img [src]="poster(it)" [alt]="it.title" alt="" />
       </div>
 
-      <!-- Content -->
       <div class="wl-body" (click)="goToDetails(it.id)">
         <div class="wl-head">
           <h2 class="wl-name">{{ it.title }}</h2>
@@ -51,7 +49,6 @@
           </button>
         </div>
 
-        <!-- Meta inline -->
         <div class="wl-meta">
           <span class="wl-date">{{ displayDate(it) }}</span>
           @if (displayDate(it)) {

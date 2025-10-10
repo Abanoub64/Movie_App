@@ -22,13 +22,10 @@ type MediaPayload = {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListDialog implements OnInit {
-  /** فتح/قفل الدايالوج من الأب */
   @Input() open = false;
 
-  /** الفيلم المطلوب إضافته */
   @Input() media?: MediaPayload;
 
-  /** بينادي الأب يقفل الدايالوج */
   @Output() closed = new EventEmitter<void>();
 
   private listsSvc = inject(ListsService);
@@ -65,7 +62,6 @@ export class ListDialog implements OnInit {
   }
 
   createList() {
-    // مرر بيانات الفيلم (اختياري) عشان يضاف تلقائي بعد الإنشاء
     const q = this.media ? {
       movieId: String(this.media.id),
       title: this.media.title ?? '',

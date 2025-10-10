@@ -3,18 +3,18 @@ import { Component, inject } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, updateProfile } from '@angular/fire/auth';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { Navbar } from '@shared/components/navbar/navbar';
 import { LanguageService } from '@shared/services/language-service';
 
 @Component({
   selector: 'app-register',
-  standalone:true,
+  standalone: true,
   templateUrl: './register.html',
   styleUrls: ['./register.css'],
-  imports: [FormsModule,CommonModule,Navbar,RouterLink]
+  imports: [FormsModule, CommonModule, RouterLink],
 })
 export class Register {
   languageService = inject(LanguageService);
+
   name = '';
   email = '';
   password = '';
@@ -23,43 +23,45 @@ export class Register {
 
   constructor(private auth: Auth, private router: Router) {}
 
-  // تحقق من تطابق الباسورد
   get passwordMismatch() {
     return this.password && this.confirmPassword && this.password !== this.confirmPassword;
   }
 
-  // عند الضغط على Sign Up
-  onRegister() {
-    // validation للإيميل
+  async onRegister() {
+    this.errorMessage = '';
+
     const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
     if (!emailRegex.test(this.email)) {
-      this.errorMessage = 'البريد الإلكتروني غير صالح';
+      this.errorMessage = 'Email is Not Valid';
       return;
     }
 
-    // validation للباسورد
+    if (!this.name.trim()) {
+      this.errorMessage = 'Name is required';
+      return;
+    }
+
     const passRegex = /^[A-Za-z0-9]{6,}$/;
     if (!passRegex.test(this.password)) {
-      this.errorMessage = 'كلمة المرور يجب أن تكون 6 أحرف أو أرقام على الأقل';
+      this.errorMessage = 'PassWord Must Contain 6 Character';
       return;
     }
 
     if (this.passwordMismatch) {
-      this.errorMessage = 'كلمة المرور غير متطابقة';
+      this.errorMessage = 'PassWord Not Match';
       return;
     }
 
-    // إنشاء المستخدم في Firebase
-    createUserWithEmailAndPassword(this.auth, this.email, this.password)
-      .then(userCredential => {
-        // تحديث الاسم
-        return updateProfile(userCredential.user, { displayName: this.name });
-      })
-      .then(() => {
-        this.router.navigate(['/home']); // تحويل المستخدم للصفحة الرئيسية
-      })
-      .catch(err => {
-        this.errorMessage = err.message;
-      });
+    try {
+      const cred = await createUserWithEmailAndPassword(this.auth, this.email, this.password);
+      await updateProfile(cred.user, { displayName: this.name.trim() });
+
+      await cred.user.reload();
+
+
+      await this.router.navigate(['/home']);
+    } catch (err: any) {
+      this.errorMessage = err?.message || 'Registration failed';
+    }
   }
 }

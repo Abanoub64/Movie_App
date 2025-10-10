@@ -1,48 +1,71 @@
 <div class="page">
-
-
   <section class="details-card">
+    @if (details) {
+      <button
+        class="details-like"
+        type="button"
+        [class.active]="inWishlist"
+        [disabled]="toggling"
+        (click)="toggleWishlistFromDetails()"
+        [attr.aria-pressed]="inWishlist"
+        [attr.aria-label]="inWishlist ? 'Remove from wishlist' : 'Add to wishlist'"
+        title="{{ inWishlist ? 'Remove from wishlist' : 'Add to wishlist' }}"
+      >
+        <svg width="30" height="27" viewBox="0 0 30 27" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path
+            d="M15.7225 24.8837C15.2831 25.0388 14.5595 25.0388 14.1202 24.8837C10.373 23.6045 2 18.268 2 9.22302C2 5.23033 5.21741 2 9.18426 2C11.5359 2 13.6163 3.13708 14.9213 4.89438C16.2264 3.13708 18.3196 2 20.6584 2C24.6253 2 27.8427 5.23033 27.8427 9.22302C27.8427 18.268 19.4696 23.6045 15.7225 24.8837Z"
+            stroke="#292D32"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            [attr.fill]="inWishlist ? '#FFE353' : 'none'"
+            [attr.stroke]="inWishlist ? '#000000' : '#9CA3AF'"
+          />
+        </svg>
+        <span class="sr-only">{{ inWishlist ? 'Saved' : 'Save' }}</span>
+      </button>
+    }
+
     <div class="poster-col">
-      <img
-        alt=""
+      <img alt=""
         [src]="imgPoster(details?.poster_path || null)"
-        [alt]="details?.title || 'poster'"
+        [alt]="titleText || 'poster'"
         class="poster"
         loading="eager"
       />
     </div>
 
+    <!-- Info -->
     <div class="info-col">
-      <h1 class="title">{{ details?.title }}</h1>
-      <div>{{ details?.release_date | date : 'MMM d, y' }}</div>
+      <h1 class="title">{{ titleText }}</h1>
+      <div>{{ releaseDateText | date : 'MMM d, y' }}</div>
 
       @if (details) {
-      <div class="rating-row">
-        <div class="stars">
-          @for (s of ratingStars(details.vote_average); track $index) {
-          <span class="star filled">★</span>
-          } @for (s of emptyStars(details.vote_average); track $index) {
-          <span class="star">★</span>
-          }
+        <div class="rating-row">
+          <div class="stars">
+            @for (s of ratingStars(details.vote_average); track $index) {
+              <span class="star filled">★</span>
+            }
+            @for (s of emptyStars(details.vote_average); track $index) {
+              <span class="star">★</span>
+            }
+          </div>
+          <div class="vote-count">{{ details.vote_count | number }}</div>
         </div>
-        <div class="vote-count">{{ details.vote_count | number }}</div>
-      </div>
       }
 
-      <p class="overview">
-        {{ details?.overview }}
-      </p>
+      <p class="overview">{{ details?.overview }}</p>
 
       <div class="chips">
         @for (g of details?.genres; track g.id) {
-        <span class="chip">{{ g.name }}</span>
+          <span class="chip">{{ g.name }}</span>
         }
       </div>
 
       <div class="meta">
         <div class="meta-item">
           <span>Duration:</span>
-          <span class="value">{{ details?.runtime }} Min.</span>
+          <span class="value">{{ minutesToHM(details?.runtime ?? null) }}</span>
         </div>
         <div class="meta-item">
           <span>Languages:</span>
@@ -51,13 +74,15 @@
       </div>
 
       <div class="companies">
-        @for (c of details?.production_companies; track c.id) { @if (c.logo_path) {
-        <img [src]="imgLogo(c.logo_path)" [alt]="c.name" class="company-logo" alt="" />
-        } }
+        @for (c of details?.production_companies; track c.id) {
+          @if (c.logo_path) {
+            <img alt="" [src]="imgLogo(c.logo_path)" [alt]="c.name" class="company-logo" />
+          }
+        }
       </div>
 
       @if (details?.homepage) {
-      <a [href]="details?.homepage" target="_blank" class="btn-ghost"> Website </a>
+        <a [href]="details?.homepage" target="_blank" class="btn-ghost">Website</a>
       }
     </div>
   </section>
@@ -66,9 +91,9 @@
     <h2 class="recs-title">Recommendations</h2>
     <app-carousel>
       @for (item of recommendations; track item.id) {
-      <div class="carousel-item p-3">
-        <app-movie-card [movie]="item"></app-movie-card>
-      </div>
+        <div class="carousel-item p-3">
+          <app-movie-card [movie]="item"></app-movie-card>
+        </div>
       }
     </app-carousel>
   </section>

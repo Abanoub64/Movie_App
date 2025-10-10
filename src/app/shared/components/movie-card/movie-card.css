@@ -274,3 +274,14 @@
 .mc-hint-btn:hover {
   filter: brightness(0.95);
 }
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.cards-grid .card {
+  width: 100%;
+  display: block; 
+}

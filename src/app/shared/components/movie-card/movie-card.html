@@ -1,25 +1,31 @@
-<div class="card style_1 relative">
-  <div (click)="goToMovie(movie.id)" class="image relative">
+<div class="card style_1 relative" [attr.data-id]="movie.id">
+  <!-- Poster / Image -->
+  <div class="image relative" (click)="goToMovie(movie.id)">
     <div class="wrapper glyphicons_v2 picture grey no_image_holder">
-      <a class="image" [routerLink]="movieLink" [title]="movie.title">
-        <img
-          alt=""
-          loading="lazy"
+      <a class="image" [routerLink]="movieLink" [title]="getTitle(movie)" (click)="$event.stopPropagation()">
+        <img alt=""
           class="poster w-full"
           [src]="posterUrl"
           [attr.srcset]="posterUrl + ' 1x, ' + posterUrl2x + ' 2x'"
-          [alt]="movie.title"
+          [alt]="getTitle(movie) || 'Poster'"
+          loading="lazy"
+          decoding="async"
         />
       </a>
     </div>
 
+    <!-- Kebab menu -->
     <button
       type="button"
-      class="absolute top-2 right-2 w-9 h-9 rounded-full bg-[rgba(0,0,0,.6)] text-white flex items-center justify-center hover:bg-black/70"
+      class="absolute top-2 right-2 w-9 h-9 rounded-full bg-[rgba(0,0,0,.6)] text-white flex items-center justify-center hover:bg-black/70 focus:outline-none focus:ring-2 focus:ring-white/70"
+      aria-haspopup="menu"
+      [attr.aria-expanded]="menuOpen"
       aria-label="More options"
       (click)="onMenuClick($event)"
+      (keydown.enter)="onMenuClick($event)"
+      (keydown.space)="onMenuClick($event)"
     >
-      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <circle cx="12" cy="5" r="2"></circle>
         <circle cx="12" cy="12" r="2"></circle>
         <circle cx="12" cy="19" r="2"></circle>
@@ -27,38 +33,59 @@
     </button>
 
     @if (menuOpen) {
-    <div class="mc-menu absolute top-12 right-2 z-20">
-      <ul class="mc-menu-list">
-        @for (opt of menuOptions; track opt.label) {
-        <li (click)="handleOption(opt.key, $event)">
-          <span class="mi">{{ opt.icon }}</span> {{ opt.label }}
-        </li>
-        }
-      </ul>
-    </div>
+      <div
+        class="mc-menu absolute top-12 right-2 z-20"
+        role="menu"
+        [attr.aria-label]="getTitle(movie) + ' options'"
+        (click)="$event.stopPropagation()"
+        (keydown.escape)="menuOpen=false"
+      >
+        <ul class="mc-menu-list">
+          @for (opt of menuOptions; track opt.key) {
+            <li
+              role="menuitem"
+              tabindex="0"
+              (click)="handleOption(opt.key, $event)"
+              (keydown.enter)="handleOption(opt.key, $event)"
+              (keydown.space)="handleOption(opt.key, $event)"
+            >
+              <span class="mi">{{ opt.icon }}</span>
+              <span class="label">{{ opt.label }}</span>
+            </li>
+          }
+        </ul>
+      </div>
     }
   </div>
 
+  <!-- Content -->
   <div class="content flex flex-col items-start gap-2" (click)="goToMovie(movie.id)">
-    <div class="consensus">
+    <!-- Score ring -->
+    <div class="consensus" aria-label="User score">
       <div class="outer_ring" [style.background]="trackColor">
         <div class="user_score_chart" [style.background]="scoreColor">
           <div class="percent">
-            @if (userScorePercent== 0) {
-            <span>NR</span>
-            }@else if(userScorePercent > 0) {
-
-            <span class="icon" [attr.data-percent]="userScorePercent"></span>
+            @if (userScorePercent === 0) {
+              <span aria-label="No rating">NR</span>
+            } @else if (userScorePercent > 0) {
+              <span class="icon" [attr.data-percent]="userScorePercent" [attr.aria-label]="userScorePercent + '% user score'"></span>
             }
           </div>
         </div>
       </div>
     </div>
 
-    <h2>
-      <a [href]="movieUrl" [title]="getTitle(movie)">{{ getTitle(movie) }}</a>
+    <!-- Title -->
+    <h2 class="line-clamp-2">
+      <a [routerLink]="movieLink" [title]="getTitle(movie)" (click)="$event.stopPropagation()">
+        {{ getTitle(movie) }}
+      </a>
     </h2>
-    <p>{{ movie.release_date }}</p>
+
+    <!-- Date -->
+    <p class="text-sm opacity-80">{{ displayDate }}</p>
+
+    <!-- Wishlist -->
     <button
       type="button"
       class="wishlist-btn"
@@ -66,15 +93,9 @@
       [disabled]="toggling"
       (click)="toggleWishlist($event)"
       [attr.aria-pressed]="inWishlist"
-      aria-label="Toggle wishlist"
+      [attr.aria-label]="inWishlist ? 'Remove from wishlist' : 'Add to wishlist'"
     >
-      <svg
-        width="30"
-        height="27"
-        viewBox="0 0 30 27"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
+      <svg width="30" height="27" viewBox="0 0 30 27" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path
           d="M15.7225 24.8837C15.2831 25.0388 14.5595 25.0388 14.1202 24.8837C10.373 23.6045 2 18.268 2 9.22302C2 5.23033 5.21741 2 9.18426 2C11.5359 2 13.6163 3.13708 14.9213 4.89438C16.2264 3.13708 18.3196 2 20.6584 2C24.6253 2 27.8427 5.23033 27.8427 9.22302C27.8427 18.268 19.4696 23.6045 15.7225 24.8837Z"
           stroke="#292D32"
@@ -85,8 +106,9 @@
           [attr.stroke]="inWishlist ? '#000000' : '#9CA3AF'"
         />
       </svg>
+      <span class="sr-only">{{ inWishlist ? 'Saved' : 'Save' }}</span>
     </button>
   </div>
 
-  <div class="hover" [attr.data-id]="movie.id"></div>
+  <div class="hover" [attr.data-id]="movie.id" aria-hidden="true"></div>
 </div>

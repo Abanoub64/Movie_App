@@ -1,7 +1,7 @@
 <div class="register-container container">
   <h2>{{ languageService.t('signup') }}</h2>
 
-  <form (ngSubmit)="onRegister()" #registerForm="ngForm">
+  <form (ngSubmit)="onRegister()" #registerForm="ngForm" novalidate>
     <div class="form-group">
       <label for="name">{{ languageService.t('name') }}</label>
       <input
@@ -12,10 +12,10 @@
         required
         #nameCtrl="ngModel"
         class="form-control"
+        placeholder="{{ languageService.t('name') }}"
       />
-
       @if (nameCtrl.invalid && nameCtrl.touched) {
-      <div class="text-danger">{{ languageService.t('name') }}</div>
+        <div class="text-danger">{{ languageService.t('name') }}</div>
       }
     </div>
 
@@ -29,10 +29,10 @@
         required
         #emailCtrl="ngModel"
         class="form-control"
+        placeholder="{{ languageService.t('email') }}"
       />
-
       @if (emailCtrl.invalid && emailCtrl.touched) {
-      <div class="text-danger">{{ languageService.t('enterYourEmail') }}</div>
+        <div class="text-danger">{{ languageService.t('enterYourEmail') }}</div>
       }
     </div>
 
@@ -47,10 +47,10 @@
         minlength="6"
         #passCtrl="ngModel"
         class="form-control"
+        placeholder="{{ languageService.t('Password') }}"
       />
-
       @if (passCtrl.invalid && passCtrl.touched) {
-      <div class="text-danger">{{ languageService.t('passwordMustBeAtLeast6') }}</div>
+        <div class="text-danger">{{ languageService.t('passwordMustBeAtLeast6') }}</div>
       }
     </div>
 
@@ -64,24 +64,23 @@
         required
         #confirmCtrl="ngModel"
         class="form-control"
+        placeholder="{{ languageService.t('confirmPassword') }}"
       />
-
       @if (confirmCtrl.invalid && confirmCtrl.touched) {
-      <div class="text-danger">{{ languageService.t('confirmPassword') }}</div>
+        <div class="text-danger">{{ languageService.t('confirmPassword') }}</div>
       }
     </div>
 
     @if (passwordMismatch) {
-    <div class="text-danger small mb-3">{{ languageService.t('passwordNotMatch') }}</div>
+      <div class="text-danger small mb-3">{{ languageService.t('passwordNotMatch') }}</div>
     }
 
-    <!-- زرار إنشاء الحساب -->
     <button type="submit" [disabled]="registerForm.invalid">
       {{ languageService.t('signup') }}
     </button>
 
     @if (errorMessage) {
-    <p class="text-danger text-center mt-3">{{ errorMessage }}</p>
+      <p class="text-danger text-center mt-3">{{ errorMessage }}</p>
     }
 
     <p class="text-center mt-3">

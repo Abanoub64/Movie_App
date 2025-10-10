@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 import { MovieCard } from '@shared/components/movie-card/movie-card';
 import { ZardPaginationComponent } from '@shared/components/pagination/pagination.component';
 import { Footer } from '@shared/components/footer/footer';
-import { Navbar } from '@shared/components/navbar/navbar';
 import { IMovie, IMoviesResponse } from '@shared/interface/interfaces';
 import {
   SegmentedControlOption,
@@ -25,16 +24,7 @@ import { LanguageService } from '@shared/services/language-service';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [
-    RouterModule,
-    Navbar,
-    MovieCard,
-    ZardPaginationComponent,
-    Footer,
-    ListDialog,
-    Carousel,
-    SegmentedControlComponent,
-    HeroSection,
+  imports: [ RouterModule,MovieCard,ZardPaginationComponent, Footer, ListDialog, Carousel, SegmentedControlComponent, HeroSection,
   ],
   templateUrl: './home.html',
   styleUrls: ['./home.css'],

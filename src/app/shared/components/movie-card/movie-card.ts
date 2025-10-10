@@ -1,18 +1,8 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  OnDestroy,
-  HostListener,
-  ElementRef,
-  EventEmitter,
-  Output,
-  inject,
-} from '@angular/core';
+import {Component,Input,OnInit,HostListener,ElementRef,EventEmitter,Output,inject,DestroyRef,} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { Auth } from '@angular/fire/auth';
-import { Subscription } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { IMovie } from '@shared/interface/interfaces';
 import { WishlistService } from '@shared/services/wishlist.service';
@@ -33,8 +23,9 @@ type MenuOptionKey = 'add' | 'fav';
   templateUrl: './movie-card.html',
   styleUrls: ['./movie-card.css'],
 })
-export class MovieCard implements OnInit, OnDestroy {
+export class MovieCard implements OnInit {
   @Input() movie!: IMovie;
+  @Input() routerLinkBase: string = '/movie';
 
   @Output() addToList = new EventEmitter<MediaPayload>();
 
@@ -44,54 +35,51 @@ export class MovieCard implements OnInit, OnDestroy {
 
   readonly menuOptions: { label: string; icon: string; key: MenuOptionKey }[] = [
     { label: 'Add to list', icon: '≡', key: 'add' },
-    { label: 'WishList  ', icon: '♥', key: 'fav' },
+    { label: 'Wishlist',    icon: '♥', key: 'fav' },
   ];
-  @Input() routerLinkBase: string = '/movie';
 
-  private hostEl: ElementRef<HTMLElement> = inject(ElementRef);
-  private sub?: Subscription;
+  private readonly hostEl = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly destroyRef = inject(DestroyRef);
 
-  constructor(private router: Router, private wishlist: WishlistService, private auth: Auth) {}
+  constructor(
+    private router: Router,
+    private wishlist: WishlistService,
+    private auth: Auth
+  ) {}
 
   ngOnInit() {
-    this.sub = this.wishlist.wishlistIds$.subscribe((set) => {
-      this.inWishlist = set.has(this.movie.id);
-    });
+    this.wishlist.wishlistIds$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((set) => {
+        this.inWishlist = set.has(this.movie.id);
+      });
   }
 
-  ngOnDestroy() {
-    this.sub?.unsubscribe();
-  }
-  get slug(): string {
-    return (
-      this.getTitle(this.movie)
-        ?.toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-') // شيل أي رموز غير حروف أو أرقام
-        .replace(/^-+|-+$/g, '') ?? ''
-    );
-  }
-
-  /** صور البوستر */
   get posterUrl(): string {
-    return this.movie.poster_path
+    return this.movie?.poster_path
       ? `https://media.themoviedb.org/t/p/w440_and_h660_face${this.movie.poster_path}`
       : '/assets/placeholder-poster.png';
   }
   get posterUrl2x(): string {
-    return this.movie.poster_path
+    return this.movie?.poster_path
       ? `https://media.themoviedb.org/t/p/w880_and_h1320_face${this.movie.poster_path}`
       : '/assets/placeholder-poster.png';
   }
-  get movieUrl(): string {
-    return `/movie/${this.movie.id}-${this.slug}`;
+
+  get movieLink() {
+    return [this.routerLinkBase, this.movie.id];
   }
+
   getTitle(item: IMovie): string {
-    return item.title == undefined ? item.name : item.title;
+    return (item.title ?? (item as any).name ?? 'Untitled').toString();
   }
 
   get userScorePercent(): number {
-    return Math.round(this.movie.vote_average * 10);
+    const raw = (this.movie?.vote_average ?? 0) * 10;
+    const val = Math.round(raw);
+    return Number.isFinite(val) && val > 0 ? val : 0;
   }
+
   get scoreColor(): string {
     const s = this.userScorePercent;
     if (s >= 70) return '#21d07a';
@@ -103,27 +91,24 @@ export class MovieCard implements OnInit, OnDestroy {
   }
 
   get displayDate(): string {
-    const d = this.movie.release_date || (this.movie as any).first_air_date || '';
+    const d = this.movie?.release_date || (this.movie as any)?.first_air_date || '';
     return d || '';
   }
 
   goToMovie(id: number) {
     this.router.navigate(['/movie', id]);
   }
-  onOptionsClick(e: Event) {
-    e.preventDefault();
-    e.stopPropagation();
-  }
 
-  /** ❤️ قلب الويش ليست (Toggle) */
   async toggleWishlist(e: Event) {
     e.preventDefault();
     e.stopPropagation();
+
     if (!this.auth.currentUser) {
       this.router.navigate(['/login']);
       return;
     }
     if (this.toggling) return;
+
     this.toggling = true;
     try {
       if (this.inWishlist) {
@@ -131,7 +116,7 @@ export class MovieCard implements OnInit, OnDestroy {
       } else {
         await this.wishlist.add({
           id: this.movie.id,
-          title: this.movie.title,
+          title: this.getTitle(this.movie),
           poster_path: this.movie.poster_path ?? null,
           vote_average: this.movie.vote_average ?? 0,
           release_date: this.movie.release_date ?? null,
@@ -145,14 +130,12 @@ export class MovieCard implements OnInit, OnDestroy {
     }
   }
 
-  /** زر الثلاث نقاط */
   onMenuClick(e: Event) {
     e.preventDefault();
     e.stopPropagation();
     this.menuOpen = !this.menuOpen;
   }
 
-  /** Dispatcher لاختيارات المينيو */
   async handleOption(key: MenuOptionKey, e: Event) {
     e.preventDefault();
     e.stopPropagation();
@@ -165,7 +148,7 @@ export class MovieCard implements OnInit, OnDestroy {
       this.menuOpen = false;
       this.addToList.emit({
         id: this.movie.id,
-        title: this.movie.title,
+        title: this.getTitle(this.movie),
         poster_path: this.movie.poster_path ?? null,
         vote_average: this.movie.vote_average ?? null,
       });
@@ -178,17 +161,15 @@ export class MovieCard implements OnInit, OnDestroy {
         return;
       }
 
-      // لو موجود بالفعل في الويش ليست، اقفل المينيو وخلاص
       if (this.inWishlist) {
         this.menuOpen = false;
         return;
       }
 
-      // إضافة سريعة للويش ليست (هتظهر في صفحة WishList تلقائيًا)
       try {
         await this.wishlist.add({
           id: this.movie.id,
-          title: this.movie.title,
+          title: this.getTitle(this.movie),
           poster_path: this.movie.poster_path ?? null,
           vote_average: this.movie.vote_average ?? 0,
           release_date: this.movie.release_date ?? null,
@@ -199,11 +180,9 @@ export class MovieCard implements OnInit, OnDestroy {
       } finally {
         this.menuOpen = false;
       }
-      return;
     }
   }
 
-  /** قفل المينيو لما نضغط خارج الكارد */
   @HostListener('document:click', ['$event'])
   closeMenuOnOutside(ev: MouseEvent) {
     const target = ev.target as Node;
@@ -212,11 +191,6 @@ export class MovieCard implements OnInit, OnDestroy {
     }
   }
 
-  get movieLink() {
-    return [this.routerLinkBase, this.movie.id];
-  }
-
-  /** Escape يقفل المينيو */
   @HostListener('document:keydown.escape')
   onEsc() {
     this.menuOpen = false;

@@ -25,6 +25,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class Navbar {
   private languageService = inject(LanguageService);
+
   private userSignal = signal<{
     uid: string | null;
     displayName?: string | null;
@@ -37,13 +38,11 @@ export class Navbar {
 
   accountDrawerOpen = false;
 
-  // Username Modal
   usernameModalOpen = false;
   newUsername = '';
   usernameError = '';
   usernameSuccess = '';
 
-  // Password Modal
   passwordModalOpen = false;
   currentPassword = '';
   newPassword = '';
@@ -69,11 +68,24 @@ export class Navbar {
         user ? { uid: user.uid, displayName: user.displayName, email: user.email } : null
       );
     });
+
+    this.refreshUserFromAuth();
   }
 
-  openAccountDrawer() {
+  private refreshUserFromAuth() {
+    const u = this.auth.currentUser;
+    this.userSignal.set(u ? { uid: u.uid, displayName: u.displayName, email: u.email } : null);
+  }
+
+  async openAccountDrawer() {
     if (!this.isLoggedIn()) return;
     if (this.isCurrentRoute('/login') || this.isCurrentRoute('/register')) return;
+
+    if (this.auth.currentUser) {
+      await this.auth.currentUser.reload();
+    }
+    this.refreshUserFromAuth();
+
     this.accountDrawerOpen = true;
   }
 
@@ -85,10 +97,10 @@ export class Navbar {
     await signOut(this.auth);
     this.userSignal.set(null);
     this.closeAccountDrawer();
-    this.router.navigate(['/login']).then(() => this.closeAccountDrawer());
+    await this.router.navigate(['/login']);
+    this.closeAccountDrawer();
   }
 
-  // ---- Change Username ----
   goChangeUsername() {
     this.closeAccountDrawer();
     this.usernameModalOpen = true;
@@ -123,7 +135,9 @@ export class Navbar {
 
     try {
       await updateProfile(user, { displayName: name });
-      this.userSignal.set({ uid: user.uid, displayName: name, email: user.email });
+      await user.reload();
+      this.refreshUserFromAuth();
+
       this.usernameSuccess = 'Username updated successfully ✅';
       setTimeout(() => this.closeUsernameModal(), 1200);
     } catch (err) {
@@ -131,7 +145,6 @@ export class Navbar {
     }
   }
 
-  // ---- Change Password ----
   goChangePassword() {
     this.closeAccountDrawer();
     this.passwordModalOpen = true;
@@ -181,7 +194,6 @@ export class Navbar {
     }
   }
 
-  // ---- Delete Account ----
   async deleteAccount() {
     this.closeAccountDrawer();
     const confirmed = confirm('Are you sure? This action cannot be undone.');
@@ -203,9 +215,11 @@ export class Navbar {
   isCurrentRoute(path: string): boolean {
     return this.router.url.split('?')[0] === path;
   }
+
   changeLanguage(lang: string) {
     this.languageService.setLanguage(lang);
   }
+
   t(key: string) {
     return this.languageService.t(key);
   }

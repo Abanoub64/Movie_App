@@ -1,40 +1,27 @@
-<div class="relative inline-block group mx-5 justify-center">
-  <div class="cursor-pointer font-semibold text-sm">{{ languageService.t('movies') }}</div>
+<!-- Movies -->
+<div class="nav-dd group relative inline-block mx-5">
+  <div class="nav-dd__label cursor-pointer font-semibold text-sm">
+    {{ languageService.t('movies') }}
+  </div>
 
-  <ul
-    class="menu menu-vertical absolute left-0 mt-0 bg-base-200 rounded-box shadow-lg hidden group-hover:block"
-  >
-    <li>
-      <a [routerLink]="['/movie/populer']">{{ languageService.t('popular') }}</a>
-    </li>
-    <li>
-      <a [routerLink]="['/movie/nowplaying']">{{ languageService.t('nowPlaying') }}</a>
-    </li>
-    <li>
-      <a [routerLink]="['/movie/upcoming']">{{ languageService.t('upcoming') }}</a>
-    </li>
-    <li>
-      <a [routerLink]="['/movie/toprated']">{{ languageService.t('topRated') }}</a>
-    </li>
+  <ul class="nav-dd__menu menu menu-vertical absolute left-0 mt-0 bg-base-200 rounded-box shadow-lg hidden group-hover:block">
+    <li><a class="nav-dd__link" [routerLink]="['/movie/populer']">{{ languageService.t('popular') }}</a></li>
+    <li><a class="nav-dd__link" [routerLink]="['/movie/nowplaying']">{{ languageService.t('nowPlaying') }}</a></li>
+    <li><a class="nav-dd__link" [routerLink]="['/movie/upcoming']">{{ languageService.t('upcoming') }}</a></li>
+    <li><a class="nav-dd__link" [routerLink]="['/movie/toprated']">{{ languageService.t('topRated') }}</a></li>
   </ul>
 </div>
-<div class="relative inline-block group mx-5 justify-center">
-  <div class="cursor-pointer font-semibold text-sm">{{ languageService.t('tvShows') }}</div>
 
-  <ul
-    class="menu menu-vertical absolute left-0 mt-0 bg-base-200 rounded-box shadow-lg hidden group-hover:block"
-  >
-    <li>
-      <a [routerLink]="['/tv/populer']">{{ languageService.t('popular') }}</a>
-    </li>
-    <li>
-      <a [routerLink]="['/tv/airing']">{{ languageService.t('airingToday') }}</a>
-    </li>
-    <li>
-      <a [routerLink]="['/tv/ontv']">{{ languageService.t('onTv') }}</a>
-    </li>
-    <li>
-      <a [routerLink]="['/tv/toprated']">{{ languageService.t('topRated') }}</a>
-    </li>
+<!-- TV Shows -->
+<div class="nav-dd group relative inline-block mx-5">
+  <div class="nav-dd__label cursor-pointer font-semibold text-sm">
+    {{ languageService.t('tvShows') }}
+  </div>
+
+  <ul class="nav-dd__menu menu menu-vertical absolute left-0 mt-0 bg-base-200 rounded-box shadow-lg hidden group-hover:block">
+    <li><a class="nav-dd__link" [routerLink]="['/tv/populer']">{{ languageService.t('popular') }}</a></li>
+    <li><a class="nav-dd__link" [routerLink]="['/tv/airing']">{{ languageService.t('airingToday') }}</a></li>
+    <li><a class="nav-dd__link" [routerLink]="['/tv/ontv']">{{ languageService.t('onTv') }}</a></li>
+    <li><a class="nav-dd__link" [routerLink]="['/tv/toprated']">{{ languageService.t('topRated') }}</a></li>
   </ul>
 </div>
