@@ -9,11 +9,14 @@
     </a>
 
     <!-- Navigation Links -->
+    <!-- Desktop Menu -->
     <ul class="hidden md:flex space-x-6 list-none">
       <li>
-        <a routerLink="/home" routerLinkActive="font-semibold ">{{ t('home') }}</a>
+        <a routerLink="/home" routerLinkActive="font-semibold">{{ t('home') }}</a>
       </li>
-      <app-button-with-menu class="text-black" />
+
+      <app-button-with-menu class="text-black"></app-button-with-menu>
+
       <li>
         <a
           routerLink="/lists"
@@ -21,9 +24,10 @@
           class="font-semibold"
           aria-label="View My Lists"
         >
-          View My Lists
+          {{ t('viewMyLists') }}
         </a>
       </li>
+
       <li>
         <a
           routerLink="/wishlist"
@@ -44,12 +48,85 @@
               d="M12 21s-6.2-4.35-9.33-7.48C.82 11.67 1 8.5 3.2 6.6c2.28-1.96 5.3-1.2 6.8.73C11.5 5.4 14.52 4.64 16.8 6.6c2.2 1.9 2.38 5.07.53 6.92C18.2 14.9 12 21 12 21z"
             />
           </svg>
-          @let cnt = (count$ | async) ?? 0; @if (cnt > 0) {
-          <span class="wishlist-badge" aria-label="Wishlist count">{{ cnt }}</span>
+          @let wishlistCount = (count$ | async) ?? 0; @if (wishlistCount > 0) {
+          <span class="wishlist-badge" aria-label="Wishlist count">{{ wishlistCount }}</span>
           }
         </a>
       </li>
     </ul>
+
+    <!-- Mobile Hamburger -->
+    <button
+      class="md:hidden text-black focus:outline-none"
+      (click)="mobileMenuOpen = true"
+      aria-label="Open menu"
+    >
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+
+    <!-- Mobile Drawer -->
+    <div
+      class="fixed inset-0 bg-black/50 z-50 transition-opacity"
+      [class.hidden]="!mobileMenuOpen"
+      (click)="mobileMenuOpen = false"
+    >
+      <div
+        class="absolute top-0 left-0 h-full w-64 bg-white text-black shadow-2xl transform transition-transform duration-300"
+        [class.-translate-x-full]="!mobileMenuOpen"
+        [class.translate-x-0]="mobileMenuOpen"
+        (click)="$event.stopPropagation()"
+      >
+        <!-- Header -->
+        <div class="flex items-center justify-between p-4 border-b">
+          <span class="text-lg font-semibold">Menu</span>
+          <button (click)="mobileMenuOpen = false" class="text-2xl leading-none">&times;</button>
+        </div>
+
+        <!-- Links -->
+        <ul class="flex flex-col p-4 space-y-4">
+          <li>
+            <a (click)="mobileMenuOpen = false" routerLink="/home" routerLinkActive="font-semibold">
+              {{ t('home') }}
+            </a>
+          </li>
+
+          <li>
+            <a (click)="mobileMenuOpen = false" routerLink="/lists" class="font-semibold">
+              {{ t('viewMyLists') }}
+            </a>
+          </li>
+
+          <li>
+            <a
+              (click)="mobileMenuOpen = false"
+              routerLink="/wishlist"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="flex items-center gap-2"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="20"
+                height="20"
+                class="heart"
+              >
+                <path
+                  d="M12 21s-6.2-4.35-9.33-7.48C.82 11.67 1 8.5 3.2 6.6c2.28-1.96 5.3-1.2 6.8.73C11.5 5.4 14.52 4.64 16.8 6.6c2.2 1.9 2.38 5.07.53 6.92C18.2 14.9 12 21 12 21z"
+                />
+              </svg>
+              @let wishlistCountMobile = (count$ | async) ?? 0; @if (wishlistCountMobile > 0) {
+              <span class="wishlist-badge" aria-label="Wishlist count">{{
+                wishlistCountMobile
+              }}</span>
+              }
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
 
     <!-- Right side (Account + Language) -->
     <div class="flex items-center space-x-4">
@@ -91,10 +168,10 @@
         </li>
         } @else {
         <li>
-          <a routerLink="/login" class="px-3 py-1 rounded-full text-black"> Log in </a>
+          <a routerLink="/login" class="px-3 py-1 rounded-full text-black"> {{ t('login') }} </a>
         </li>
         <li>
-          <a routerLink="/register" class="px-3 py-1 rounded-full text-black"> Sign Up </a>
+          <a routerLink="/register" class="px-3 py-1 rounded-full text-black"> {{ t('signup') }}</a>
         </li>
         }
       </uL>

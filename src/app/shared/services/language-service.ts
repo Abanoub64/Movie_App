@@ -52,9 +52,12 @@ export class LanguageService {
       notFoundTitle: '404',
       notFoundMessage: 'The page you are looking for was not found. Check the URL or return home.',
       goHome: 'Back to Home',
+      viewMyLists: 'View My Lists',
     },
 
     ar: {
+      viewMyLists: 'قوائمي',
+
       movies: 'الأفلام',
       tvShows: 'المسلسلات',
       popular: 'الأكثر شهرة',
@@ -102,6 +105,8 @@ export class LanguageService {
     },
 
     fr: {
+      viewMyLists: 'Voir mes listes',
+
       movies: 'Films',
       tvShows: 'Séries TV',
       popular: 'Populaire',
@@ -151,6 +156,8 @@ export class LanguageService {
     },
 
     zh: {
+      viewMyLists: '查看我的列表',
+
       movies: '电影',
       tvShows: '电视剧',
       popular: '热门',

@@ -42,6 +42,7 @@ export class Navbar {
   newUsername = '';
   usernameError = '';
   usernameSuccess = '';
+  mobileMenuOpen = false;
 
   passwordModalOpen = false;
   currentPassword = '';
