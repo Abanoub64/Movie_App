@@ -105,6 +105,20 @@ export class Details implements OnInit {
         next: (res: IMoviesResponse) => (this.recommendations = res?.results ?? []),
         error: (err) => console.error(err),
       });
+    this.moviesService
+      .getMovieTrailer(+this.movieId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (res: TrailerResponse) => {
+          const trailer = res.results.find((v) => v.site === 'YouTube' && v.type === 'Trailer');
+
+          if (trailer) {
+            this.trailerKey = trailer.key;
+          } else {
+            this.trailerKey = '';
+          }
+        },
+      });
   }
 
   private loadTvDetails(): void {
