@@ -5,6 +5,10 @@ You can browse popular movies, view details, check ratings, search for specific 
 
 ---
 
+# Live Demo : https://flourishing-marshmallow-97ca80.netlify.app/
+
+---
+
 ## 🚀 Features  
 - 🎥 Browse and view trending & popular movies  
 - ⭐ View detailed movie information and ratings  
